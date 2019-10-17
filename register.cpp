@@ -36,15 +36,15 @@ unsigned int simulated_register::general_purpose_registors[] = {
 };
 
 //getters
-unsigned int simulated_register::read_register(const unsigned int& register_number) const
+unsigned int simulated_register::read_register(const unsigned int& register_number)
 {
     return general_purpose_registors[register_number];
 }
-unsigned int simulated_register::read_HI() const
+unsigned int simulated_register::read_HI()
 {
     return HI;
 }
-unsigned int simulated_register::read_LO() const
+unsigned int simulated_register::read_LO()
 {
     return LO;
 }
