@@ -36,7 +36,7 @@ unsigned int simulated_register::general_purpose_registors[] = {
 };
 
 //getters
-unsigned int simulated_register::read_register(const unsigned int& register_number)
+unsigned int simulated_register::read_register(const unsigned char& register_number)
 {
     return general_purpose_registors[register_number];
 }
@@ -50,7 +50,7 @@ unsigned int simulated_register::read_LO()
 }
 
 //setters
-void simulated_register::write_register(const unsigned int& register_number, const unsigned int& value)
+void simulated_register::write_register(const unsigned char& register_number, const unsigned int& value)
 {
     // ensure that register $0 is immutable
     if ( register_number > 0 && register_number < 32 )
