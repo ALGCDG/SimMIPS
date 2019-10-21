@@ -21,7 +21,18 @@ unsigned int (*alu_operations[])(const unsigned int &, const unsigned int &) = {
     band,
     bor,
     bxor
-    };
+};
+
+void print()
+{
+    std::cout << "hello world" << std::endl;
+}
+
+// // a function which takes a function as an argument
+// void do_it(void(*in_f))
+// {
+//     in_f();
+// }
 
 int main()
 {
@@ -30,5 +41,9 @@ int main()
     std::cout << bla(0) << std::endl;
     std::cout << succ(5) << std::endl;
     std::cout << (alu_operations)[1](5,2) << std::endl;
+    do_it(print);
     return 0;
 }
+
+// write cpu design
+
