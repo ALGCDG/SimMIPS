@@ -18,9 +18,9 @@ class CPU
     private:
     // memory;
     simulated_register registers;
-    static std::map<int, R_OPCODE> R;
-    static std::map<int, I_OPCODE> I;
-    static std::map<int, J_OPCODE> J;
+    static std::map<uchar, R_OPCODE> R;
+    static std::map<uchar, I_OPCODE> I;
+    static std::map<uchar, J_OPCODE> J;
 
     public:
     int run(); // returns exit code
