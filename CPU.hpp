@@ -15,7 +15,8 @@ typedef void (*J_OPCODE)(const uint &);
 
 class CPU
 {
-    private:
+    // private:
+    public:
     // memory;
     simulated_register registers;
     static std::map<uchar, R_OPCODE> R;

@@ -3,60 +3,60 @@
 
 // R type operators
 void SLL(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
-void SRL(const uchar &, const uchar &, const uchar &, const uchar &);
-void SRA(const uchar &, const uchar &, const uchar &, const uchar &);
-void SLLV(const uchar &, const uchar &, const uchar &, const uchar &);
-void SRLV(const uchar &, const uchar &, const uchar &, const uchar &);
-void SRAV(const uchar &, const uchar &, const uchar &, const uchar &);
-void JR(const uchar &, const uchar &, const uchar &, const uchar &);
-void JALR(const uchar &, const uchar &, const uchar &, const uchar &);
-void SYSCALL(const uchar &, const uchar &, const uchar &, const uchar &);
-void MFHI(const uchar &, const uchar &, const uchar &, const uchar &);
-void MTHI(const uchar &, const uchar &, const uchar &, const uchar &);
-void MFLO(const uchar &, const uchar &, const uchar &, const uchar &);
-void MTLO(const uchar &, const uchar &, const uchar &, const uchar &);
-void MULT(const uchar &, const uchar &, const uchar &, const uchar &);
-void MULTU(const uchar &, const uchar &, const uchar &, const uchar &);
-void DIV(const uchar &, const uchar &, const uchar &, const uchar &);
-void DIVU(const uchar &, const uchar &, const uchar &, const uchar &);
-void ADD(const uchar &, const uchar &, const uchar &, const uchar &);
-void ADDU(const uchar &, const uchar &, const uchar &, const uchar &);
-void SUB(const uchar &, const uchar &, const uchar &, const uchar &);
-void SUBU(const uchar &, const uchar &, const uchar &, const uchar &);
-void AND(const uchar &, const uchar &, const uchar &, const uchar &);
-void OR(const uchar &, const uchar &, const uchar &, const uchar &);
-void XOR(const uchar &, const uchar &, const uchar &, const uchar &);
-void NOR(const uchar &, const uchar &, const uchar &, const uchar &);
-void SLT(const uchar &, const uchar &, const uchar &, const uchar &);
-void SLTU(const uchar &, const uchar &, const uchar &, const uchar &);
+void SRL(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
+void SRA(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
+void SLLV(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
+void SRLV(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
+void SRAV(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
+void JR(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
+void JALR(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
+void SYSCALL(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
+void MFHI(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
+void MTHI(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
+void MFLO(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
+void MTLO(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
+void MULT(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
+void MULTU(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
+void DIV(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
+void DIVU(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
+void ADD(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
+void ADDU(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
+void SUB(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
+void SUBU(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
+void AND(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
+void OR(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
+void XOR(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
+void NOR(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
+void SLT(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
+void SLTU(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
 
 // I type operators
-void BEQ(const uchar &, const uchar &, const uint &);
-void BNE(const uchar &, const uchar &, const uint &);
-void BLEZ(const uchar &, const uchar &, const uint &);
-void BGTZ(const uchar &, const uchar &, const uint &);
-void ADDI(const uchar &, const uchar &, const uint &);
-void ADDIU(const uchar &, const uchar &, const uint &);
-void SLTI(const uchar &, const uchar &, const uint &);
-void SLTIU(const uchar &, const uchar &, const uint &);
-void ANDI(const uchar &, const uchar &, const uint &);
-void ORI(const uchar &, const uchar &, const uint &);
-void XORI(const uchar &, const uchar &, const uint &);
-void LUI(const uchar &, const uchar &, const uint &);
-void LB(const uchar &, const uchar &, const uint &);
-void LH(const uchar &, const uchar &, const uint &);
-void LW(const uchar &, const uchar &, const uint &);
-void LBU(const uchar &, const uchar &, const uint &);
-void LHU(const uchar &, const uchar &, const uint &);
-void SB(const uchar &, const uchar &, const uint &);
-void SH(const uchar &, const uchar &, const uint &);
-void SW(const uchar &, const uchar &, const uint &);
+void BEQ(const uchar &rs, const uchar &rt, const uint &immediate);
+void BNE(const uchar &rs, const uchar &rt, const uint &immediate);
+void BLEZ(const uchar &rs, const uchar &rt, const uint &immediate);
+void BGTZ(const uchar &rs, const uchar &rt, const uint &immediate);
+void ADDI(const uchar &rs, const uchar &rt, const uint &immediate);
+void ADDIU(const uchar &rs, const uchar &rt, const uint &immediate);
+void SLTI(const uchar &rs, const uchar &rt, const uint &immediate);
+void SLTIU(const uchar &rs, const uchar &rt, const uint &immediate);
+void ANDI(const uchar &rs, const uchar &rt, const uint &immediate);
+void ORI(const uchar &rs, const uchar &rt, const uint &immediate);
+void XORI(const uchar &rs, const uchar &rt, const uint &immediate);
+void LUI(const uchar &rs, const uchar &rt, const uint &immediate);
+void LB(const uchar &rs, const uchar &rt, const uint &immediate);
+void LH(const uchar &rs, const uchar &rt, const uint &immediate);
+void LW(const uchar &rs, const uchar &rt, const uint &immediate);
+void LBU(const uchar &rs, const uchar &rt, const uint &immediate);
+void LHU(const uchar &rs, const uchar &rt, const uint &immediate);
+void SB(const uchar &rs, const uchar &rt, const uint &immediate);
+void SH(const uchar &rs, const uchar &rt, const uint &immediate);
+void SW(const uchar &rs, const uchar &rt, const uint &immediate);
 
 // J type operators
 void J(const uint &address);
 void JAL(const uint &address);
 
-
+// cannot put functions in map until they are defined
 std::map<uchar, R_OPCODE> CPU::R = 
 {
     {0, SLL},
@@ -112,15 +112,15 @@ std::map<uchar, I_OPCODE> CPU::I =
 };
 std::map<uchar, J_OPCODE> CPU::J =
 {
-    {2, J},
-    {3, JAL}
+    // {2, J},
+    // {3, JAL}
 };
 
 
 // functions for interpreting binary instructions
 uchar pass_OPCODE(const uint &instruction)
 {
-    return uint(instruction / pow(2, -26)) & uint(0b111111);
+    return (instruction >> 26) & 0b111111;
 }
 
 uchar pass_funct(const uint &instruction)
@@ -128,32 +128,32 @@ uchar pass_funct(const uint &instruction)
     /*
     A function specifically for returning the six bit function code of the an R type instruction
     */
-    return instruction & 0b111111;
+    return instruction & 0x3F;
 }
 uchar pass_rs(const uint &instruction)
 {
-    return (instruction >> 21) & 0b11111;
+    return (instruction >> 21) & 0x1F;
 }
 uchar pass_rt(const uint &instruction)
 {
-    return (instruction >> 16) & 0b11111;
+    return (instruction >> 16) & 0x1F;
 }
 uchar pass_rd(const uint &instruction)
 {
-    return (instruction >> 11) & 0b11111;
+    return (instruction >> 11) & 0x1F;
 }
 uchar pass_shamt(const uint &instruction)
 {
-    return (instruction >> 6) & 0b11111;
+    return (instruction >> 6) & 0x1F;
 }
 
 uint pass_immediate(const uint &instruction)
 {
-    return (instruction & 0b1111111111111111);
+    return (instruction & 0xFFFF);
 }
 uint pass_address(const uint &instruction)
 {
-    return (instruction & 0b11111111111111111111111111);
+    return (instruction & 0x3FFFFFF);
 }
 
 void interpret_instruction(const uint &instruction)
@@ -166,7 +166,7 @@ void interpret_instruction(const uint &instruction)
         rt = pass_rt(instruction);
         rd = pass_rd(instruction);
         shamt = pass_shamt(instruction);
-        R_OPCODE(pass_funct(instruction))(rs, rt, rd, shamt);
+        (R_OPCODE(pass_funct(instruction)))(rs, rt, rd, shamt);
     }
     else if ((OPCODE >=4 && OPCODE <=15) || (OPCODE >=32 && OPCODE <= 34) || OPCODE == 36 || OPCODE == 37 || OPCODE ==40 || OPCODE ==41 || OPCODE ==43)
     {
@@ -175,13 +175,13 @@ void interpret_instruction(const uint &instruction)
         rs = pass_rs(instruction);
         rt = pass_rt(instruction);
         immediate = pass_immediate(instruction);
-        J_OPCODE(OPCODE)(rs, rt, immediate);
+        (I_OPCODE(OPCODE))(rs, rt, immediate);
     }
     else if (2 == OPCODE || 3 == OPCODE)
     {
         uint address;
         address = pass_address(instruction);
-        I_OPCODE(OPCODE)(address);
+        (J_OPCODE(OPCODE))(address);
     }
     else
     {
@@ -192,9 +192,10 @@ void interpret_instruction(const uint &instruction)
 
 }
 
-int run()
-{
-    // load instruction
-    interpret_instruction();
-    
-}
+// int run()
+// {
+//     // while not pointing to null
+//         // load instruction
+//         interpret_instruction();
+//     // return exit code
+// }
