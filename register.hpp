@@ -19,4 +19,5 @@ class simulated_register
     static void write_LO(const unsigned int& value);
 
     // NB, consider using $ notation
+    unsigned int& $(const unsigned char &register_number);
 };

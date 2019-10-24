@@ -66,3 +66,16 @@ void simulated_register::write_LO(const unsigned int &value)
 {
     LO = value;
 }
+
+// unsigned int & simulated_register::$(const unsigned char &register_number)
+// {
+//     // ensure that register $0 is immutable
+//     if (register_number > 0 && register_number < 32)
+//     {
+//         return general_purpose_registors[register_number];
+//     }
+//     else if (register_number == 0)
+//     {
+//         return nullptr;
+//     }
+// }

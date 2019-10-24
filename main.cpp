@@ -1,5 +1,5 @@
 // main
-#include<string> // for pruposes of passing the binary instruction location
+#include <string> // for pruposes of passing the binary instruction location
 #include <iostream> // for pruposes of passing the binary instruction location
 
 // int main(std::string binary_path)
