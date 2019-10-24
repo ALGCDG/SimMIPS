@@ -22,11 +22,14 @@ class CPU : public simulated_register, public R_TYPE, public I_TYPE, public J_TY
     public:
     // memory;
     // simulated_register registers;
-    static std::map<uchar, R_OPCODE> R;
-    static std::map<uchar, I_OPCODE> I;
-    static std::map<uchar, J_OPCODE> J;
+    // static std::map<uchar, R_OPCODE> R_OPCODES;
+    std::map<uchar, R_OPCODE> R_OPCODES;
+
+    static std::map<uchar, I_OPCODE> I_OPCODES;
+    static std::map<uchar, J_OPCODE> J_OPCODES;
+    void interpret_instruction(const uint &instruction);
 
     public:
-    int run(); // returns exit code
-    CPU(/*file stream for binary instructions*/);
+        int run(); // returns exit code
+        CPU(/*file stream for binary instructions*/);
 };

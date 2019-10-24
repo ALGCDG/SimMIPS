@@ -1,66 +1,72 @@
 #include "R.hpp"
 
 // R type operators implementations
-void SLL(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt)
+void R_TYPE::SLL(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt)
 {
     write_register(rd, read_register(rt) << shamt);
 }
-void SRL(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
-void SRA(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
-void SLLV(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt)
+void R_TYPE::SRL(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt)
+{
+
+}
+void R_TYPE::SRA(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt)
+{
+
+}
+void R_TYPE::SLLV(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt)
 {
     write_register(rd, read_register(rt) << read_register(rs));
 }
-void SRLV(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
-void SRAV(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
-void JR(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
-void JALR(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
-void SYSCALL(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
-void MFHI(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt)
+void R_TYPE::SRLV(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt) {}
+void R_TYPE::SRAV(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt) {}
+void R_TYPE::JR(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt) {}
+void R_TYPE::JALR(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt) {}
+void R_TYPE::SYSCALL(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt) {}
+void R_TYPE::MFHI(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt)
 {
     write_register(rd, read_HI());
 }
-void MTHI(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt)
+void R_TYPE::MTHI(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt)
 {
     write_HI(read_register(rd));
 }
-void MFLO(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt)
+void R_TYPE::MFLO(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt)
 {
     write_register(rd, read_LO());
 }
-void MTLO(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt)
+void R_TYPE::MTLO(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt)
 {
     write_LO(read_register(rd));
 }
-void MULT(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
-void MULTU(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
-void DIV(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
-void DIVU(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
-void ADD(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
-void ADDU(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt)
+void R_TYPE::MULT(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt) {}
+void R_TYPE::MULTU(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt) {}
+void R_TYPE::DIV(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt) {}
+void R_TYPE::DIVU(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt) {}
+void R_TYPE::ADD(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt) {}
+void R_TYPE::ADDU(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt)
 {
     write_register(rd, read_register(rs) + read_register(rt));
 }
-void SUB(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
-void SUBU(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt)
+void R_TYPE::SUB(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt) {}
+void R_TYPE::SUBU(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt)
 {
     write_register(rd, read_register(rs) - read_register(rt));
 }
-void AND(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt)
+void R_TYPE::AND(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt)
 {
     write_register(rd, read_register(rs) & read_register(rt));
 }
-void OR(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt)
+void R_TYPE::OR(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt)
 {
     write_register(rd, read_register(rs) | read_register(rt));
 }
-void XOR(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt)
+void R_TYPE::XOR(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt)
 {
     write_register(rd, read_register(rs) ^ read_register(rt));
 }
-void NOR(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt)
+void R_TYPE::NOR(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt)
 {
     write_register(rd, ~(read_register(rs) | read_register(rt)));
 }
-void SLT(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
-void SLTU(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
+void R_TYPE::SLT(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt){}
+void R_TYPE::SLTU(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt) {}

@@ -3,8 +3,7 @@
 #include "register.hpp"
 
 // cannot put functions in map until they are defined
-// std::map<uchar, R_OPCODE> CPU::R = 
-// {
+// std::map<uchar, R_OPCODE> CPU::R_OPCODES = {
 //     {0, SLL},
 //     {2, SRL},
 //     {3, SRA},
@@ -62,6 +61,40 @@
 //     // {3, JAL}
 // };
 
+CPU::CPU()
+{
+    std::map<uchar, R_OPCODE> R_OPCODES = {/*
+        {0, SLL},
+        {2, SRL},
+        {3, SRA},
+        {4, SLLV},
+        {6, SRLV},
+        {7, SRAV},
+        {8, JR},
+        {9, JALR},
+        {12, SYSCALL},
+        {16, MFHI},
+        {17, MTHI},
+        {18, MFLO},
+        {19, MTLO},
+        {24, MULT},
+        {25, MULTU},
+        {26, DIV},
+        {27, DIVU},*/
+        {32, ADD}
+        /*,
+        {33, ADDU},
+        {34, SUB},
+        {35, SUBU},
+        {36, AND},
+        {37, OR},
+        {38, XOR},
+        {39, NOR},
+        {42, SLT},
+        {43, SLTU}*/
+    };
+}
+
 
 // functions for interpreting binary instructions
 uchar pass_OPCODE(const uint &instruction)
@@ -102,7 +135,7 @@ uint pass_address(const uint &instruction)
     return (instruction & 0x3FFFFFF);
 }
 
-void interpret_instruction(const uint &instruction)
+void CPU::interpret_instruction(const uint &instruction)
 {
     uchar OPCODE = pass_OPCODE(instruction);
     if (0 == OPCODE)
@@ -112,7 +145,7 @@ void interpret_instruction(const uint &instruction)
         rt = pass_rt(instruction);
         rd = pass_rd(instruction);
         shamt = pass_shamt(instruction);
-        (R_OPCODE(pass_funct(instruction)))(rs, rt, rd, shamt);
+        (R_OPCODES[pass_funct(instruction)])(rs, rt, rd, shamt);
     }
     else if ((OPCODE >=4 && OPCODE <=15) || (OPCODE >=32 && OPCODE <= 34) || OPCODE == 36 || OPCODE == 37 || OPCODE ==40 || OPCODE ==41 || OPCODE ==43)
     {
@@ -121,13 +154,13 @@ void interpret_instruction(const uint &instruction)
         rs = pass_rs(instruction);
         rt = pass_rt(instruction);
         immediate = pass_immediate(instruction);
-        (I_OPCODE(OPCODE))(rs, rt, immediate);
+        (I_OPCODES[OPCODE])(rs, rt, immediate);
     }
     else if (2 == OPCODE || 3 == OPCODE)
     {
         uint address;
         address = pass_address(instruction);
-        (J_OPCODE(OPCODE))(address);
+        (J_OPCODES[OPCODE])(address);
     }
     else
     {
