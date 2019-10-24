@@ -17,4 +17,6 @@ class simulated_register
     static void write_register(const unsigned char& register_number, const unsigned int& value);
     static void write_HI(const unsigned int& value);
     static void write_LO(const unsigned int& value);
+
+    // NB, consider using $ notation
 };

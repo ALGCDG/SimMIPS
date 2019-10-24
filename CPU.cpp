@@ -1,7 +1,7 @@
 #include "CPU.hpp"
 #include <math.h>
 
-// R type operators
+// R type operators declarations
 void SLL(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
 void SRL(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
 void SRA(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
@@ -199,3 +199,44 @@ void interpret_instruction(const uint &instruction)
 //         interpret_instruction();
 //     // return exit code
 // }
+
+// R type operators implementations
+void SLL(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
+void SRL(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
+void SRA(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
+void SLLV(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
+void SRLV(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
+void SRAV(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
+void JR(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
+void JALR(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
+void SYSCALL(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
+void MFHI(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
+void MTHI(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
+void MFLO(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
+void MTLO(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
+void MULT(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
+void MULTU(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
+void DIV(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
+void DIVU(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
+void ADD(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
+void ADDU(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
+void SUB(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
+void SUBU(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
+void AND(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt)
+{
+    write_register(rs, read_register(rt) & read_register(rt));
+}
+void OR(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt)
+{
+    write_register(rs, read_register(rt) | read_register(rt));
+}
+void XOR(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt)
+{
+    write_register(rs, read_register(rt) ^ read_register(rt));
+}
+void NOR(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt)
+{
+    write_register(rs, ~(read_register(rt) | read_register(rt)));
+}
+void SLT(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);
+void SLTU(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt);

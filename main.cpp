@@ -20,4 +20,5 @@ int main(int argc, char *argv[])    // this is the way it has to be, left over f
 {
     std::string binary_file_name = argv[1];
     std::cerr << argv[1] << std::endl; // how all error should be handled NEVER use cout 
+    exit(-1); // how we should exit in event of error
 }
