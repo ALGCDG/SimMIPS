@@ -2,6 +2,9 @@
 #include <iostream>
 #include <map>
 #include "register.hpp"
+#include "J.hpp"
+#include "I.hpp"
+#include "R.hpp"
 
 typedef unsigned int uint;
 typedef unsigned char uchar;
@@ -13,7 +16,7 @@ typedef void (*I_OPCODE)(const uchar &, const uchar &, const uint &);
 typedef void (*J_OPCODE)(const uint &);
 // input arguments are address(26)
 
-class CPU : simulated_register
+class CPU : public simulated_register, public R_TYPE, public I_TYPE, public J_TYPE
 {
     // private:
     public:
