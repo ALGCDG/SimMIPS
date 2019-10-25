@@ -61,39 +61,39 @@
 //     // {3, JAL}
 // };
 
-CPU::CPU()
-{
-    std::map<uchar, R_OPCODE> R_OPCODES = {/*
-        {0, SLL},
-        {2, SRL},
-        {3, SRA},
-        {4, SLLV},
-        {6, SRLV},
-        {7, SRAV},
-        {8, JR},
-        {9, JALR},
-        {12, SYSCALL},
-        {16, MFHI},
-        {17, MTHI},
-        {18, MFLO},
-        {19, MTLO},
-        {24, MULT},
-        {25, MULTU},
-        {26, DIV},
-        {27, DIVU},*/
-        {32, ADD}
-        /*,
-        {33, ADDU},
-        {34, SUB},
-        {35, SUBU},
-        {36, AND},
-        {37, OR},
-        {38, XOR},
-        {39, NOR},
-        {42, SLT},
-        {43, SLTU}*/
-    };
-}
+// CPU::CPU()
+// {
+//     std::map<uchar, R_OPCODE> R_OPCODES = {/*
+//         {0, SLL},
+//         {2, SRL},
+//         {3, SRA},
+//         {4, SLLV},
+//         {6, SRLV},
+//         {7, SRAV},
+//         {8, JR},
+//         {9, JALR},
+//         {12, SYSCALL},
+//         {16, MFHI},
+//         {17, MTHI},
+//         {18, MFLO},
+//         {19, MTLO},
+//         {24, MULT},
+//         {25, MULTU},
+//         {26, DIV},
+//         {27, DIVU},*/
+//         {32, ADD}
+//         /*,
+//         {33, ADDU},
+//         {34, SUB},
+//         {35, SUBU},
+//         {36, AND},
+//         {37, OR},
+//         {38, XOR},
+//         {39, NOR},
+//         {42, SLT},
+//         {43, SLTU}*/
+//     };
+// }
 
 
 // functions for interpreting binary instructions
