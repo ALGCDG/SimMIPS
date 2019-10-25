@@ -1,0 +1,22 @@
+//bit values
+MemRead
+MemWrite
+ALUSrc
+RegDst
+RegWrite
+PCSrc
+MemtoReg
+Branch
+
+ALU(ALUOp, a, b)
+{
+    switch(ALUOp):
+    case(2)
+}
+ALUop can take three vales 00, 01, and 10 (11 should never be used)
+00 means the alu should do an add
+01 means the alu should do a subtract
+10 means the instruction is Rtype and more information is needed (I have also seen 1x, where x is don't care)
+
+control block takes as input the six bits of the opcode, and outputs the 9 bits specified above
+7 + 2 for the ALUOp
