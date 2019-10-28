@@ -23,7 +23,7 @@ fileManager::jump_r_w_left_return(int offset){
 	uchar * bytes = new char[num_bytes - 1];
 	binary_file.read(bytes,num_bytes);
 	for(int i = 0; i < num_bytes; i++){
-		word |= (bytes[i] << (24 - i*4));
+		word |= (bytes[i] << (24 - i*8));
 	}
 	delete bytes;
 	jump_to_offset(initial_offset);
@@ -31,7 +31,19 @@ fileManager::jump_r_w_left_return(int offset){
 }
 
 fileManager::jump_r_w_right_return(int offset){
-	
+	int num_bytes = offset%4 + 1;
+	int start_addr = offset - num_bytes + 1;
+	int initial_offset = get_currOffset();
+	jump_to_offset(start_addr);
+	uint word = 0;
+	uchar * bytes = new char[num_bytes - 1];
+	binary_file.read(bytes, num_bytes);
+	for(int i = 0; i < num_bytes; i++){
+		word |= (bytes[i] << (num_bytes - i - 1)*8);
+	}
+	jump_to_offset(initial_offset);
+	delete bytes;
+	return word;
 }
 
 
