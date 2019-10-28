@@ -1,10 +1,10 @@
 #include "register.hpp"
-
+#include "simulated_memory"
 typedef unsigned int uint;
 typedef unsigned char uchar;
 
-typedef void (*I_OPCODE)(const uchar &, const uchar &, const uint &);
-// input arguments are rs(5), rt(5), immediate(16)
+typedef void (*I_OPCODE)(const uchar &, const uchar &, const uint &, simulated_register&, simulated_memory&);
+// input arguments are rs(5), rt(5), immediate(16) AND a reference to the register block AND a reference to the memory block
 
 class I_TYPE : public simulated_register
 {

@@ -3,8 +3,8 @@
 typedef unsigned int uint;
 typedef unsigned char uchar;
 
-typedef void (*R_OPCODE)(const uchar &, const uchar &, const uchar &, const uchar &);
-// input arguments are rs(5), rt(5), rd(5), shamt(5)
+typedef void (*R_OPCODE)(const uchar &, const uchar &, const uchar &, const uchar &, simulated_register&);
+// input arguments are rs(5), rt(5), rd(5), shamt(5) AND a reference to the register block
 
 class R_TYPE : public simulated_register
 {
