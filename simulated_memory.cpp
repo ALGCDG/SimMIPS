@@ -99,5 +99,10 @@ uint simulated_memory::read_word(int base, int offset){
 }
 
 uint simulated_memory::read_word_left(int base, int offset){
-    
+    switch(simulated_memory::which_readMemLoc(base+offset)){
+        case 0:
+            return DATA_MEM.r_word_left(base+offset);
+        case 1:
+
+    }
 }

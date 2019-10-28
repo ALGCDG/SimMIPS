@@ -1,9 +1,8 @@
 #include <iostream>
+#include <bitset>
 
 int main(){
-    int a;
-    while(a = std::getchar()){
-    //a = std::getchar();
-    std::cout << (a == EOF);
-    }
+    uint a = -1;
+    uint b = -1;
+    int c = 0xFFFFFFFF
 }
