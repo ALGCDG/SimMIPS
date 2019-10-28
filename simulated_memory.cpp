@@ -42,7 +42,7 @@ char simulated_memory::which_storeMemLoc(int location){
 }
 
 uint simulated_memory::read_byte_u(int base, int offset){
-    switch(simulated_memory::which_readMemLoc(base+offset)){
+    switch(which_readMemLoc(base+offset)){
         case 0:
             return DATA_MEM.read_byte(base+offset, 0);
         case 1:
@@ -53,12 +53,12 @@ uint simulated_memory::read_byte_u(int base, int offset){
 }
 
 uint simulated_memory::read_byte_s(int base, int offset){
-    switch(simulated_memory::which_readMemLoc(base+offset)){
+    switch(which_readMemLoc(base+offset)){
         case 0:
             return DATA_MEM.read_byte(base+offset, 1);
         case 1:
             uint word = (INSTR_MEM.jump_r_byte_return(offset + base));
-            word = simulated_memory::sign_extend_bytes_to_word(word, 1);
+            word = sign_extend_bytes_to_word(word, 1);
             return word;
         case 2:
             //TODO : getc, putc
@@ -66,7 +66,7 @@ uint simulated_memory::read_byte_s(int base, int offset){
 }
 
 uint simulated_memory::read_h_word_u(int base, int offset){
-    switch(simulated_memory::which_readMemLoc(base+offset){
+    switch(which_readMemLoc(base+offset){
         case 0:
             return DATA_MEM.r_h_word(base+offset, 0);
         case 1:
@@ -77,7 +77,7 @@ uint simulated_memory::read_h_word_u(int base, int offset){
 }
 
 uint simulated_memory:read_h_word_s(int base, int offset){
-    switch(simulated_memory::which_readMemLoc(base+offset)){
+    switch(which_readMemLoc(base+offset)){
         case 0:
             return DATA_MEM.r_h_word(base+offset, 1);
         case 1:
@@ -88,7 +88,7 @@ uint simulated_memory:read_h_word_s(int base, int offset){
 }
 
 uint simulated_memory::read_word(int base, int offset){
-    switch(simulated_memory::which_readMemLoc(base+offset)){
+    switch(which_readMemLoc(base+offset)){
         case 0:
             return DATA_MEM.r_word(base+offset);
         case 1:
@@ -99,10 +99,23 @@ uint simulated_memory::read_word(int base, int offset){
 }
 
 uint simulated_memory::read_word_left(int base, int offset){
-    switch(simulated_memory::which_readMemLoc(base+offset)){
+    switch(which_readMemLoc(base+offset)){
         case 0:
             return DATA_MEM.r_word_left(base+offset);
         case 1:
+            return INSTR_MEM.jump_r_w_left_return(base+offset);
+        case 2:
+        //todo
+    }
+}
 
+uint simulated_memory::read_word_right(int base, int offset){
+    switch(which_readMemLoc(base+offset)){
+        case 0:
+            return DATA_MEM.r_word_right(base+offset);
+        case 1:
+            return INSTR_MEM.jump_r_w_right_return(base+offset);
+        case 2:
+        //todo
     }
 }
