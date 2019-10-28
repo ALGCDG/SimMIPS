@@ -119,3 +119,33 @@ uint simulated_memory::read_word_right(int base, int offset){
         //todo
     }
 }
+
+void simulated_memory::store_word(int base, int offset, uint word){
+    switch(which_storeMemLoc(base+offset)){
+        case 0:
+            DATA_MEM.s_word(base+offset,word);
+            break;
+        case 1:
+            //todo
+    }
+}
+
+void simulated_memory::store_half_word(int base, int offset, uint half_word){
+    switch(which_storeMemLoc(base+offset)){
+        case 0:
+            DATA_MEM.s_h_word(base+offset,half_word);
+            break;
+        case 1:
+            //todo
+    }
+}
+
+void simulated_memory::store_byte(int base, int offset, uint byte){
+    switch(which_storeMemLoc(base+offset)){
+        case 0:
+            DATA_MEM.s_byte(base+offset,byte);
+            break;
+        case 1:
+            //todo
+    }
+}
