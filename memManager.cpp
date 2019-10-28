@@ -1,7 +1,7 @@
 #include "memManager.hpp"
 
 uint memManager::r_word(int offset){
-    uint word = DATA[offset] << 12 | DATA[offset+4] << 8 | DATA[offset+8] << 4 | DATA[offset+12];
+    uint word = DATA[offset] << 24| DATA[offset+4] << 16 | DATA[offset+8] << 8 | DATA[offset+12];
     return word;
 }
 
@@ -14,7 +14,7 @@ uint memManager::r_byte(int offset, bool signed=true){
 }
 
 uint memManager::r_h_word(int offset, bool signed=true){
-    uint word = DATA[offset] << 4 | DATA[offset+4];
+    uint word = DATA[offset] << 8 | DATA[offset+1];
     if((0x8000 & word) & signed) { word |= 0xFFFF0000; }
     return word;
 }
@@ -33,7 +33,7 @@ uint memManager::r_word_left(int offset){
     uint word_out = 0;
     //increases until encounters next aligned address
     //if initially aligned, will still increase until next aligned
-    for(int vADDR = offset, shift = 12; vADDR%4 != 0 && shift != 12; vADDR++, shift -= 4){
+    for(int vADDR = offset, shift = 24; vADDR%4 != 0 && shift != 24; vADDR++, shift -= 8){
         uchar temp_byte;
         temp_byte = DATA[vADDR];
         word_out |= temp_byte << shift;
@@ -47,7 +47,7 @@ uint memManager::r_word_right(int offset){
     int vADDR = offset;
     int remainder = vADDR%4;
 
-    for(int i = remainder + 1, shift = 0; i > 0; i--, shift += 4){
+    for(int i = remainder + 1, shift = 0; i > 0; i--, shift += 8){
         uchar temp_byte;
         temp_byte = DATA[vADDR + i - 1];
         word_out |= temp_byte << shift;
@@ -61,8 +61,8 @@ void memManager::s_byte(int offset, uint byte){
 }
 
 void memManager::s_word(int offset, uint word){
-    for(int i = 0; i < 16; i+=4){
-        DATA[offset+i/4] = static_cast<uchar>((word & (0xFF000000 >> i)) >> (12-i));
+    for(int i = 0; i < 32; i+=8){
+        DATA[offset+i/8] = static_cast<uchar>((word & (0xFF000000 >> i)) >> (24-i));
     }
 }
 
