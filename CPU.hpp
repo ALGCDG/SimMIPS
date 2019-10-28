@@ -1,6 +1,7 @@
 // CPU
 #include <iostream>
 #include <map>
+#include "simulated_memory.hpp"
 #include "register.hpp"
 #include "J.hpp"
 #include "I.hpp"
@@ -18,11 +19,11 @@ typedef void (*J_OPCODE)(const uint &);
 
 class CPU : public simulated_register, public R_TYPE, public I_TYPE, public J_TYPE
 {
-    // private:
-    public:
-    // memory;
-    // simulated_register registers;
-    // static std::map<uchar, R_OPCODE> R_OPCODES;
+    private:
+    //public:
+    simulated_memory memory;
+    simulated_register registers;
+    //static std::map<uchar, R_OPCODE> R_OPCODES;
     std::map<uchar, R_OPCODE> R_OPCODES;
 
     static std::map<uchar, I_OPCODE> I_OPCODES;
