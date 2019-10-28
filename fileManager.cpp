@@ -7,6 +7,34 @@ fileManager::fileManager(std::string path){
 	binary_file.open(path);
 }
 
+fileManager::jump_r_w_left_return(int offset){
+	int initial_offset = get_currOffset();
+	jump_to_offset(offset);
+	int num_bytes = 4 - offset%4;
+
+	uint word = 0;
+
+	//uchar * bytes = new char[num_bytes - 1];
+	// for(int i = 0; i < num_bytes; i++){
+	// 	//bytes[i] = r_byte_advance();
+	// 	word |= (r_byte_advance() << (24 - i*4));
+	// }
+
+	uchar * bytes = new char[num_bytes - 1];
+	binary_file.read(bytes,num_bytes);
+	for(int i = 0; i < num_bytes; i++){
+		word |= (bytes[i] << (24 - i*4));
+	}
+	delete bytes;
+	jump_to_offset(initial_offset);
+	return word;
+}
+
+fileManager::jump_r_w_right_return(int offset){
+	
+}
+
+
 void fileManager::jump_to_offset(int offset){
 	//used just for jumping i.e return to label
 	binary_file.seekg(offset);
@@ -44,7 +72,7 @@ uint fileManager::r_word_advance(){
 	char * buffer = new char[4];
 	binary_file.read(buffer,4);
 	//returns a significance corrected word, ie: most significant byte highest in the word
-	uint word = (uint)buffer[3] | (uint)buffer[2] << 4 | (uint)buffer[1] << 8 | (uint)buffer[0] << 12;
+	uint word = (uint)buffer[3] | (uint)buffer[2] << 8 | (uint)buffer[1] << 16 | (uint)buffer[0] << 24;
 	delete buffer;
 	return word;
 }
