@@ -30,7 +30,7 @@ fileManager::jump_r_w_left_return(int offset){
 	return word;
 }
 
-fileManager::jump_r_w_right_return(int offset){
+uint fileManager::jump_r_w_right_return(int offset){
 	int num_bytes = offset%4 + 1;
 	int start_addr = offset - num_bytes + 1;
 	int initial_offset = get_currOffset();
@@ -89,19 +89,19 @@ uint fileManager::r_word_advance(){
 	return word;
 }
 
-uchar fileManager::jump_r_byte_return(int offset){
+uint fileManager::jump_r_byte_return(int offset){
 	//useful for reading just bytes
 	int initial_offset = get_currOffset();
 	jump_to_offset(offset);
 	uchar byte;
 	binary_file.read(&byte, 1);
 	jump_to_offset(initial_offset); //returns to original offset after read
-	return byte;
+	return (uint)byte;
 }
 
-uchar fileManager::r_byte_advance(){
+uint fileManager::r_byte_advance(){
 	//useful for half words, and left/right words
 	uchar byte;
 	binary_file.read(&byte, 1);
-	return byte;
+	return (uint)byte;
 }
