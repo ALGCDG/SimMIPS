@@ -7,7 +7,7 @@ fileManager::fileManager(std::string path){
 	binary_file.open(path);
 }
 
-fileManager::jump_r_w_left_return(int offset){
+uint fileManager::jump_r_w_left_return(int offset){
 	int initial_offset = get_currOffset();
 	jump_to_offset(offset);
 	int num_bytes = 4 - offset%4;
