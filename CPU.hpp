@@ -17,14 +17,18 @@ typedef void (*I_OPCODE)(const uchar &, const uchar &, const uint &);
 typedef void (*J_OPCODE)(const uint &);
 // input arguments are address(26)
 
-class CPU : public simulated_register, public R_TYPE, public I_TYPE, public J_TYPE
+class CPU
 {
     private:
     //public:
+    // references to processor components
     simulated_memory memory;
     simulated_register registers;
+    R_TYPE r;
+    I_TYPE i;
+    J_TYPE j;
     //static std::map<uchar, R_OPCODE> R_OPCODES;
-    std::map<uchar, R_OPCODE> R_OPCODES;
+    //std::map<uchar, R_OPCODE> R_OPCODES;
 
     static std::map<uchar, I_OPCODE> I_OPCODES;
     static std::map<uchar, J_OPCODE> J_OPCODES;
