@@ -11,10 +11,10 @@ public:
 
     simulated_memory(std::string binary_path)
 
-    uint read_byte_u(int base, int offset);
-    uint read_byte_s(int base, int offset);
-    uint read_h_word_u(int base, int offset);
-    uint read_h_word_s(int base, int offset);
+    uint read_byte_u(int base, int offset);//unsigned
+    uint read_byte_s(int base, int offset);//signed
+    uint read_h_word_u(int base, int offset);//half_word unsigned
+    uint read_h_word_s(int base, int offset);//half word signed
     uint read_word(int base, int offset);
     uint read_word_left(int base, int offset);
     uint read_word_right(int base, int offset);
@@ -22,4 +22,10 @@ public:
     void store_word(int base, int offset, uint word);
     void store_half_word(int base, int offset, uint half_word);
     void store_byte(int base, int offset, uint byte);
+
+    uint fetch_instruction();
+    void jump_to(int address);
+    uint get_PC();
+    //jump stuff
+    //instruction stuff
 }
