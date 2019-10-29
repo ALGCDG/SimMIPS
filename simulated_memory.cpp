@@ -1,3 +1,8 @@
+
+simulated_memory::simulated_memory(std::string binary_path){
+    INSTR_MEM = fileManager(binary_path);
+}
+
 uint simulated_memory::sign_extend_bytes_to_word(uint word, int num_bytes_in){
     if((0x10 << (num_bytes_in-1)) & word){
         return ((-1 << num_bytes_in*4) || word);
