@@ -8,7 +8,7 @@ uint simulated_memory::get_word(int address){
         case(0):
             return DATA_MEM.read_word(word_index);
         case(1):
-            return INSTR_MEM.read_word(word_index);
+            return INSTR_MEM.jump_r_word_return(word_index*4);
         case(2):
             return IO_MEM.read_word();
     }
@@ -130,4 +130,14 @@ void simulated_memory::store_byte(int address, uint byte){
         temp_word |= ((word & 0xFF) << (address & 0b11)*8);
         put_word(address,temp_word);
     }
+}
+
+uint simulated_memory::fetch_instruction(){
+    return INSTR_MEM.r_word_advance();
+}
+void simulated_memory::jump_to(int address){
+    INSTR_MEM.jump_to_offset(address);
+}
+void simulated_memory::get_PC(){
+    return INSTR_MEM.get_currOffset();
 }
