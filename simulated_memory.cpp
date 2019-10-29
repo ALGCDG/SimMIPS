@@ -131,5 +131,3 @@ void simulated_memory::store_byte(int address, uint byte){
         put_word(address,temp_word);
     }
 }
-
-//not changed
