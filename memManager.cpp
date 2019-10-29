@@ -1,26 +1,38 @@
 #include "memManager.hpp"
 
-uint memManager::r_word(int offset){
-    uint word = DATA[offset] << 24| DATA[offset+4] << 16 | DATA[offset+8] << 8 | DATA[offset+12];
+//need a getter and a setter
+//this way, putchar type class can override the getter and the setter
+//whilst reusing the functions
+
+uchar memManager::getDATAbyte(int index){
+    return DATA[index];
+}
+
+void memManager::setDATAbyte(int index, uchar byte){
+    DATA[index] = byte;
+}
+
+uint memManager::r_word(int index){
+    uint word = getDATAbyte(index) << 24 | getDATAbyte(index+1) << 16 | getDATAbyte(index+2) << 8 | getDATAbyte(index+3);
     return word;
 }
 
-uint memManager::r_byte(int offset, bool signed=true){
+uint memManager::r_byte(int index, bool signed=true){
     uint word = 0;
-    uchar byte = DATA[offset];
+    uchar byte = getDATAbyte(index);
     word |= byte;
     if((0x80 & byte) && signed){ word | 0xFFF0; }
     return word;
 }
 
-uint memManager::r_h_word(int offset, bool signed=true){
-    uint word = DATA[offset] << 8 | DATA[offset+1];
+uint memManager::r_h_word(int index, bool signed=true){
+    uint word = getDATAbyte(index) << 8 | getDATAbyte(index+1);
     if((0x8000 & word) & signed) { word |= 0xFFFF0000; }
     return word;
 }
 
 
-uint memManager::r_word_left(int offset){
+uint memManager::r_word_left(int index){
     //starting at the start_byte of the word at offset
     //this byte is treated as the most significant byte
     //and as we are loading the left part of the word
@@ -33,43 +45,43 @@ uint memManager::r_word_left(int offset){
     uint word_out = 0;
     //increases until encounters next aligned address
     //if initially aligned, will still increase until next aligned
-    for(int vADDR = offset, shift = 24; vADDR%4 != 0 && shift != 24; vADDR++, shift -= 8){
+    for(int vADDR = index, shift = 24; vADDR%4 != 0 && shift != 24; vADDR++, shift -= 8){
         uchar temp_byte;
-        temp_byte = DATA[vADDR];
+        temp_byte = getDATAbyte(vADDR);
         word_out |= temp_byte << shift;
     }
     return word_out;
 }
 
-uint memManager::r_word_right(int offset){
+uint memManager::r_word_right(int index){
     //TODO come back here
     uint word_out = 0;
-    int vADDR = offset;
+    int vADDR = index;
     int remainder = vADDR%4;
 
     for(int i = remainder + 1, shift = 0; i > 0; i--, shift += 8){
         uchar temp_byte;
-        temp_byte = DATA[vADDR + i - 1];
+        temp_byte = getDATAbyte(vADDR + i - 1);
         word_out |= temp_byte << shift;
     }
     return word_out;
 }
 
-void memManager::s_byte(int offset, uint byte){
+void memManager::s_byte(int index, uint byte){
     byte &= 0x000000FF;
-    DATA[offset] = static_cast<uchar>(byte);
+    setDATAbyteDATA(index, static_cast<uchar>(byte));
 }
 
-void memManager::s_word(int offset, uint word){
+void memManager::s_word(int index, uint word){
     for(int i = 0; i < 32; i+=8){
-        DATA[offset+i/8] = static_cast<uchar>((word & (0xFF000000 >> i)) >> (24-i));
+        setDATAbyte(index+i/8, static_cast<uchar>((word & (0xFF000000 >> i)) >> (24-i)));
     }
 }
 
-void memManager::s_h_word(int offset, uint h_word){
+void memManager::s_h_word(int index, uint h_word){
     uchar b0 = static_cast<uchar>(h_word);
     uchar b1 = static_cast<uchar>(h_word >> 8);
 
-    DATA[offset] = b1;
-    DATA[offset+1] = b0;
+    setDATAbyte(index, b1);
+    setDATAbyte(index+1, b0);
 }
