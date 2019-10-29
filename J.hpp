@@ -10,6 +10,6 @@ class J_TYPE // also inherits from memory
 {
     public:
     // J type operators declarations
-    void J(const uint &address);
-    void JAL(const uint &address);
+    void J(const uint &address, simulated_memory &mem);
+    void JAL(const uint &address, simulated_memory &mem);
 };

@@ -7,4 +7,7 @@ echo "Running testbench..."
 tests = $( cat test_file.csv )
 file | grep -o "hello,"
 
+cat filename | while read LINE; do
+    echo $LINE
+done
 # testing character outputs
