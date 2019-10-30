@@ -31,3 +31,5 @@ class I_TYPE : public simulated_register
         void SH(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem);
         void SW(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem);
 };
+
+uint sign_extend(uint word, uchar length_of_word);
