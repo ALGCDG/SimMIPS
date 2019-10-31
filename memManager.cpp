@@ -2,7 +2,10 @@
 
 
 //need constructor
-memManager::memManager() {}
+memManager::memManager()
+{
+    std::vector<uchar> DATA(0x4000000, 0);
+}
 
 uint memManager::read_word(int index){
     return (uint)(DATA[index] << 24 | DATA[index+1] << 16 | DATA[index+2] << 8 | DATA[index+3]);
