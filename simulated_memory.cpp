@@ -82,7 +82,7 @@ uint simulated_memory::read_byte_s(int address){
 }
 uint simulated_memory::read_h_word_u(int address){
     uint word = get_word(address);
-    ls_2b = address & 0b11;
+    uint ls_2b = address & 0b11;
     if(ls_2b == 0b00){
         return word & 0xFFFF;
     }
