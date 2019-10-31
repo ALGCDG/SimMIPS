@@ -13,9 +13,10 @@ private:
     fileManager INSTR_MEM;
     ioManager IO_MEM;
 
-    char which_readMemLoc(int location);
-    char which_storeMemLoc(int location);
-    uint sign_extend_bytes_to_word(uint word, int num_bytes_in);
+    char which_readMemLoc(const int &address, int &word_index);
+    char which_storeMemLoc(const int &address, int &word_index);
+    void sign_extend_bytes_to_word(uint &word, int num_bytes_in);
+
 public:
 
     // simulated_memory(std::string binary_path);
@@ -44,11 +45,7 @@ public:
 
     void put_word(int address, uint word);
 
-    char which_readMemLoc(const int &address, int &word_index);
- 
-    char which_storeMemLoc(const int &address, int &word_index);
 
-    void sign_extend_bytes_to_word(uint &word, int num_bytes_in);
 
     uint read_byte_u(int address);
 

@@ -1,4 +1,5 @@
 #include <string>
+#include <vector>
 #include <bitset>
 
 typedef unsigned int uint;
