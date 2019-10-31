@@ -2,7 +2,10 @@
 #include <fstream>
 #include <string>
 
-class fileManager(){
+typedef unsigned int uint;
+typedef unsigned char uchar;
+
+class fileManager{
 private:
 	std::ifstream binary_file;
 public:
@@ -20,7 +23,7 @@ public:
 	uint r_word_advance();//used
 	uint jump_r_byte_return(int offset);//used
 	uint r_byte_advance(); //potentially unused
-}
+};
 //potentially unused commment means:
 //Function created for initial design architecture.
 //In current design: not used, extraneous function,
