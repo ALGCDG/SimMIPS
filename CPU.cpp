@@ -171,11 +171,15 @@ void CPU::interpret_instruction(const uint &instruction)
 
 }
 
-// int run()
-// {
-//     // while not pointing to null
-//         // load instruction
-//         interpret_instruction();
-//     // return exit code
-// }
+int run()
+{
+    // while not pointing to null
+    for (;;) // i've done some research and I've read this is more efficent than any while loop
+    {
+        uint instruction;// load instruction
+        interpret_instruction(instruction);
+
+    }
+    return registers.read_register(2); // return exit code
+}
 
