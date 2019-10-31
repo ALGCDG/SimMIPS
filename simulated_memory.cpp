@@ -1,3 +1,5 @@
+#include "simulated_memory.hpp"
+
 simulated_memory::simulated_memory(std::string binary_path){
     INSTR_MEM = fileManager(binary_path);
 }
@@ -18,7 +20,7 @@ void simulated_memory::put_word(int address, uint word){
     char code = which_storeMemLoc(address - address%4, word_index);
     switch(code){
         case(0):
-            DATA.store_word(word_index, word);
+            DATA_MEM.store_word(word_index, word);
         case(1):
             IO_MEM.store_word(word);
     }
@@ -80,7 +82,7 @@ uint simulated_memory::read_byte_s(int address){
 }
 uint simulated_memory::read_h_word_u(int address){
     uint word = get_word(address);
-    ls_2b = address & 0b11;
+    uint ls_2b = address & 0b11;
     if(ls_2b == 0b00){
         return word & 0xFFFF;
     }
@@ -88,7 +90,7 @@ uint simulated_memory::read_h_word_u(int address){
         return ((word & 0xFFFF0000) >> 16);
     }
 }
-uint simulated_memory:read_h_word_s(int address){
+uint simulated_memory::read_h_word_s(int address){
     uint half_word = read_h_word_u(address);
     sign_extend_bytes_to_word(half_word,2);
     return half_word;
@@ -126,7 +128,7 @@ void simulated_memory::store_byte(int address, uint byte){
     }
     else{
         uint temp_word = get_word(address);
-        temp_word &= ^(0xFF << (address & 0b11)*8); //zero byte
+        temp_word &= ~(0xFF << (address & 0b11)*8); //zero byte
         temp_word |= ((word & 0xFF) << (address & 0b11)*8);
         put_word(address,temp_word);
     }
@@ -138,6 +140,6 @@ uint simulated_memory::fetch_instruction(){
 void simulated_memory::jump_to(int address){
     INSTR_MEM.jump_to_offset(address);
 }
-void simulated_memory::get_PC(){
+uint simulated_memory::get_PC(){
     return INSTR_MEM.get_currOffset();
 }
