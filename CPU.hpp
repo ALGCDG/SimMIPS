@@ -13,7 +13,6 @@ typedef unsigned char uchar;
 class CPU
 {
     private:
-    //public:
     // references to processor components
     simulated_memory memory;
     simulated_register registers;
