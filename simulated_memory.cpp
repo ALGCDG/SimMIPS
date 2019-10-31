@@ -20,7 +20,7 @@ void simulated_memory::put_word(int address, uint word){
     char code = which_storeMemLoc(address - address%4, word_index);
     switch(code){
         case(0):
-            DATA.store_word(word_index, word);
+            DATA_MEM.store_word(word_index, word);
         case(1):
             IO_MEM.store_word(word);
     }
@@ -128,7 +128,7 @@ void simulated_memory::store_byte(int address, uint byte){
     }
     else{
         uint temp_word = get_word(address);
-        temp_word &= ^(0xFF << (address & 0b11)*8); //zero byte
+        temp_word &= ~(0xFF << (address & 0b11)*8); //zero byte
         temp_word |= ((word & 0xFF) << (address & 0b11)*8);
         put_word(address,temp_word);
     }
@@ -140,6 +140,6 @@ uint simulated_memory::fetch_instruction(){
 void simulated_memory::jump_to(int address){
     INSTR_MEM.jump_to_offset(address);
 }
-void simulated_memory::get_PC(){
+uint simulated_memory::get_PC(){
     return INSTR_MEM.get_currOffset();
 }

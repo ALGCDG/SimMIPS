@@ -72,6 +72,6 @@ public:
    
     void jump_to(int address);
   
-    void get_PC();
+    uint get_PC();
   
 };
