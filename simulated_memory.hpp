@@ -1,3 +1,6 @@
+typedef unsigned int uint;
+typedef unsigned char uchar;
+
 class simulated_memory{
 private:
 
@@ -9,7 +12,7 @@ private:
     uint sign_extend_bytes_to_word(uint word, int num_bytes_in);
 public:
 
-    simulated_memory(std::string binary_path)
+    simulated_memory(std::string binary_path);
 
     uint read_byte_u(int base, int offset);//unsigned
     uint read_byte_s(int base, int offset);//signed
@@ -28,4 +31,4 @@ public:
     uint get_PC();
     //jump stuff
     //instruction stuff
-}
+};
