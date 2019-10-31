@@ -1,3 +1,5 @@
+#include "simulated_memory.hpp"
+
 simulated_memory::simulated_memory(std::string binary_path){
     INSTR_MEM = fileManager(binary_path);
 }
