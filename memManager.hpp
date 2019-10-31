@@ -11,7 +11,8 @@ typedef unsigned char uchar
 
 class memManager(){
 private:
-	static unsigned char DATA[0x4000000] = {};
+	// signed char DATA[0x4000000] = {};
+	std::vector<uchar> DATA(0x4000000, 0);
 	//maps offset and range to address code
 	// std::map<std::tuple<int,int>, std::string> valid_read;
 	//maps offset and range to address code
