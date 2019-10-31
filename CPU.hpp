@@ -28,6 +28,6 @@ class CPU
     void interpret_instruction(const uint &instruction);
 
     public:
-        int run(); // returns exit code
-        CPU(/*file stream for binary instructions*/);
+    int run(); // returns exit code
+    CPU(std::string binary_file_path/*file stream for binary instructions*/);
 };

@@ -1,6 +1,7 @@
 // main
 #include <string> // for pruposes of passing the binary instruction location
-#include <iostream> // for pruposes of passing the binary instruction location
+#include <iostream> // for pruposes of passing the binary instruction location and error messages
+#include "CPU.hpp" // main implementation of the simulated CPU
 
 // int main(std::string binary_path)
 // {
@@ -18,7 +19,13 @@
 
 int main(int argc, char *argv[])    // this is the way it has to be, left over from C
 {
-    std::string binary_file_name = argv[1];
-    std::cerr << argv[1] << std::endl; // how all error should be handled NEVER use cout 
-    exit(-1); // how we should exit in event of error
+    std::string binary_file_name = argv[1]; // 
+    // std::cerr << argv[1] << std::endl; // how all error should be handled NEVER use cout 
+    CPU processor(binary_file_name);// constructing the simulated processor
+    return processor.run(); // runs the processor, the run function returns the value of the register 2
+
+
+    exit(-2); // how we should exit in event of error
+    // to retrieve the exit value, use "echo $?"
+    std::cerr << "helo" << std::endl;
 }
