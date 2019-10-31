@@ -90,7 +90,7 @@ uint simulated_memory::read_h_word_u(int address){
         return ((word & 0xFFFF0000) >> 16);
     }
 }
-uint simulated_memory:read_h_word_s(int address){
+uint simulated_memory::read_h_word_s(int address){
     uint half_word = read_h_word_u(address);
     sign_extend_bytes_to_word(half_word,2);
     return half_word;
