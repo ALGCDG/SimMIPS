@@ -130,8 +130,8 @@ void R_TYPE::ADD(const uchar &rs, const uchar &rt, const uchar &rd, const uchar 
     uint a, b;
     a = reg.read_register(rs);
     b = reg.read_register(rt);
-    // checking for overflow
-    if (a > UINT_MAX - b)
+    // checking for ARITHMATIC overflow
+    if (a > INT_MAX - b)
     {
         std::cerr << "ADD arithmatic overflow" << std::endl; // ERROR LOGGING
         throw(-10); // Throwing an arithmatic exception (which will be caught in the CPU execute function)
@@ -149,13 +149,18 @@ void R_TYPE::SUB(const uchar &rs, const uchar &rt, const uchar &rd, const uchar 
     a = reg.read_register(rs);
     b = reg.read_register(rt);
     // checking for overflow
-    if (a > UINT_MAX - (~b) - 1)
+    // if (a > UINT_MAX - (~b) - 1)
+    bool msb_a = a & 0x80000000 > 0;
+    bool msb_b = b & 0x80000000 > 0;
+    uint result = a - b;
+    bool msb_r = result & 0x80000000 > 0;
+    if ((msb_a&&!msb_b)&&(!msb_r))||((!msb_a&&msb_b)&&(msb_r))
     {
         std::cerr << "SUB arithmatic overflow" << std::endl; // ERROR LOGGING
-        throw(-10); // Throwing an arithmatic exception (which will be caught in the CPU execute function)
+        throw(-10);                                          // Throwing an arithmatic exception (which will be caught in the CPU execute function)
         // in the event of overflow, the register write will not occur
     }
-    reg.write_register(rd, a - b);
+    reg.write_register(rd, result);
 }
 void R_TYPE::SUBU(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
 {
