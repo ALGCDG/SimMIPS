@@ -2,39 +2,10 @@
 
 simulated_register::simulated_register()
 {
-    unsigned int general_purpose_registors[32] = {
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0};
+    //no need to type this many 0s
+    //just type
+    //unsigned int general_purpose_registors[32] = {0};
+    unsigned int general_purpose_registors[32] = {0};
 }
 
 
