@@ -138,7 +138,11 @@ uint simulated_memory::fetch_instruction(){
     return INSTR_MEM.r_word_advance();
 }
 void simulated_memory::jump_to(int address){
-    INSTR_MEM.jump_to_offset(address);
+    //TODO check address valid for jump offset
+    int word_index;
+    char returnval = which_readMemLoc(address, word_index);
+    //check returnval
+    INSTR_MEM.jump_to_offset(word_index*4);
 }
 uint simulated_memory::get_PC(){
     return INSTR_MEM.get_currOffset();
