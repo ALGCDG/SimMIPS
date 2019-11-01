@@ -17,14 +17,18 @@ FILE_MEM.o: fileManager.hpp fileManager.cpp
 SIM_MEM.o: DATA_MEM.o FILE_MEM.o IO_MEM.o
 	g++ -std=c++11 -c simulated_memory.cpp
 
+# compiling register class
+REG.o: register.hpp register.cpp
+	g++ -std=c++11 -c register.cpp
+
 # compiling instruction set libraries
-R.o: R.hpp R.cpp
+R.o: R.hpp R.cpp SIM_MEM.o REG.o
 	g++ -std=c++11 -c R.cpp
 
-I.o: I.hpp I.cpp
+I.o: I.hpp I.cpp SIM_MEM.o REG.o
 	g++ -std=c++11 -c I.cpp
 
-J.o: J.hpp J.cpp
+J.o: J.hpp J.cpp SIM_MEM.o REG.o
 	g++ -std=c++11 -c J.cpp
 
 # linking all of the above into CPU object

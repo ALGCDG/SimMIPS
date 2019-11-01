@@ -1,5 +1,5 @@
 #include "register.hpp"
-#include "simulated_memory"
+#include "simulated_memory.hpp"
 typedef unsigned int uint;
 typedef unsigned char uchar;
 
