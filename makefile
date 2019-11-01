@@ -1,5 +1,9 @@
 # the make file for the MIPS Simulator and testbench
 
+# finally compiling main
+all: CPU.o
+	g++ -std=c++11 main.cpp -o /bin/prog
+
 # compiling linked memory objects
 IO_MEM.o: ioManager.hpp ioManager.cpp
 	g++ -std=c++11 -c ioManager.cpp
@@ -26,10 +30,6 @@ J.o: J.hpp J.cpp
 # linking all of the above into CPU object
 CPU.o: SIM_MEM.o R.o I.o J.o
 	g++ -std=c++11 -c CPU.cpp
-
-# finally compiling main
-all: CPU.o
-	g++ -std=c++11 main.cpp -o /bin/prog
 
 clean:
 	rm *.o prog
