@@ -183,3 +183,9 @@ int CPU::run()
     return registers.read_register(2); // return exit code
 }
 
+// CPU constructor
+CPU::CPU(const std::string &binary_file_path)
+{
+
+
+}

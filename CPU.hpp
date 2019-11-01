@@ -28,5 +28,5 @@ class CPU
 
     public:
     int run(); // returns exit code
-    CPU(std::string binary_file_path/*file stream for binary instructions*/);
+    CPU(const std::string &binary_file_path/*file stream for binary instructions*/);
 };
