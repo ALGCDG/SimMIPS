@@ -1,6 +1,5 @@
 #include <string>
 #include <vector>
-#include <bitset>
 
 typedef unsigned int uint;
 typedef unsigned char uchar;
