@@ -145,7 +145,7 @@ void CPU::interpret_instruction(const uint &instruction)
         rt = pass_rt(instruction);
         rd = pass_rd(instruction);
         shamt = pass_shamt(instruction);
-        (R_OPCODES[pass_funct(instruction)])(rs, rt, rd, shamt);
+        (R_OPCODES[pass_funct(instruction)])(rs, rt, rd, shamt, registers, memory);
     }
     else if ((OPCODE >=4 && OPCODE <=15) || (OPCODE >=32 && OPCODE <= 34) || OPCODE == 36 || OPCODE == 37 || OPCODE ==40 || OPCODE ==41 || OPCODE ==43)
     {
@@ -154,13 +154,13 @@ void CPU::interpret_instruction(const uint &instruction)
         rs = pass_rs(instruction);
         rt = pass_rt(instruction);
         immediate = pass_immediate(instruction);
-        (I_OPCODES[OPCODE])(rs, rt, immediate);
+        (I_OPCODES[OPCODE])(rs, rt, immediate, registers, memory);
     }
     else if (2 == OPCODE || 3 == OPCODE)
     {
         uint address;
         address = pass_address(instruction);
-        (J_OPCODES[OPCODE])(address);
+        (J_OPCODES[OPCODE])(address, registers, memory);
     }
     else
     {
@@ -171,7 +171,7 @@ void CPU::interpret_instruction(const uint &instruction)
 
 }
 
-int run()
+int CPU::run()
 {
     // while not pointing to null
     for (;;) // i've done some research and I've read this is more efficent than any while loop
