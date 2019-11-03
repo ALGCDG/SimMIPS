@@ -184,11 +184,6 @@ int CPU::run()
 }
 
 // CPU constructor
-CPU::CPU(const std::string &binary_file_path)
+CPU::CPU(const std::string &binary_file_path) : memory(binary_file_path), registers(), r(), i(), j()
 {
-    memory = new simulated_memory();
-    registers = new simulated_register();
-    r = new R_TYPE();
-    i = new I_TYPE();
-    j = new J_TYPE();
 }
