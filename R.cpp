@@ -51,8 +51,17 @@ int SRAV(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, 
     reg.write_register(rd, shifted_word | signed_bits);
     return 0;
 }
-int JR(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem) {}
-int JALR(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem) {}
+int JR(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
+{
+    mem.jump_to(reg.read_register(rs));
+    return 0;
+}
+int JALR(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
+{
+    reg.write_register(rd, mem.get_PC() + 8);
+    mem.jump_to(reg.read_register(rs));
+    return 0;
+}
 // int SYSCALL(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem) {} // I don't believe this is required for coureswork, but WE OUGHT TO CHECK
 int MFHI(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
 {
