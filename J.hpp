@@ -1,3 +1,6 @@
+#ifndef J_TYPE_HPP
+#define J_TYPE_HPP
+
 #include "simulated_memory.hpp"
 #include "register.hpp"
 #include <map>
@@ -17,3 +20,5 @@ class J_TYPE // also inherits from memory
     std::map<uchar, J_OPCODE> J_OPCODES;
     J_TYPE();
 };
+
+#endif

@@ -1,3 +1,6 @@
+#ifndef SIMULATED_MEMORY_HPP
+#define SIMULATED_MEMORY_HPP
+
 #include <string>
 #include "memManager.hpp"
 #include "fileManager.hpp"
@@ -75,3 +78,5 @@ public:
     uint get_PC();
   
 };
+
+#endif

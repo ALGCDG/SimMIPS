@@ -1,3 +1,7 @@
+//inclusion guard
+#ifndef IOMANAGER_HPP
+#define IOMANAGER_HPP
+
 typedef unsigned int uint;
 typedef unsigned char uchar;
 class ioManager
@@ -8,3 +12,5 @@ class ioManager
     ioManager();
 
 };
+
+#endif

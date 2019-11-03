@@ -165,10 +165,10 @@ int SUB(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, s
     b = reg.read_register(rt);
     // checking for overflow
     // if (a > UINT_MAX - (~b) - 1)
-    bool msb_a = a & 0x80000000 > 0;
-    bool msb_b = b & 0x80000000 > 0;
+    bool msb_a = (a & 0x80000000) > 0;
+    bool msb_b = (b & 0x80000000) > 0;
     uint result = a - b;
-    bool msb_r = result & 0x80000000 > 0;
+    bool msb_r = (result & 0x80000000) > 0;
     if (((msb_a&&!msb_b)&&(!msb_r))||((!msb_a&&msb_b)&&(msb_r)))
     {
         std::cerr << "SUB arithmatic overflow" << std::endl; // ERROR LOGGING

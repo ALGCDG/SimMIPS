@@ -1,3 +1,6 @@
+#ifndef FILEMANAGER_HPP
+#define FILEMANAGER_HPP
+
 #include <fstream>
 #include <string>
 
@@ -34,3 +37,5 @@ public:
 //eg jump read word return uses jump, r_word_advance, then return
 // no need for eg r_word_maintain 
 //
+
+#endif

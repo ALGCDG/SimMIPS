@@ -1,3 +1,6 @@
+#ifndef MEMMANAGER_HPP
+#define MEMMANAGER_HPP
+
 #include <string>
 #include <vector>
 
@@ -22,3 +25,5 @@ public:
 	void store_word(int index, uint word);
 	memManager();
 };
+
+#endif

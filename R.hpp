@@ -1,3 +1,6 @@
+#ifndef R_TYPE_HPP
+#define R_TYPE_HPP
+
 #include "register.hpp"
 #include "simulated_memory.hpp"
 #include <map>
@@ -45,3 +48,5 @@ class R_TYPE
     std::map<uchar, R_OPCODE> R_OPCODES;
     R_TYPE();
 };
+
+#endif

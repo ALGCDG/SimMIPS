@@ -1,3 +1,6 @@
+#ifndef I_TYPE_HPP
+#define I_TYPE_HPP
+
 #include "register.hpp"
 #include "simulated_memory.hpp"
 #include <map>
@@ -39,3 +42,5 @@ class I_TYPE : public simulated_register
 };
 
 uint sign_extend(uint word, uchar length_of_word);
+
+#endif

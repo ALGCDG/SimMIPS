@@ -1,4 +1,7 @@
 // CPU
+#ifndef CPU_HPP
+#define CPU_HPP
+
 #include <iostream>
 #include <map>
 #include "simulated_memory.hpp"
@@ -30,3 +33,5 @@ class CPU
     int run(); // returns exit code
     CPU(const std::string &binary_file_path/*file stream for binary instructions*/);
 };
+
+#endif

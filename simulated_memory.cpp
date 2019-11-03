@@ -15,6 +15,7 @@ uint simulated_memory::get_word(int address){
         case(2):
             return IO_MEM.read_word();
     }
+    // TODO: function must have a default return here
 }
 void simulated_memory::put_word(int address, uint word){
     int word_index;
