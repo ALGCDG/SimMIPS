@@ -200,6 +200,7 @@ int XOR(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, s
 int NOR(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
 {
     reg.write_register(rd, ~(reg.read_register(rs) | reg.read_register(rt)));
+    return 0;
 }
 int SLT(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
 {
