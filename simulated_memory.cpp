@@ -1,7 +1,8 @@
 #include "simulated_memory.hpp"
 
-simulated_memory::simulated_memory(std::string binary_path){
-    INSTR_MEM = fileManager(binary_path);
+simulated_memory::simulated_memory(std::string binary_path) : INSTR_MEM(binary_path), DATA_MEM(), IO_MEM()
+{
+    // INSTR_MEM = fileManager(binary_path);
 }
 uint simulated_memory::get_word(int address){
     int word_index;
