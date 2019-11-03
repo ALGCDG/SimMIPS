@@ -22,8 +22,8 @@ class CPU
     //static std::map<uchar, R_OPCODE> R_OPCODES;
     //std::map<uchar, R_OPCODE> R_OPCODES;
 
-    static std::map<uchar, I_OPCODE> I_OPCODES;
-    static std::map<uchar, J_OPCODE> J_OPCODES;
+    // static std::map<uchar, I_OPCODE> I_OPCODES;
+    // static std::map<uchar, J_OPCODE> J_OPCODES;
     void interpret_instruction(const uint &instruction);
 
     public:
