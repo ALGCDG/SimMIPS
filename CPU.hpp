@@ -27,7 +27,7 @@ class CPU
 
     // static std::map<uchar, I_OPCODE> I_OPCODES;
     // static std::map<uchar, J_OPCODE> J_OPCODES;
-    void interpret_instruction(const uint &instruction);
+    int interpret_instruction(const uint &instruction);
 
     public:
     int run(); // returns exit code

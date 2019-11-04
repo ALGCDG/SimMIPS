@@ -20,6 +20,8 @@ private:
     char which_storeMemLoc(const int &address, int &word_index);
     void sign_extend_bytes_to_word(uint &word, int num_bytes_in);
 
+    bool exception_flag; // a flag that is initialised low and set high upon unathorised memory access.
+    void set_exception_flag();
 public:
 
     // simulated_memory(std::string binary_path);
@@ -76,7 +78,8 @@ public:
     void jump_to(int address);
   
     uint get_PC();
-  
+
+    bool get_exception_flag(); // a flag that is initialised low and set high upon unathorised memory access.
 };
 
 #endif

@@ -2,8 +2,18 @@
 
 simulated_memory::simulated_memory(std::string binary_path) : INSTR_MEM(binary_path), DATA_MEM(), IO_MEM()
 {
-    // INSTR_MEM = fileManager(binary_path);
+    exception_flag = false;
 }
+
+void simulated_memory::set_exception_flag()
+{
+    exception_flag = true;
+}
+bool simulated_memory::get_exception_flag()
+{
+    return exception_flag;
+}
+
 uint simulated_memory::get_word(int address){
     int word_index;
     char code = which_readMemLoc(address - address%4, word_index);

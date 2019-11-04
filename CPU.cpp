@@ -41,7 +41,7 @@ uint pass_address(const uint &instruction)
     return (instruction & 0x3FFFFFF);
 }
 
-void CPU::interpret_instruction(const uint &instruction)
+int CPU::interpret_instruction(const uint &instruction)
 {
     uchar OPCODE = pass_OPCODE(instruction);
     if (0 == OPCODE)
@@ -51,7 +51,7 @@ void CPU::interpret_instruction(const uint &instruction)
         rt = pass_rt(instruction);
         rd = pass_rd(instruction);
         shamt = pass_shamt(instruction);
-        (r.R_OPCODES[pass_funct(instruction)])(rs, rt, rd, shamt, registers, memory);
+        return (r.R_OPCODES[pass_funct(instruction)])(rs, rt, rd, shamt, registers, memory);
     }
     else if ((OPCODE >=4 && OPCODE <=15) || (OPCODE >=32 && OPCODE <= 34) || OPCODE == 36 || OPCODE == 37 || OPCODE ==40 || OPCODE ==41 || OPCODE ==43)
     {
@@ -60,19 +60,21 @@ void CPU::interpret_instruction(const uint &instruction)
         rs = pass_rs(instruction);
         rt = pass_rt(instruction);
         immediate = pass_immediate(instruction);
-        (i.I_OPCODES[OPCODE])(rs, rt, immediate, registers, memory);
+        return (i.I_OPCODES[OPCODE])(rs, rt, immediate, registers, memory);
     }
     else if (2 == OPCODE || 3 == OPCODE)
     {
         uint address;
         address = pass_address(instruction);
         (j.J_OPCODES[OPCODE])(address, registers, memory);
+        return 0; //returns zero always as J type cannot have arithmetic exceptions
     }
     else
     {
         /*
         ERROR, UNSUPPORTED OPCODE USED, THROW EXCEPTION
         */
+        return -12; // invalid instruction return value
     }
 
 }
@@ -80,10 +82,19 @@ void CPU::interpret_instruction(const uint &instruction)
 int CPU::run()
 {
     // while not pointing to null
-    for (;;) // i've done some research and I've read this is more efficent than any while loop
+    // for (;;) // i've done some research and I've read this is more efficent than any while loop
+    while (memory.get_PC != 0) // i've done some research and I've read this is more efficent than any while loop
     {
         uint instruction = memory.fetch_instruction(); // load instruction
-        interpret_instruction(instruction);
+        int instruction_status = interpret_instruction(instruction);
+        if (instruction_status != 0)
+        {
+            return instruction_status;
+        }
+        if (memory.get_exception_flag()) //TODO: implement exception flag
+        {
+            return -11;
+        }
     }
     return registers.read_register(2); // return exit code
 }
