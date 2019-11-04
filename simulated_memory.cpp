@@ -1,7 +1,8 @@
 #include "simulated_memory.hpp"
 
-simulated_memory::simulated_memory(std::string binary_path){
-    INSTR_MEM = fileManager(binary_path);
+simulated_memory::simulated_memory(std::string binary_path) : INSTR_MEM(binary_path), DATA_MEM(), IO_MEM()
+{
+    // INSTR_MEM = fileManager(binary_path);
 }
 uint simulated_memory::get_word(int address){
     int word_index;
@@ -14,6 +15,7 @@ uint simulated_memory::get_word(int address){
         case(2):
             return IO_MEM.read_word();
     }
+    // TODO: function must have a default return here
 }
 void simulated_memory::put_word(int address, uint word){
     int word_index;
@@ -31,7 +33,7 @@ char simulated_memory::which_readMemLoc(const int & address, int & word_index){
     //1 if instr
     //2 if getc
     char returnval = -1;
-    if(address < 0x100000000){
+    if(address < 0x10000000){
         if(address >= 0x10000000 && address < 0x10000000 + 0x1000000){
             returnval = 1;
             word_index = address - 0x10000000;
@@ -52,7 +54,7 @@ char simulated_memory::which_storeMemLoc(const int & address, int & word_index){
     //0 if DATA
     //1 if putc
     char returnval = -1;
-    if(address < 0x100000000){
+    if(address < 0x10000000){
         if(address >= 0x20000000 && address < 0x20000000 + 0x4000000){
             returnval = 0;
             word_index = address - 0x20000000;
@@ -124,12 +126,12 @@ void simulated_memory::store_half_word(int address, uint word){
 void simulated_memory::store_byte(int address, uint byte){
     int temp_index; //just to fill the param slot
     if(which_storeMemLoc(address,temp_index) == 1){
-        put_word(address, (word & 0xFF) << (address & 0b11)*8);
+        put_word(address, (byte & 0xFF) << (address & 0b11)*8);
     }
     else{
         uint temp_word = get_word(address);
         temp_word &= ~(0xFF << (address & 0b11)*8); //zero byte
-        temp_word |= ((word & 0xFF) << (address & 0b11)*8);
+        temp_word |= ((temp_word & 0xFF) << (address & 0b11) * 8);
         put_word(address,temp_word);
     }
 }

@@ -1,10 +1,16 @@
+//inclusion guard
+#ifndef IOMANAGER_HPP
+#define IOMANAGER_HPP
+
 typedef unsigned int uint;
 typedef unsigned char uchar;
 class ioManager
 {
     public:
-    uint ioManager::get_word();
-    void ioManager::store_word(uint word);
+    uint read_word();
+    void store_word(uint word);
     ioManager();
 
 };
+
+#endif

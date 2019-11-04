@@ -1,6 +1,7 @@
 #include "ioManager.hpp"
 #include <iostream>
-uint ioManager::get_word(){
+uint ioManager::read_word()
+{
     int input;
     input = std::getchar();
     return static_cast<uint>(input);

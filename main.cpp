@@ -26,6 +26,7 @@ int main(int argc, char *argv[])    // this is the way it has to be, left over f
 
 
     exit(-2); // how we should exit in event of error
+    // UMMMMM, ACTUALLY, WE SHOULDN'T, CAUSES MEMORY LEEKS CAUSE DECONSTRUCTORS ARE NOT CALLED
     // to retrieve the exit value, use "echo $?"
     std::cerr << "helo" << std::endl;
 }

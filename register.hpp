@@ -1,4 +1,6 @@
 // a header file defining the register class
+#ifndef REGISTER_HPP
+#define REGISTER_HPP
 
 class simulated_register
 {
@@ -24,3 +26,5 @@ class simulated_register
     // constructor
     simulated_register();
 };
+
+#endif

@@ -1,3 +1,6 @@
+#ifndef SIMULATED_MEMORY_HPP
+#define SIMULATED_MEMORY_HPP
+
 #include <string>
 #include "memManager.hpp"
 #include "fileManager.hpp"
@@ -9,7 +12,7 @@ typedef unsigned char uchar;
 class simulated_memory{
 private:
     // TODO: I would suggest that this initialisation is done in the constructor
-    memManager DATA_MEM = memManager();
+    memManager DATA_MEM;
     fileManager INSTR_MEM;
     ioManager IO_MEM;
 
@@ -75,3 +78,5 @@ public:
     uint get_PC();
   
 };
+
+#endif

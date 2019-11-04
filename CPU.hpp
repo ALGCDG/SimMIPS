@@ -1,4 +1,7 @@
 // CPU
+#ifndef CPU_HPP
+#define CPU_HPP
+
 #include <iostream>
 #include <map>
 #include "simulated_memory.hpp"
@@ -22,11 +25,13 @@ class CPU
     //static std::map<uchar, R_OPCODE> R_OPCODES;
     //std::map<uchar, R_OPCODE> R_OPCODES;
 
-    static std::map<uchar, I_OPCODE> I_OPCODES;
-    static std::map<uchar, J_OPCODE> J_OPCODES;
+    // static std::map<uchar, I_OPCODE> I_OPCODES;
+    // static std::map<uchar, J_OPCODE> J_OPCODES;
     void interpret_instruction(const uint &instruction);
 
     public:
     int run(); // returns exit code
-    CPU(std::string binary_file_path/*file stream for binary instructions*/);
+    CPU(const std::string &binary_file_path/*file stream for binary instructions*/);
 };
+
+#endif

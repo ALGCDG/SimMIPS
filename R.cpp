@@ -4,15 +4,17 @@
 // NB, behaviour of shifts, << and >>, is undefined for negative numbers
 
 // R type operators implementations
-void R_TYPE::SLL(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
+int SLL(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
 {
     reg.write_register(rd, reg.read_register(rt) << shamt);
+    return 0;
 }
-void R_TYPE::SRL(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
+int SRL(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
 {
     reg.write_register(rd, reg.read_register(rt) >> shamt);
+    return 0;
 }
-void R_TYPE::SRA(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
+int SRA(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
 {
     /*
     SRA shifts a 32 bit word right be a specified number of bits
@@ -23,16 +25,19 @@ void R_TYPE::SRA(const uchar &rs, const uchar &rt, const uchar &rd, const uchar 
     uint shifted_word = word >> shamt;
     uint signed_bits = ((word & 0x80000000) > 0) ? 0xFFFFFFFF << (32 - shamt) : 0 ;
     reg.write_register(rd, shifted_word | signed_bits);
+    return 0;
 }
-void R_TYPE::SLLV(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
+int SLLV(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
 {
     reg.write_register(rd, reg.read_register(rt) << reg.read_register(rs));
+    return 0;
 }
-void R_TYPE::SRLV(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
+int SRLV(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
 {
     reg.write_register(rd, reg.read_register(rt) >> reg.read_register(rs));
+    return 0;
 }
-void R_TYPE::SRAV(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
+int SRAV(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
 {
     /*
     SRA shifts a 32 bit word right be a specified number of bits
@@ -44,27 +49,41 @@ void R_TYPE::SRAV(const uchar &rs, const uchar &rt, const uchar &rd, const uchar
     uint shifted_word = word >> shift;
     uint signed_bits = ((word & 0x80000000) > 0) ? 0xFFFFFFFF << (32 - shift) : 0 ;
     reg.write_register(rd, shifted_word | signed_bits);
+    return 0;
 }
-void R_TYPE::JR(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem) {}
-void R_TYPE::JALR(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem) {}
-// void R_TYPE::SYSCALL(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem) {} // I don't believe this is required for coureswork, but WE OUGHT TO CHECK
-void R_TYPE::MFHI(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
+int JR(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
+{
+    mem.jump_to(reg.read_register(rs));
+    return 0;
+}
+int JALR(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
+{
+    reg.write_register(rd, mem.get_PC() + 8);
+    mem.jump_to(reg.read_register(rs));
+    return 0;
+}
+// int SYSCALL(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem) {} // I don't believe this is required for coureswork, but WE OUGHT TO CHECK
+int MFHI(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
 {
     reg.write_register(rd, reg.read_HI());
+    return 0;
 }
-void R_TYPE::MTHI(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
+int MTHI(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
 {
     reg.write_HI(reg.read_register(rd));
+    return 0;
 }
-void R_TYPE::MFLO(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
+int MFLO(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
 {
     reg.write_register(rd, reg.read_LO());
+    return 0;
 }
-void R_TYPE::MTLO(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
+int MTLO(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
 {
     reg.write_LO(reg.read_register(rd));
+    return 0;
 }
-void R_TYPE::MULT(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
+int MULT(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
 {
     /*
     MULT does signed multiplication of two 32 bit words
@@ -78,8 +97,9 @@ void R_TYPE::MULT(const uchar &rs, const uchar &rt, const uchar &rd, const uchar
     // conversion from signed long long int to unsigned long long int should be implicitly handled
     reg.write_HI((product & 0xFFFFFFFF00000000) >> 32 );
     reg.write_LO(product & 0x00000000FFFFFFFF);
+    return 0;
 }
-void R_TYPE::MULTU(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
+int MULTU(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
 {
     /*
     MULTU does unsigned multiplication of two 32 bit words
@@ -90,8 +110,9 @@ void R_TYPE::MULTU(const uchar &rs, const uchar &rt, const uchar &rd, const ucha
     unsigned long long int product = (unsigned long long int) reg.read_register(rt) * reg.read_register(rs); // by casting the first argument, we ensure that it is a long long int (64 bit) operation
     reg.write_HI((product & 0xFFFFFFFF00000000) >> 32 );
     reg.write_LO(product & 0x00000000FFFFFFFF);
+    return 0;
 }
-void R_TYPE::DIV(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
+int DIV(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
 {
     /*
     DIV does signed division of two 32 bit words
@@ -106,8 +127,9 @@ void R_TYPE::DIV(const uchar &rs, const uchar &rt, const uchar &rd, const uchar 
     */
     reg.write_LO((int) reg.read_register(rs) / reg.read_register(rt));
     reg.write_HI((int) reg.read_register(rs) % reg.read_register(rt));
+    return 0;
 }
-void R_TYPE::DIVU(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
+int DIVU(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
 {
     /*
     DIVU does unsigned division of two 32 bit words
@@ -119,8 +141,9 @@ void R_TYPE::DIVU(const uchar &rs, const uchar &rt, const uchar &rd, const uchar
     */
     reg.write_LO(reg.read_register(rs) / reg.read_register(rt));
     reg.write_HI(reg.read_register(rs) % reg.read_register(rt));
+    return 0;
 }
-void R_TYPE::ADD(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
+int ADD(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
 {
     /*
     Given that overflowing behavour of signed datatypes in C++ is undefined
@@ -130,59 +153,103 @@ void R_TYPE::ADD(const uchar &rs, const uchar &rt, const uchar &rd, const uchar 
     uint a, b;
     a = reg.read_register(rs);
     b = reg.read_register(rt);
-    // checking for overflow
-    if (a > UINT_MAX - b)
+    // checking for ARITHMATIC overflow
+    if (a > INT_MAX - b)
     {
         std::cerr << "ADD arithmatic overflow" << std::endl; // ERROR LOGGING
-        throw(-10); // Throwing an arithmatic exception (which will be caught in the CPU execute function)
-        // in the event of overflow, the register write will not occur
+        return -10; // Throwing an arithmatic exception (which will be caught in the CPU execute function)
     }
     reg.write_register(rd, a + b);
+    return 0;
 }
-void R_TYPE::ADDU(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
+int ADDU(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
 {
     reg.write_register(rd, reg.read_register(rs) + reg.read_register(rt));
+    return 0;
 }
-void R_TYPE::SUB(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
+int SUB(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
 {
     uint a, b;
     a = reg.read_register(rs);
     b = reg.read_register(rt);
     // checking for overflow
-    if (a > UINT_MAX - (~b) - 1)
+    // if (a > UINT_MAX - (~b) - 1)
+    bool msb_a = (a & 0x80000000) > 0;
+    bool msb_b = (b & 0x80000000) > 0;
+    uint result = a - b;
+    bool msb_r = (result & 0x80000000) > 0;
+    if (((msb_a&&!msb_b)&&(!msb_r))||((!msb_a&&msb_b)&&(msb_r)))
     {
         std::cerr << "SUB arithmatic overflow" << std::endl; // ERROR LOGGING
-        throw(-10); // Throwing an arithmatic exception (which will be caught in the CPU execute function)
-        // in the event of overflow, the register write will not occur
+        return -10;                                          // Throwing an arithmatic exception (which will be caught in the CPU execute function)
     }
-    reg.write_register(rd, a - b);
+    reg.write_register(rd, result);
+    return 0;
 }
-void R_TYPE::SUBU(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
+int SUBU(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
 {
     reg.write_register(rd, reg.read_register(rs) - reg.read_register(rt));
+    return 0;
 }
-void R_TYPE::AND(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
+int AND(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
 {
     reg.write_register(rd, reg.read_register(rs) & reg.read_register(rt));
+    return 0;
 }
-void R_TYPE::OR(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
+int OR(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
 {
     reg.write_register(rd, reg.read_register(rs) | reg.read_register(rt));
+    return 0;
 }
-void R_TYPE::XOR(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
+int XOR(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
 {
     reg.write_register(rd, reg.read_register(rs) ^ reg.read_register(rt));
+    return 0;
 }
-void R_TYPE::NOR(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
+int NOR(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
 {
     reg.write_register(rd, ~(reg.read_register(rs) | reg.read_register(rt)));
+    return 0;
 }
-void R_TYPE::SLT(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
+int SLT(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
 {
     // using type casting to signed int
     reg.write_register(rd, ((int) reg.read_register(rs) < reg.read_register(rt))); // we can rely on implicit type conversion of bool to int
+    return 0;
 }
-void R_TYPE::SLTU(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
+int SLTU(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
 {
     reg.write_register(rd, (reg.read_register(rs) < reg.read_register(rt))); // we can rely on implicit type conversion of bool to int
+    return 0;
+}
+
+R_TYPE::R_TYPE()
+{
+    R_OPCODES[0] = SLL;
+    R_OPCODES[2] = SRL;
+    R_OPCODES[3] = SRA;
+    R_OPCODES[4] = SLLV;
+    R_OPCODES[6] = SRLV;
+    R_OPCODES[7] = SRAV;
+    R_OPCODES[8] = JR;
+    R_OPCODES[9] = JALR;
+    R_OPCODES[12] = SYSCALL;
+    R_OPCODES[16] = MFHI;
+    R_OPCODES[17] = MTHI;
+    R_OPCODES[18] = MFLO;
+    R_OPCODES[19] = MTLO;
+    R_OPCODES[24] = MULT;
+    R_OPCODES[25] = MULTU;
+    R_OPCODES[26] = DIV;
+    R_OPCODES[27] = DIVU;
+    R_OPCODES[32] = ADD;
+    R_OPCODES[33] = ADDU;
+    R_OPCODES[34] = SUB;
+    R_OPCODES[35] = SUBU;
+    R_OPCODES[36] = AND;
+    R_OPCODES[37] = OR;
+    R_OPCODES[38] = XOR;
+    R_OPCODES[39] = NOR;
+    R_OPCODES[42] = SLT;
+    R_OPCODES[43] = SLTU;
 }

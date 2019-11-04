@@ -1,6 +1,8 @@
+#ifndef MEMMANAGER_HPP
+#define MEMMANAGER_HPP
+
 #include <string>
 #include <vector>
-#include <bitset>
 
 typedef unsigned int uint;
 typedef unsigned char uchar;
@@ -23,3 +25,5 @@ public:
 	void store_word(int index, uint word);
 	memManager();
 };
+
+#endif
