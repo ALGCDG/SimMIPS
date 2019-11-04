@@ -137,7 +137,12 @@ void simulated_memory::store_byte(int address, uint word){
 }
 
 uint simulated_memory::fetch_instruction(){
-    return INSTR_MEM.r_word_advance();
+    if(! INSTR_MEM.instr_buff.empty()){
+        return instr_buff.pop();
+    }
+    else{
+        return INSTR_MEM.r_word_advance();
+    }
 }
 void simulated_memory::jump_to(int address){
     //TODO check address valid for jump offset
