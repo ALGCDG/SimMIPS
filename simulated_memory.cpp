@@ -123,10 +123,10 @@ void simulated_memory::store_half_word(int address, uint word){
         put_word(address,temp_word);
     }
 }
-void simulated_memory::store_byte(int address, uint byte){
+void simulated_memory::store_byte(int address, uint word){
     int temp_index; //just to fill the param slot
     if(which_storeMemLoc(address,temp_index) == 1){
-        put_word(address, (byte & 0xFF) << (address & 0b11)*8);
+        put_word(address, (word & 0xFF) << (address & 0b11)*8);
     }
     else{
         uint temp_word = get_word(address);
