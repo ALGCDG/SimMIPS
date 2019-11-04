@@ -10,6 +10,7 @@ typedef unsigned char uchar;
 class fileManager{
 private:
 	std::ifstream binary_file;
+	std::queue<uint> instr_buff;
 public:
 	//TODO update functions
 	fileManager(std::string path); //constr
@@ -25,7 +26,7 @@ public:
 	// uint r_word_advance();//used
 	// uint jump_r_byte_return(int offset);//used
 	// uint r_byte_advance(); //potentially unused
-	
+
 	void jump_to_offset(int offset);
 	int get_currOffset();
 	uint jump_r_word_return(int offset);
@@ -35,7 +36,7 @@ public:
 //Function created for initial design architecture.
 //In current design: not used, extraneous function,
 //eg jump read word return uses jump, r_word_advance, then return
-// no need for eg r_word_maintain 
+// no need for eg r_word_maintain
 //
 
 #endif
