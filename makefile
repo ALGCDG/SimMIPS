@@ -35,5 +35,9 @@ J.o: J.hpp J.cpp SIM_MEM.o REG.o
 CPU.o: SIM_MEM.o R.o I.o J.o
 	g++ -std=c++11 -c CPU.cpp
 
+# compiling main object file
+MAIN.o: main.cpp CPU.o
+	g++ -std=c++11 -c main.cpp
+
 clean:
 	rm *.o prog
