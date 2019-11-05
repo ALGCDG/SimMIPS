@@ -62,7 +62,7 @@ int JALR(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, 
     mem.jump_to(reg.read_register(rs));
     return 0;
 }
-// int SYSCALL(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem) {} // I don't believe this is required for coureswork, but WE OUGHT TO CHECK
+int SYSCALL(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem) { return 0;} // I don't believe this is required for coureswork, but WE OUGHT TO CHECK
 int MFHI(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
 {
     reg.write_register(rd, reg.read_HI());
