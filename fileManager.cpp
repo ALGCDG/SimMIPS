@@ -29,6 +29,6 @@ uint fileManager::r_word_advance(){
 	binary_file.read(buffer,4);
 	//returns a significance corrected word, ie: most significant byte highest in the word
 	uint word = (uint)buffer[3] | (uint)buffer[2] << 8 | (uint)buffer[1] << 16 | (uint)buffer[0] << 24;
-	delete buffer;
+	delete[] buffer;
 	return word;
 }

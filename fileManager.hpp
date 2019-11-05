@@ -1,4 +1,6 @@
-#include <bitset>
+#ifndef FILEMANAGER_HPP
+#define FILEMANAGER_HPP
+
 #include <fstream>
 #include <string>
 
@@ -24,10 +26,10 @@ public:
 	// uint jump_r_byte_return(int offset);//used
 	// uint r_byte_advance(); //potentially unused
 	
-	void fileManager::jump_to_offset(int offset);
-	int fileManager::get_currOffset();
-	uint fileManager::jump_r_word_return(int offset);
-	uint fileManager::r_word_advance();
+	void jump_to_offset(int offset);
+	int get_currOffset();
+	uint jump_r_word_return(int offset);
+	uint r_word_advance();
 };
 //potentially unused commment means:
 //Function created for initial design architecture.
@@ -35,3 +37,5 @@ public:
 //eg jump read word return uses jump, r_word_advance, then return
 // no need for eg r_word_maintain 
 //
+
+#endif

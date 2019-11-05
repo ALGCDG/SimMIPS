@@ -2,100 +2,6 @@
 #include <math.h>
 #include "register.hpp"
 
-// cannot put functions in map until they are defined
-// std::map<uchar, R_OPCODE> CPU::R_OPCODES = {
-//     {0, SLL},
-//     {2, SRL},
-//     {3, SRA},
-//     {4, SLLV},
-//     {6, SRLV},
-//     {7, SRAV},
-//     {8, JR},
-//     {9, JALR},
-//     {12, SYSCALL},
-//     {16, MFHI},
-//     {17, MTHI},
-//     {18, MFLO},
-//     {19, MTLO},
-//     {24, MULT},
-//     {25, MULTU},
-//     {26, DIV},
-//     {27, DIVU},
-//     {32, ADD},
-//     {33, ADDU},
-//     {34, SUB},
-//     {35, SUBU},
-//     {36, AND},
-//     {37, OR},
-//     {38, XOR},
-//     {39, NOR},
-//     {42, SLT},
-//     {43, SLTU}
-// };
-// std::map<uchar, I_OPCODE> CPU::I =
-// {
-//     {4, BEQ},
-//     {5, BNE},
-//     {6, BLEZ},
-//     {7, BGTZ},
-//     {8, ADDI},
-//     {9, ADDIU},
-//     {10, SLTI},
-//     {11, SLTIU},
-//     {12, ANDI},
-//     {13, ORI},
-//     {14, XORI},
-//     {15, LUI},
-//     {32, LB},
-//     {33, LH},
-//     {34, LW},
-//     {36, LBU},
-//     {37, LHU},
-//     {40, SB},
-//     {41, SH},
-//     {43, SW}
-// };
-// std::map<uchar, J_OPCODE> CPU::J =
-// {
-//     // {2, J},
-//     // {3, JAL}
-// };
-
-// CPU::CPU()
-// {
-//     std::map<uchar, R_OPCODE> R_OPCODES = {/*
-//         {0, SLL},
-//         {2, SRL},
-//         {3, SRA},
-//         {4, SLLV},
-//         {6, SRLV},
-//         {7, SRAV},
-//         {8, JR},
-//         {9, JALR},
-//         {12, SYSCALL},
-//         {16, MFHI},
-//         {17, MTHI},
-//         {18, MFLO},
-//         {19, MTLO},
-//         {24, MULT},
-//         {25, MULTU},
-//         {26, DIV},
-//         {27, DIVU},*/
-//         {32, ADD}
-//         /*,
-//         {33, ADDU},
-//         {34, SUB},
-//         {35, SUBU},
-//         {36, AND},
-//         {37, OR},
-//         {38, XOR},
-//         {39, NOR},
-//         {42, SLT},
-//         {43, SLTU}*/
-//     };
-// }
-
-
 // functions for interpreting binary instructions
 uchar pass_OPCODE(const uint &instruction)
 {
@@ -135,7 +41,7 @@ uint pass_address(const uint &instruction)
     return (instruction & 0x3FFFFFF);
 }
 
-void CPU::interpret_instruction(const uint &instruction)
+int CPU::interpret_instruction(const uint &instruction)
 {
     uchar OPCODE = pass_OPCODE(instruction);
     if (0 == OPCODE)
@@ -145,7 +51,7 @@ void CPU::interpret_instruction(const uint &instruction)
         rt = pass_rt(instruction);
         rd = pass_rd(instruction);
         shamt = pass_shamt(instruction);
-        (R_OPCODES[pass_funct(instruction)])(rs, rt, rd, shamt);
+        return (r.R_OPCODES[pass_funct(instruction)])(rs, rt, rd, shamt, registers, memory);
     }
     else if ((OPCODE >=4 && OPCODE <=15) || (OPCODE >=32 && OPCODE <= 34) || OPCODE == 36 || OPCODE == 37 || OPCODE ==40 || OPCODE ==41 || OPCODE ==43)
     {
@@ -154,32 +60,46 @@ void CPU::interpret_instruction(const uint &instruction)
         rs = pass_rs(instruction);
         rt = pass_rt(instruction);
         immediate = pass_immediate(instruction);
-        (I_OPCODES[OPCODE])(rs, rt, immediate);
+        return (i.I_OPCODES[OPCODE])(rs, rt, immediate, registers, memory);
     }
     else if (2 == OPCODE || 3 == OPCODE)
     {
         uint address;
         address = pass_address(instruction);
-        (J_OPCODES[OPCODE])(address);
+        (j.J_OPCODES[OPCODE])(address, registers, memory);
+        return 0; //returns zero always as J type cannot have arithmetic exceptions
     }
     else
     {
         /*
         ERROR, UNSUPPORTED OPCODE USED, THROW EXCEPTION
         */
+        return -12; // invalid instruction return value
     }
 
 }
 
-int run()
+int CPU::run()
 {
     // while not pointing to null
-    for (;;) // i've done some research and I've read this is more efficent than any while loop
+    // for (;;) // i've done some research and I've read this is more efficent than any while loop
+    while (memory.get_PC() != 0) // i've done some research and I've read this is more efficent than any while loop
     {
-        uint instruction;// load instruction
-        interpret_instruction(instruction);
-
+        uint instruction = memory.fetch_instruction(); // load instruction
+        int instruction_status = interpret_instruction(instruction);
+        if (instruction_status != 0)
+        {
+            return instruction_status;
+        }
+        if (memory.get_exception_flag()) //TODO: implement exception flag
+        {
+            return -11;
+        }
     }
     return registers.read_register(2); // return exit code
 }
 
+// CPU constructor
+CPU::CPU(const std::string &binary_file_path) : memory(binary_file_path), registers(), r(), i(), j()
+{
+}
