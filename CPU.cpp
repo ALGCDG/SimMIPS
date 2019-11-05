@@ -83,7 +83,7 @@ int CPU::run()
 {
     // while not pointing to null
     // for (;;) // i've done some research and I've read this is more efficent than any while loop
-    while (memory.get_PC != 0) // i've done some research and I've read this is more efficent than any while loop
+    while (memory.get_PC() != 0) // i've done some research and I've read this is more efficent than any while loop
     {
         uint instruction = memory.fetch_instruction(); // load instruction
         int instruction_status = interpret_instruction(instruction);
