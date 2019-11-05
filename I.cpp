@@ -6,49 +6,127 @@ uint sign_extend(uint word, uchar length_of_word)
     {
         return (0xFFFFFFFF << length_of_word) | word;
     }
-    else 
+    else
     {
         return word;
     }
 }
 
 // I type operators implementation
-int BEQ(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem) {}
-int BNE(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem) {}
-int BLEZ(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem) {}
-int BGTZ(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem) {}
-int ADDI(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem) {}
+int BEQ(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem){
+    if(reg.read_register(rs) == reg.read_register(rt)){
+        mem.jump_to(mem.get_PC() + sign_extend(immediate << 2, 18));
+    }
+    return 0;
+}
+int BNE(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem){
+    if(reg.read_register(rs) != reg.read_register(rt)){
+        mem.jump_to(mem.get_PC() + sign_extend(immediate << 2, 18));
+    }
+    return 0;
+}
+int BLEZ(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem){
+    if(static_cast<int>(reg.read_register(rs)) <= 0){
+        mem.jump_to(mem.get_PC() + sign_extend(immediate << 2, 18));
+    }
+    return 0;
+}
+int BGTZ(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem){
+    if(static_cast<int>(reg.read_register(rs)) > 0){
+        mem.jump_to(mem.get_PC() + sign_extend(immediate << 2, 18));
+    }
+    return 0;
+}
+int ADDI(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem)
+{
+    //overflow possible
+    uint a = reg.read_register(rs);
+    uint b = sign_extend(immediate, 16);
+    uint sum = a + b;
+    // !(a^b) Top bit true if they are the same
+    // (a^sum) Top bit true if sign change
+    // !(a^b) & (a^sum) & 0x80000000
+    if( !(a^b) & (a^sum) & 0x80000000 ){ //then possible overflow
+        return -12;
+    }
+    reg.write_register(rt, sum);
+    return 0;
+}
 int ADDIU(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem)
 {
     reg.write_register(rt, reg.read_register(rs) + sign_extend(immediate, 16));
     return 0;
 }
-int SLTI(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem) {}
-int SLTIU(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem) {}
-int ANDI(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem) 
+int SLTI(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem)
+{
+    reg.write_register(rt, static_cast<int>(reg.read_register(rs)) < static_cast<int>(sign_extend(immediate,16)));
+    return 0;
+}
+int SLTIU(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem)
+{
+    reg.write_register(rt, reg.read_register(rs) < sign_extend(immediate,16));
+    return 0;
+}
+int ANDI(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem)
 {
     reg.write_register(rt, reg.read_register(rs) & immediate);
     return 0;
 }
-int ORI(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem) 
+int ORI(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem)
 {
     reg.write_register(rt, reg.read_register(rs) | immediate);
     return 0;
 }
-int XORI(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem) 
+int XORI(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem)
 {
     reg.write_register(rt, reg.read_register(rs) ^ immediate);
     return 0;
 }
-int LUI(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem) {}
-int LB(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem) {}
-int LH(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem) {}
-int LW(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem) {}
-int LBU(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem) {}
-int LHU(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem) {}
-int SB(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem) {}
-int SH(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem) {}
-int SW(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem) {}
+int LUI(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem)
+{
+    reg.write_register(rt, immediate << 16);
+    return 0;
+}
+int LB(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem)
+{
+    reg.write_register(rt,mem.read_byte_s(reg.read_register(rs) + sign_extend(immediate,16)));
+    return 0;
+}
+int LH(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem)
+{
+    reg.write_register(rt, mem.read_h_word_s(reg.read_register(rs) + sign_extend(immediate,16)));
+    return 0;
+}
+int LW(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem)
+{
+    reg.write_register(rt, mem.read_word(reg.read_register(rs) + sign_extend(immediate,16)));
+    return 0;
+}
+int LBU(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem)
+{
+    reg.write_register(rt,mem.read_byte_u(reg.read_register(rs) + sign_extend(immediate,16)));
+    return 0;
+}
+int LHU(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem)
+{
+    reg.write_register(rt, mem.read_h_word_u(reg.read_register(rs) + sign_extend(immediate,16)));
+    return 0;
+}
+int SB(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem)
+{
+    mem.store_byte(reg.read_register(rs) + sign_extend(immediate,16), reg.read_register(rt));
+    return 0;
+}
+int SH(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem)
+{
+    mem.store_half_word(reg.read_register(rs) + sign_extend(immediate,16), reg.read_register(rt));
+    return 0;
+}
+int SW(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem)
+{
+    mem.store_word(reg.read_register(rs) + sign_extend(immediate,16), reg.read_register(rt));
+    return 0;
+}
 
 I_TYPE::I_TYPE()
 {
