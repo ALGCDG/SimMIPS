@@ -13,10 +13,30 @@ uint sign_extend(uint word, uchar length_of_word)
 }
 
 // I type operators implementation
-int BEQ(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem) {}
-int BNE(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem) {}
-int BLEZ(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem) {}
-int BGTZ(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem) {}
+int BEQ(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem){
+    if(reg.read_register(rs) == reg.read_register(rt)){
+        mem.jump_to(mem.get_PC() + sign_extend(immediate << 2, 18));
+    }
+    return 0;
+}
+int BNE(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem){
+    if(reg.read_register(rs) != reg.read_register(rt)){
+        mem.jump_to(mem.get_PC() + sign_extend(immediate << 2, 18));
+    }
+    return 0;
+}
+int BLEZ(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem){
+    if(static_cast<int>(reg.read_register(rs)) <= 0){
+        mem.jump_to(mem.get_PC() + sign_extend(immediate << 2, 18));
+    }
+    return 0;
+}
+int BGTZ(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem){
+    if(static_cast<int>(reg.read_register(rs)) > 0){
+        mem.jump_to(mem.get_PC() + sign_extend(immediate << 2, 18));
+    }
+    return 0;
+}
 int ADDI(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem)
 {
     //overflow possible
