@@ -12,3 +12,5 @@ void ioManager::store_word(uint word){
     std::putchar(out);
     return;
 }
+
+ioManager::ioManager(){}
