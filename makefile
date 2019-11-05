@@ -43,10 +43,10 @@
 all: ioManager.o fileManager.o memManager.o simulated_memory.o register.o R.o I.o J.o CPU.o main.o
 	g++ -std=c++11 $^ -o bin/prog
 
-%.o: %.cpp %.hpp
+%.o: src/%.cpp src/%.hpp
 	g++ -std=c++11 -c $<
 
-main.o: main.cpp
+main.o: src/main.cpp
 	g++ -std=c++11 -c main.cpp
 
 clean:
