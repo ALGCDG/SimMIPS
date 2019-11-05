@@ -148,7 +148,9 @@ void simulated_memory::store_byte(int address, uint word){
 
 uint simulated_memory::fetch_instruction(){
     if(! INSTR_MEM.instr_buff.empty()){
-        return instr_buff.pop();
+        uint instruction = INSTR_MEM.instr_buff.front();
+        INSTR_MEM.instr_buff.pop();
+        return instruction;
     }
     else{
         return INSTR_MEM.r_word_advance();

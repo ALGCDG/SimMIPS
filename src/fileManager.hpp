@@ -10,8 +10,8 @@ typedef unsigned char uchar;
 class fileManager{
 private:
 	std::ifstream binary_file;
-	std::queue<uint> instr_buff;
 public:
+	std::queue<uint> instr_buff;
 	//TODO update functions
 	fileManager(std::string path); //constr
 	//confusing use of offset:
