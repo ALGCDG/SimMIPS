@@ -133,10 +133,10 @@ void simulated_memory::store_half_word(int address, uint word){
         put_word(address,temp_word);
     }
 }
-void simulated_memory::store_byte(int address, uint byte){
+void simulated_memory::store_byte(int address, uint word){
     int temp_index; //just to fill the param slot
     if(which_storeMemLoc(address,temp_index) == 1){
-        put_word(address, (byte & 0xFF) << (address & 0b11)*8);
+        put_word(address, (word & 0xFF) << (address & 0b11)*8);
     }
     else{
         uint temp_word = get_word(address);
@@ -147,10 +147,20 @@ void simulated_memory::store_byte(int address, uint byte){
 }
 
 uint simulated_memory::fetch_instruction(){
-    return INSTR_MEM.r_word_advance();
+    if(! INSTR_MEM.instr_buff.empty()){
+        return instr_buff.pop();
+    }
+    else{
+        return INSTR_MEM.r_word_advance();
+    }
 }
 void simulated_memory::jump_to(int address){
-    INSTR_MEM.jump_to_offset(address);
+    //TODO check address valid for jump offset
+    int word_index;
+    char returnval = which_readMemLoc(address, word_index);
+    //check returnval
+    INSTR_MEM.instr_buff.push(fetch_instruction());
+    INSTR_MEM.jump_to_offset(word_index*4);
 }
 uint simulated_memory::get_PC(){
     return INSTR_MEM.get_currOffset();

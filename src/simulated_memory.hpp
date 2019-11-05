@@ -69,14 +69,14 @@ public:
     void store_word(int address, uint word);
 
     void store_half_word(int address, uint word);
-   
+
     void store_byte(int address, uint byte);
-    
+
 
     uint fetch_instruction();
-   
+
     void jump_to(int address);
-  
+
     uint get_PC();
 
     bool get_exception_flag(); // a flag that is initialised low and set high upon unathorised memory access.
