@@ -1,2 +1,1 @@
-# Author, Message
-Archie, Testing the ADD instruction using 7 and 8
+Archie, testing the addition of the zeroth register with its self storing the result in the zeroth register NB I am not sure what should happen in this case

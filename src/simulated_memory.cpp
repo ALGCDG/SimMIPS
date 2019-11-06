@@ -3,6 +3,7 @@
 simulated_memory::simulated_memory(std::string binary_path) : INSTR_MEM(binary_path), DATA_MEM(), IO_MEM()
 {
     exception_flag = false;
+    program_end_flag = false;
 }
 
 void simulated_memory::set_exception_flag()
@@ -12,6 +13,14 @@ void simulated_memory::set_exception_flag()
 bool simulated_memory::get_exception_flag()
 {
     return exception_flag;
+}
+void simulated_memory::set_program_end_flag()
+{
+    program_end_flag = true;
+}
+bool simulated_memory::get_program_end_flag()
+{
+    return program_end_flag;
 }
 
 uint simulated_memory::get_word(int address){
@@ -37,6 +46,17 @@ void simulated_memory::put_word(int address, uint word){
             IO_MEM.store_word(word);
     }
 }
+// I suggest we use these instead of literals, from Archie
+const uint INST_BASE = 0x10000000;
+const uint DATA_BASE = 0x20000000;
+const uint GETC_BASE = 0x30000000;
+const uint PUTC_BASE = 0x30000004;
+
+const uint INST_SIZE = 0x1000000;
+const uint DATA_SIZE = 0x4000000;
+const uint GETC_SIZE = 0x4;
+const uint PUTC_SIZE = 0x4;
+
 char simulated_memory::which_readMemLoc(const int & address, int & word_index){
     //-1 if not valid
     //0 if DATA
@@ -162,10 +182,19 @@ void simulated_memory::jump_to(int address){
     if(address == 0)
     int word_index;
     char returnval = which_readMemLoc(address, word_index);
-    //check returnval
-    INSTR_MEM.instr_buff.push(fetch_instruction());
-    INSTR_MEM.jump_to_offset(word_index*4);
+    if (address == 0x0)
+    {
+        // handles program termination
+        set_program_end_flag();
+    }
+    else
+    {
+        //check returnval
+        INSTR_MEM.instr_buff.push(fetch_instruction());
+        INSTR_MEM.jump_to_offset(word_index*4);
+    }
 }
 uint simulated_memory::get_PC(){
-    return INSTR_MEM.get_currOffset();
+    return INSTR_MEM.get_currOffset() + 0x10000000; // must be memory address (not relative instruction address)
+    // NB consider writing all these memory addresses as constant unsigned ints, code with large literals are hard to read
 }
