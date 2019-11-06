@@ -165,5 +165,6 @@ void simulated_memory::jump_to(int address){
     INSTR_MEM.jump_to_offset(word_index*4);
 }
 uint simulated_memory::get_PC(){
-    return INSTR_MEM.get_currOffset();
+    return INSTR_MEM.get_currOffset() + 0x10000000; // must be memory address (not relative instruction address)
+    // NB consider writing all these memory addresses as constant unsigned ints, code with large literals are hard to read
 }
