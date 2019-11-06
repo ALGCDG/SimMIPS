@@ -179,13 +179,11 @@ uint simulated_memory::fetch_instruction(){
         return instruction;
     }
     else{
-        if(get_PC() == 0){}
         return INSTR_MEM.r_word_advance();
     }
 }
 void simulated_memory::jump_to(int address){
     //TODO check address valid for jump offset
-    if(address == 0)
     int word_index;
     char returnval = which_readMemLoc(address, word_index);
     if (returnval = 3)
