@@ -47,7 +47,7 @@ all: ioManager.o fileManager.o memManager.o simulated_memory.o register.o R.o I.
 	g++ -std=c++11 -c $<
 
 main.o: src/main.cpp
-	g++ -std=c++11 -c main.cpp
+	g++ -std=c++11 -c src/main.cpp
 
 clean:
 	rm *.o prog
