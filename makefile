@@ -40,8 +40,8 @@
 # 	g++ -std=c++11 -c main.cpp
 
 
-all: ioManager.o fileManager.o memManager.o simulated_memory.o register.o R.o I.o J.o CPU.o main.o
-	g++ -std=c++11 $^ -o bin/prog
+simulator: ioManager.o fileManager.o memManager.o simulated_memory.o register.o R.o I.o J.o CPU.o main.o
+	g++ -std=c++11 $^ -o bin/mips_simulator
 
 %.o: src/%.cpp src/%.hpp
 	g++ -std=c++11 -c $<
@@ -50,4 +50,5 @@ main.o: src/main.cpp
 	g++ -std=c++11 -c src/main.cpp
 
 clean:
-	rm *.o prog
+	rm *.o
+	rm bin/mips_simulator
