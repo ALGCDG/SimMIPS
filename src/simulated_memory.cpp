@@ -62,6 +62,8 @@ char simulated_memory::which_readMemLoc(const int & address, int & word_index){
     //0 if DATA
     //1 if instr
     //2 if getc
+
+    //3 if 0x0
     char returnval = -1;
     if(address < 0x10000000){
         if(address >= 0x10000000 && address < 0x10000000 + 0x1000000){
@@ -75,6 +77,10 @@ char simulated_memory::which_readMemLoc(const int & address, int & word_index){
         if(address >= 0x30000000 && address < 0x30000000 + 0x4){
             returnval = 2;
             word_index = address - 0x30000000;
+        }
+        if(address == 0){
+            returnval = 3;
+            word_index = 0;
         }
     }
     return returnval;
@@ -167,7 +173,7 @@ void simulated_memory::store_byte(int address, uint word){
 }
 
 uint simulated_memory::fetch_instruction(){
-    if(! INSTR_MEM.instr_buff.empty()){
+    if(!INSTR_MEM.instr_buff.empty()){
         uint instruction = INSTR_MEM.instr_buff.front();
         INSTR_MEM.instr_buff.pop();
         return instruction;
@@ -180,17 +186,14 @@ void simulated_memory::jump_to(int address){
     //TODO check address valid for jump offset
     int word_index;
     char returnval = which_readMemLoc(address, word_index);
-    if (address == 0x0)
+    if (returnval = 3)
     {
         // handles program termination
         set_program_end_flag();
     }
-    else
-    {
-        //check returnval
-        INSTR_MEM.instr_buff.push(fetch_instruction());
-        INSTR_MEM.jump_to_offset(word_index*4);
-    }
+    //check returnval
+    INSTR_MEM.instr_buff.push(fetch_instruction());
+    INSTR_MEM.jump_to_offset(word_index*4);
 }
 uint simulated_memory::get_PC(){
     return INSTR_MEM.get_currOffset() + 0x10000000; // must be memory address (not relative instruction address)
