@@ -5,6 +5,7 @@ typedef unsigned char uchar;
 
 fileManager::fileManager(std::string path){
 	binary_file.open(path);
+	//TODO check if properly opened
 }
 void fileManager::jump_to_offset(int offset){
 	//used just for jumping i.e return to label
