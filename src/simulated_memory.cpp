@@ -1,4 +1,5 @@
 #include "simulated_memory.hpp"
+#include <iostream> //TESTING
 
 simulated_memory::simulated_memory(std::string binary_path) : INSTR_MEM(binary_path), DATA_MEM(), IO_MEM()
 {
@@ -205,21 +206,21 @@ uint simulated_memory::fetch_instruction(){
     if(!INSTR_MEM.instr_buff.empty()){
         uint instruction = INSTR_MEM.instr_buff.front();
         INSTR_MEM.instr_buff.pop();
-        // std::cerr << "Getting instruction from queue" << std::endl;//TESTING
         if(interior_end_flag){ set_program_end_flag(); }
+        std::cerr << "Getting instruction from queue" << std::endl;//TESTING
         return instruction;
     }
     else{
         // return INSTR_MEM.r_word_advance();
         uint instr = INSTR_MEM.r_word_advance();
-        // std::cerr << "Getting instruction from file" << std::endl;//TESTING
+        std::cerr << "Getting instruction from file" << std::endl;//TESTING
         if(!INSTR_MEM.get_EOF_FLAG()){
-            // std::cerr << "Not at EOF" << std::endl; //TESTING
+            std::cerr << "Not at EOF" << std::endl; //TESTING
             return instr;
         }
         else
         {
-            // std::cerr << "EOF, exception flag set" << std::endl;//TESTING
+            std::cerr << "EOF, exception flag set" << std::endl;//TESTING
             set_exception_flag();
             return 0;
         }
@@ -236,9 +237,11 @@ void simulated_memory::jump_to(int address){
     {
         // handles program termination
         interior_end_flag = true;
+        std::cerr << "end flag set" << std::endl; //Testing
     }
     //check returnval
     INSTR_MEM.instr_buff.push(fetch_instruction());
+    std::cerr << "pushing to queue, queue size: " << INSTR_MEM.instr_buff.size() << std::endl; //Testing
     INSTR_MEM.jump_to_offset(word_index*4);
 }
 uint simulated_memory::get_PC(){

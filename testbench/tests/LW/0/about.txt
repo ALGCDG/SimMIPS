@@ -1,0 +1,1 @@
+Archie, writing to the first address in data memory (0x20000000) from zero register
