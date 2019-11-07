@@ -206,20 +206,20 @@ uint simulated_memory::fetch_instruction(){
     if(!INSTR_MEM.instr_buff.empty()){
         uint instruction = INSTR_MEM.instr_buff.front();
         INSTR_MEM.instr_buff.pop();
-        std::cerr << "Getting instruction from queue" << std::endl;//TESTING
+        // std::cerr << "Getting instruction from queue" << std::endl;//TESTING
         return instruction;
     }
     else{
         // return INSTR_MEM.r_word_advance();
         uint instr = INSTR_MEM.r_word_advance();
-        std::cerr << "Getting instruction from file" << std::endl;//TESTING
+        // std::cerr << "Getting instruction from file" << std::endl;//TESTING
         if(!INSTR_MEM.get_EOF_FLAG()){
-            std::cerr << "Not at EOF" << std::endl; //TESTING
+            // std::cerr << "Not at EOF" << std::endl; //TESTING
             return instr;
         }
         else
         {
-            std::cerr << "EOF, exception flag set" << std::endl;//TESTING
+            // std::cerr << "EOF, exception flag set" << std::endl;//TESTING
             set_exception_flag();
             return 0;
         }
