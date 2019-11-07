@@ -24,8 +24,7 @@ int main(int argc, char *argv[])    // this is the way it has to be, left over f
     std::string binary_file_name = argv[1]; //
     std::ifstream file;
     if(!file.open(binary_file_name)){
-        std::cerr << "File cannot be opened" << std::endl;
-        return 0;
+
     }
 
     // std::cerr << argv[1] << std::endl; // how all error should be handled NEVER use cout
