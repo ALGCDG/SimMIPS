@@ -5,7 +5,6 @@
 #include "memManager.hpp"
 #include "fileManager.hpp"
 #include "ioManager.hpp"
-#include <fstream>
 
 typedef unsigned int uint;
 typedef unsigned char uchar;
@@ -48,7 +47,7 @@ public:
     // //jump stuff
     // //instruction stuff
 
-    simulated_memory(std::ifstream & file);
+    simulated_memory(std::string binary_path);
 
     uint get_word(int address);
 

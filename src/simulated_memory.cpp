@@ -1,7 +1,7 @@
 #include "simulated_memory.hpp"
 #include <iostream> //TESTING
 
-simulated_memory::simulated_memory(std::string binary_path) : INSTR_MEM(file), DATA_MEM(), IO_MEM()
+simulated_memory::simulated_memory(std::string binary_path) : INSTR_MEM(binary_path), DATA_MEM(), IO_MEM()
 {
     exception_flag = false;
     program_end_flag = false;
