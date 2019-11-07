@@ -28,6 +28,8 @@ uint simulated_memory::get_word(int address){
     int word_index;
     char code = which_readMemLoc(address - address%4, word_index);
     switch(code){
+        case(-1):
+            return 0;
         case(0):
             return DATA_MEM.read_word(word_index);
         case(1):
@@ -41,6 +43,8 @@ void simulated_memory::put_word(int address, uint word){
     int word_index;
     char code = which_storeMemLoc(address - address%4, word_index);
     switch(code){
+        case(-1):
+            return;
         case(0):
             DATA_MEM.store_word(word_index, word);
         case(1):
@@ -71,16 +75,21 @@ char simulated_memory::which_readMemLoc(const int & address, int & word_index){
             returnval = 1;
             word_index = address - 0x10000000;
         }
-        if(address >= 0x20000000 && address < 0x20000000 + 0x4000000){
+        else if(address >= 0x20000000 && address < 0x20000000 + 0x4000000){
             returnval = 0;
             word_index = address - 0x20000000;
         }
-        if(address >= 0x30000000 && address < 0x30000000 + 0x4){
+        else if(address >= 0x30000000 && address < 0x30000000 + 0x4){
             returnval = 2;
             word_index = address - 0x30000000;
         }
-        if(address == 0){
+        else if(address == 0){
             returnval = 3;
+            word_index = 0;
+        }
+        else{
+            set_exception_flag();
+            returnval = -1;
             word_index = 0;
         }
     // }
@@ -96,9 +105,14 @@ char simulated_memory::which_storeMemLoc(const int & address, int & word_index){
             returnval = 0;
             word_index = address - 0x20000000;
         }
-        if(address >= 0x30000004 && address < 0x30000004 + 0x4){
+        else if(address >= 0x30000004 && address < 0x30000004 + 0x4){
             returnval = 1;
             word_index = address - 0x30000004;
+        }
+        else{
+            set_exception_flag();
+            returnval = -1;
+            word_index = 0;
         }
     // }
     return returnval;
@@ -128,6 +142,10 @@ uint simulated_memory::read_h_word_u(int address){
     else if(ls_2b == 0b10){
         return ((word & 0xFFFF0000) >> 16);
     }
+    else{
+        set_exception_flag();
+        return 0;
+    }
 }
 uint simulated_memory::read_h_word_s(int address){
     uint half_word = read_h_word_u(address);
@@ -135,6 +153,10 @@ uint simulated_memory::read_h_word_s(int address){
     return half_word;
 }
 uint simulated_memory::read_word(int address){
+    if((address & 0b11) ^ 0b00){
+        set_exception_flag();
+        return 0;
+    }
     return get_word(address);
 }
 uint simulated_memory::read_word_left(int address){
@@ -146,10 +168,18 @@ uint simulated_memory::read_word_right(int address){
     return word >> (3-(address%4))*8;
 }
 void simulated_memory::store_word(int address, uint word){
+    if((address & 0b11) ^ 0b00){
+        set_exception_flag();
+        return;
+    }
     put_word(address,word);
 }
 void simulated_memory::store_half_word(int address, uint word){
     int temp_index; //just to fill the param slot
+    if(address & 0b1){
+        set_exception_flag();
+        return;
+    }
     if(which_storeMemLoc(address,temp_index) == 1){
         put_word(address, (word & 0xFFFF) << (address & 0b10)*8);
     }
@@ -177,20 +207,20 @@ uint simulated_memory::fetch_instruction(){
     if(!INSTR_MEM.instr_buff.empty()){
         uint instruction = INSTR_MEM.instr_buff.front();
         INSTR_MEM.instr_buff.pop();
-        std::cerr << "Getting instruction from queue" << std::endl;//TESTING
+        // std::cerr << "Getting instruction from queue" << std::endl;//TESTING
         return instruction;
     }
     else{
         // return INSTR_MEM.r_word_advance();
         uint instr = INSTR_MEM.r_word_advance();
-        std::cerr << "Getting instruction from file" << std::endl;//TESTING
+        // std::cerr << "Getting instruction from file" << std::endl;//TESTING
         if(!INSTR_MEM.get_EOF_FLAG()){
-            std::cerr << "Not at EOF" << std::endl; //TESTING
+            // std::cerr << "Not at EOF" << std::endl; //TESTING
             return instr;
         }
         else
         {
-            std::cerr << "EOF, exception flag set" << std::endl;//TESTING
+            // std::cerr << "EOF, exception flag set" << std::endl;//TESTING
             set_exception_flag();
             return 0;
         }
@@ -200,7 +230,7 @@ void simulated_memory::jump_to(int address){
     //TODO check address valid for jump offset
     int word_index;
     char returnval = which_readMemLoc(address, word_index);
-    if (returnval = 3)
+    if (returnval == 3)
     {
         // handles program termination
         set_program_end_flag();
