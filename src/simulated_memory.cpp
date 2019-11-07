@@ -82,6 +82,10 @@ char simulated_memory::which_readMemLoc(const int & address, int & word_index){
             returnval = 2;
             word_index = address - 0x30000000;
         }
+        else if(address == 0){
+            returnval = 1;
+            word_index = 0;
+        }
         else{
             set_exception_flag();
             returnval = -1;
@@ -226,6 +230,9 @@ void simulated_memory::jump_to(int address){
     //TODO check address valid for jump offset
     int word_index;
     char returnval = which_readMemLoc(address, word_index);
+    if(returnval != 1){
+        set_exception_flag();
+    }
     if (address == 0)
     {
         // handles program termination
