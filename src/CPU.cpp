@@ -103,17 +103,17 @@ int CPU::run()
     while (!memory.get_program_end_flag()) // i've done some research and I've read this is more efficent than any while loop
     {
         uint instruction = memory.fetch_instruction(); // load instruction
+        if (memory.get_exception_flag()) //TODO: implement exception flag
+        {
+            std::cerr << "ERROR: memory access exception (-11)" << std::endl; //TESTING
+            return -11;
+        }
         std::cerr << "running instruction: " << instruction << std::endl; //TESTING
         int instruction_status = interpret_instruction(instruction);
         if (instruction_status != 0)
         {
             std::cerr << "ERROR: instruction exception (arithmatic or instruction validity)" << std::endl; //TESTING
             return instruction_status;
-        }
-        if (memory.get_exception_flag()) //TODO: implement exception flag
-        {
-            std::cerr << "ERROR: memory access exception (-11)" << std::endl; //TESTING
-            return -11;
         }
     }
     std::cerr << "returning value in register 2" << std::endl; //TESTING
