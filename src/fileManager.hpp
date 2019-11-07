@@ -10,7 +10,9 @@ typedef unsigned char uchar;
 class fileManager{
 private:
 	std::ifstream binary_file;
+	bool EOF_FLAG;
 public:
+	bool get_EOF_FLAG();
 	std::queue<uint> instr_buff;
 	//TODO update functions
 	fileManager(std::string path); //constr
