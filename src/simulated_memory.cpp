@@ -179,7 +179,14 @@ uint simulated_memory::fetch_instruction(){
         return instruction;
     }
     else{
-        return INSTR_MEM.r_word_advance();
+        // return INSTR_MEM.r_word_advance();
+        uint instr = INSTR_MEM.r_word_advance();
+        if(instr != EOF){return instr;}
+        else
+        {
+            set_exception_flag();
+            return 0;
+        }
     }
 }
 void simulated_memory::jump_to(int address){
