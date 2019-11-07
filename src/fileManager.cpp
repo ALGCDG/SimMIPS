@@ -3,8 +3,9 @@
 typedef unsigned int uint;
 typedef unsigned char uchar;
 
-fileManager::fileManager(std::string path){
-	binary_file.open(path);
+fileManager::fileManager(std::ifstream & file){
+	binary_file = file;
+
 	EOF_FLAG = false;
 	//TODO check if properly opened
 }
@@ -29,7 +30,7 @@ uint fileManager::r_word_advance(){
 	//eg for getting an instruction
 	char * buffer = new char[4];
 	binary_file.read(buffer,4);
-	if(binary_file.eof()){ 
+	if(binary_file.eof()){
 		std::cerr << "setting EOF" << std::endl; //TESTING
 		EOF_FLAG = true;
 	}

@@ -15,8 +15,7 @@ public:
 	bool get_EOF_FLAG();
 	std::queue<uint> instr_buff;
 	//TODO update functions
-	fileManager(std::string path); //constr
-	//confusing use of offset:
+	fileManager(std::ifstream & file);
 	//offset in this sense is the logical location (not offset eg base + offset)
 	// uint jump_r_w_left_return(int offset); //used
 	// uint jump_r_w_right_return(int offset);//used
