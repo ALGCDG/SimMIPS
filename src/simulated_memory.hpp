@@ -24,8 +24,9 @@ private:
     void set_exception_flag();
     bool program_end_flag; // a flag that is set high when 0x0 address is jumped to
     void set_program_end_flag();
-public:
 
+    bool interior_end_flag;
+public:
     // simulated_memory(std::string binary_path);
 
     // uint read_byte_u(int base, int offset);//unsigned
