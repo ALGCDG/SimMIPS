@@ -5,6 +5,7 @@ typedef unsigned char uchar;
 
 fileManager::fileManager(std::string path){
 	binary_file.open(path);
+	EOF_FLAG = false;
 	//TODO check if properly opened
 }
 void fileManager::jump_to_offset(int offset){
@@ -35,7 +36,8 @@ uint fileManager::r_word_advance(){
 	return word;
 }
 
-bool get_EOF_FLAG(){
+bool fileManager::get_EOF_FLAG()
+{
 	return EOF_FLAG;
 }
 
