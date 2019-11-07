@@ -183,7 +183,7 @@ uint simulated_memory::fetch_instruction(){
         // return INSTR_MEM.r_word_advance();
         uint instr = INSTR_MEM.r_word_advance();
         std::cerr << "Getting instruction from file" << std::endl;//TESTING
-        if(instr != EOF){
+        if(!INSTR_MEM.get_EOF_FLAG()){
             std::cerr << "Not at EOF" << std::endl; //TESTING
             return instr;
         }

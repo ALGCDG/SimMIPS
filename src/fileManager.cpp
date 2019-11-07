@@ -28,10 +28,15 @@ uint fileManager::r_word_advance(){
 	//eg for getting an instruction
 	char * buffer = new char[4];
 	binary_file.read(buffer,4);
+	if(binary_file.eof()){ EOF_FLAG = true;	}
 	//returns a significance corrected word, ie: most significant byte highest in the word
 	uint word = (uint)buffer[3] | (uint)buffer[2] << 8 | (uint)buffer[1] << 16 | (uint)buffer[0] << 24;
 	delete[] buffer;
 	return word;
+}
+
+bool get_EOF_FLAG(){
+	return EOF_FLAG;
 }
 
 // TODO: if read past the end of a file, throw memory access exception
