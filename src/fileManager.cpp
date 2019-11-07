@@ -33,3 +33,5 @@ uint fileManager::r_word_advance(){
 	delete[] buffer;
 	return word;
 }
+
+// TODO: if read past the end of a file, throw memory access exception

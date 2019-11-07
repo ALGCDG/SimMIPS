@@ -65,7 +65,7 @@ char simulated_memory::which_readMemLoc(const int & address, int & word_index){
 
     //3 if 0x0
     char returnval = -1;
-    if(address < 0x10000000){
+    // if(address < 0x10000000){
         if(address >= 0x10000000 && address < 0x10000000 + 0x1000000){
             returnval = 1;
             word_index = address - 0x10000000;
@@ -82,7 +82,7 @@ char simulated_memory::which_readMemLoc(const int & address, int & word_index){
             returnval = 3;
             word_index = 0;
         }
-    }
+    // }
     return returnval;
 }
 char simulated_memory::which_storeMemLoc(const int & address, int & word_index){
@@ -90,7 +90,7 @@ char simulated_memory::which_storeMemLoc(const int & address, int & word_index){
     //0 if DATA
     //1 if putc
     char returnval = -1;
-    if(address < 0x10000000){
+    // if(address < 0x10000000){
         if(address >= 0x20000000 && address < 0x20000000 + 0x4000000){
             returnval = 0;
             word_index = address - 0x20000000;
@@ -99,7 +99,7 @@ char simulated_memory::which_storeMemLoc(const int & address, int & word_index){
             returnval = 1;
             word_index = address - 0x30000004;
         }
-    }
+    // }
     return returnval;
 }
 void simulated_memory::sign_extend_bytes_to_word(uint & word, int num_bytes_in){
