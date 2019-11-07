@@ -4,6 +4,7 @@ simulated_memory::simulated_memory(std::string binary_path) : INSTR_MEM(binary_p
 {
     exception_flag = false;
     program_end_flag = false;
+    interior_end_flag = false;
 }
 
 void simulated_memory::set_exception_flag()
@@ -66,8 +67,6 @@ char simulated_memory::which_readMemLoc(const int & address, int & word_index){
     //0 if DATA
     //1 if instr
     //2 if getc
-
-    //3 if 0x0
     char returnval = -1;
     // if(address < 0x10000000){
         if(address >= 0x10000000 && address < 0x10000000 + 0x1000000){
@@ -81,10 +80,6 @@ char simulated_memory::which_readMemLoc(const int & address, int & word_index){
         else if(address >= 0x30000000 && address < 0x30000000 + 0x4){
             returnval = 2;
             word_index = address - 0x30000000;
-        }
-        else if(address == 0){
-            returnval = 3;
-            word_index = 0;
         }
         else{
             set_exception_flag();
@@ -207,6 +202,7 @@ uint simulated_memory::fetch_instruction(){
         uint instruction = INSTR_MEM.instr_buff.front();
         INSTR_MEM.instr_buff.pop();
         // std::cerr << "Getting instruction from queue" << std::endl;//TESTING
+        if(interior_end_flag){ set_program_end_flag(); }
         return instruction;
     }
     else{
@@ -229,10 +225,10 @@ void simulated_memory::jump_to(int address){
     //TODO check address valid for jump offset
     int word_index;
     char returnval = which_readMemLoc(address, word_index);
-    if (returnval == 3)
+    if (address == 0)
     {
         // handles program termination
-        set_program_end_flag();
+        interior_end_flag = true;
     }
     //check returnval
     INSTR_MEM.instr_buff.push(fetch_instruction());
