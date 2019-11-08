@@ -40,7 +40,7 @@ do
         bin/mips_simulator "./testbench/tests/$i/$t/binary.mips.bin";
         RESULT=$?;
 	EXPECTATION=$(<expectation.txt);
-        if $RESULT == $EXPECTATION;
+        if ['$RESULT' = '$EXPECTATION'];
         then
             STATUS="Pass";
         else
