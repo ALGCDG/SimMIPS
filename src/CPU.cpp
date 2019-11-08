@@ -5,6 +5,7 @@
 // functions for interpreting binary instructions
 uchar pass_OPCODE(const uint &instruction)
 {
+	std::cerr << "OPcode2: " << std::hex << (instruction >> 26) << std::endl; //testing
     return (instruction >> 26) & 0b111111;
 }
 
@@ -104,6 +105,7 @@ int CPU::run()
     while (!memory.get_program_end_flag()) // i've done some research and I've read this is more efficent than any while loop
     {
         uint instruction = memory.fetch_instruction(); // load instruction
+	std::cerr << "fresh from hex" << std::hex << instruction << std::endl; //TESTING
         if (memory.get_exception_flag()) //TODO: implement exception flag
         {
             std::cerr << "ERROR: memory access exception (-11)" << std::endl; //TESTING
