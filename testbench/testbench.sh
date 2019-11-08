@@ -39,14 +39,14 @@ do
         TestID="${i} ${t}";
         bin/mips_simulator "./testbench/tests/$i/$t/binary.mips.bin";
         RESULT=$?;
-        EXPECTATION="$cat expectation.txt";
+	EXPECTATION=$(expectation.txt);
         if $RESULT == $EXPECTATION;
         then
             STATUS="Pass";
         else
             STATUS="Fail";
         fi
-        AUTHOR_AND_MESSAGE="$cat about.txt";
+	AUTHOR_AND_MESSAGE=$(<about.txt);
 	cs=", ";
         echo "${TestID} ${cs} ${i} ${cs} ${STATUS} ${cs}  ${AUTHOR_AND_MESSAGE}";
     done
