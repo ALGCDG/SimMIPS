@@ -22,8 +22,11 @@ private:
 
     bool exception_flag; // a flag that is initialised low and set high upon unathorised memory access.
     void set_exception_flag();
-public:
+    bool program_end_flag; // a flag that is set high when 0x0 address is jumped to
+    void set_program_end_flag();
 
+    bool interior_end_flag;
+public:
     // simulated_memory(std::string binary_path);
 
     // uint read_byte_u(int base, int offset);//unsigned
@@ -78,8 +81,8 @@ public:
     void jump_to(int address);
 
     uint get_PC();
-
     bool get_exception_flag(); // a flag that is initialised low and set high upon unathorised memory access.
+    bool get_program_end_flag(); // a flag that is initialised low and set high upon unathorised memory access.
 };
 
 #endif
