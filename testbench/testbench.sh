@@ -36,18 +36,18 @@ do
     for t in ls -d "./testbench/tests/$i" #for each test in the folder (t)
     do
         #cd t;
-        TestID = "${i} ${t}";
+        TestID="${i} ${t}";
         bin/mips_simulator "./testbench/tests/$i/$t/binary.mips.bin";
-        RESULT = $?;
-        EXPECTATION = cat expectation.txt;
+        RESULT=$?;
+        EXPECTATION="$cat expectation.txt";
         if $RESULT == $EXPECTATION;
         then
-            STATUS = "Pass";
+            STATUS="Pass";
         else
-            STATUS = "Fail";
+            STATUS="Fail";
         fi
-        AUTHOR_AND_MESSAGE = cat about.txt;
-	cs = ", ";
+        AUTHOR_AND_MESSAGE="$cat about.txt";
+	cs=", ";
         echo "${TestID} ${cs} ${i} ${cs} ${STATUS} ${cs}  ${AUTHOR_AND_MESSAGE}";
     done
 done
