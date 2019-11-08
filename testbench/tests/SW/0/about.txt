@@ -1,0 +1,1 @@
+Archie, testing SW - loading literal 0x2 to $1 then shift left 32 then store 0x8 in $3 then store $3 in the first memory address of Data memory 

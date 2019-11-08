@@ -1,0 +1,1 @@
+Archie, use addi to store 0x1 in $2 then SLL to shift left by 5 then jump to end

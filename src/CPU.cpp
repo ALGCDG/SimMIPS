@@ -44,6 +44,7 @@ uint pass_address(const uint &instruction)
 int CPU::interpret_instruction(const uint &instruction)
 {
     uchar OPCODE = pass_OPCODE(instruction);
+    std::cerr << "OPCODE: " << std::hex << OPCODE << std::endl; //TESTING
     if (0 == OPCODE)
     {
         std::cerr << "R Type" << std::endl; //TESTING
@@ -87,7 +88,7 @@ int CPU::interpret_instruction(const uint &instruction)
     }
     else
     {
-        std::cerr << "Invalid instruction: No match for OPCODE " << OPCODE << std::endl; //TESTING
+        std::cerr << "Invalid instruction: No match for OPCODE " << std::hex << OPCODE << std::endl; //TESTING
         /*
         ERROR, UNSUPPORTED OPCODE USED, THROW EXCEPTION
         */
