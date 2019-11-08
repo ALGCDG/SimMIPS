@@ -38,7 +38,7 @@ do
         #cd t;
         TestID = "${i} ${t}";
         bin/mips_simulator "./testbench/tests/$i/$t/binary.mips.bin";
-        RESULT = echo $?;
+        RESULT = $?;
         EXPECTATION = cat expectation.txt;
         if $RESULT == $EXPECTATION;
         then
