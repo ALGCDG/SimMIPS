@@ -30,23 +30,23 @@ echo "Running testbench..."
 # done
 
 cd ..;
-for i in ls -d ./testbench/tests #for each directory in the tests folder
+for i in ./testbench/tests/*/  #for each directory in the tests folder
 do
     #cd $i
-    for t in ls -d "./testbench/tests/$i" #for each test in the folder (t)
+    for t in $i/*/  #for each test in the folder (t)
     do
         #cd t;
         TestID="${i} ${t}";
-        bin/mips_simulator "./testbench/tests/$i/$t/binary.mips.bin";
+        bin/mips_simulator "$t/binary.mips.bin";
         RESULT=$?;
-	EXPECTATION=$(<expectation.txt);
-        if $RESULT == $EXPECTATION;
+	EXPECTATION=$(<"$t/expectation.txt");
+        if ['$RESULT' = '$EXPECTATION'];
         then
             STATUS="Pass";
         else
             STATUS="Fail";
         fi
-	AUTHOR_AND_MESSAGE=$(<about.txt);
+	AUTHOR_AND_MESSAGE=$(<"$t/about.txt");
 	cs=", ";
         echo "${TestID} ${cs} ${i} ${cs} ${STATUS} ${cs}  ${AUTHOR_AND_MESSAGE}";
     done
