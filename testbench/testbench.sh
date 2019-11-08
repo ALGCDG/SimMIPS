@@ -39,7 +39,7 @@ do
         TestID="${i} ${t}";
         bin/mips_simulator "./testbench/tests/$i/$t/binary.mips.bin";
         RESULT=$?;
-	EXPECTATION=$(expectation.txt);
+	EXPECTATION=$(<expectation.txt);
         if $RESULT == $EXPECTATION;
         then
             STATUS="Pass";
