@@ -56,4 +56,4 @@ clean:
 
 testbench: mips_testbench/testbench.sh
 	cp mips_testbench/testbench.sh bin/mips_testbench
-	chmod u-x bin/mips_testbench
+	#chmod u-x bin/mips_testbench
