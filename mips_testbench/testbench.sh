@@ -30,13 +30,14 @@ echo "Running testbench..."
 # done
 
 cd ..;
-for i in ./testbench/tests/*/  #for each directory in the tests folder
+for i in ./mips_testbench/tests/*/  #for each directory in the tests folder
 do
     #cd $i
     for t in $i/*/  #for each test in the folder (t)
     do
-        #cd t;
-        TestID="${i} ${t}";
+	testType=$(echo "$i" | cut -d/ -f4)
+	testNum=$(echo "$t" | cut -d/ -f6)
+        TestID="${testType}${testNum}";
         bin/mips_simulator "$t/binary.mips.bin";
         RESULT=$?;
 	EXPECTATION=$(<"$t/expectation.txt");
@@ -48,6 +49,7 @@ do
         fi
 	AUTHOR_AND_MESSAGE=$(<"$t/about.txt");
 	cs=", ";
-        echo "${TestID} ${cs} ${i} ${cs} ${STATUS} ${cs}  ${AUTHOR_AND_MESSAGE}";
+        echo "${TestID}${cs}${testType}${cs}${STATUS}${cs}${AUTHOR_AND_MESSAGE}";
     done
 done
+
