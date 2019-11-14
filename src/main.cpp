@@ -19,7 +19,7 @@
 
 int main(int argc, char *argv[])    // this is the way it has to be, left over from C
 {
-    std::cerr << "starting main..." << std::endl; //TESTING
+    //std::cerr << "starting main..." << std::endl; //TESTING
     std::string binary_file_name = argv[1]; // 
     // std::cerr << argv[1] << std::endl; // how all error should be handled NEVER use cout 
     
@@ -33,8 +33,8 @@ int main(int argc, char *argv[])    // this is the way it has to be, left over f
     }
     	
     CPU processor(binary_file_name);// constructing the simulated processor
-    std::cerr << "CPU constructed!" << std::endl; //TESTING
-    std::cerr << "running CPU..." << std::endl; //TESTING
+    //std::cerr << "CPU constructed!" << std::endl; //TESTING
+    //std::cerr << "running CPU..." << std::endl; //TESTING
     return processor.run(); // runs the processor, the run function returns the value of the register 2
 
 
