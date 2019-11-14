@@ -40,8 +40,8 @@ do
         bin/mips_simulator "$t/binary.mips.bin";
         RESULT=$?;
 	EXPECTATION=$(<"$t/expectation.txt");
-        if ['$RESULT' = '$EXPECTATION'];
-        then
+        if [ "$RESULT" = "$EXPECTATION" ];
+	then
             STATUS="Pass";
         else
             STATUS="Fail";
