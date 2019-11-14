@@ -54,6 +54,6 @@ clean:
 	rm bin/mips_simulator
 	rm bin/mips_testbench
 
-testbench: testbench/testbench.sh
-	cp testbench/testbench.sh bin/mips_testbench
+testbench: mips_testbench/testbench.sh
+	cp mips_testbench/testbench.sh bin/mips_testbench
 	chmod u-x bin/mips_testbench
