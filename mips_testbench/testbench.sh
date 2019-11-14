@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Adding Unofficial Strict Mode
+set -uo pipefail
+IFS=$'\n\t'
+
 echo "Running testbench..."
 
 # testing return codes
