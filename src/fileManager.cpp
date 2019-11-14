@@ -5,7 +5,7 @@ typedef unsigned char uchar;
 
 fileManager::fileManager(std::string path){
 	binary_file.open(path);
-	std::cerr << "File name: "<< path << std::endl;
+	//std::cerr << "File name: "<< path << std::endl;
 	EOF_FLAG = false;
 	//TODO check if properly opened
 }
@@ -29,7 +29,7 @@ uint fileManager::r_word_advance(){
 	//file pointer is advanced
 	//eg for getting an instruction
 	char * buffer = new char[4];
-	std::cerr << "current pointer" <<binary_file.tellg() << std::endl;
+	//std::cerr << "current pointer" <<binary_file.tellg() << std::endl;
 	binary_file.read(buffer,4);
 	if(binary_file.eof()){ 
 		//std::cerr << "setting EOF" << std::endl; //TESTING
@@ -37,7 +37,7 @@ uint fileManager::r_word_advance(){
 	}
 	//returns a significance corrected word, ie: most significant byte highest in the word
 	uint word = (uint)buffer[3] | (uint)buffer[2] << 8 | (uint)buffer[1] << 16 | (uint)buffer[0] << 24;
-	std::cerr << "Instruction word fetched: "<< std::hex << word << std::endl; //testing
+	//std::cerr << "Instruction word fetched: "<< std::hex << word << std::endl; //testing
 	delete[] buffer;
 	return word;
 }

@@ -5,7 +5,7 @@
 // functions for interpreting binary instructions
 uchar pass_OPCODE(const uint &instruction)
 {
-	std::cerr << "OPcode2: " << std::hex << (instruction >> 26) << std::endl; //testing
+	//std::cerr << "OPcode2: " << std::hex << (instruction >> 26) << std::endl; //testing
     return (instruction >> 26) & 0b111111;
 }
 
@@ -45,10 +45,10 @@ uint pass_address(const uint &instruction)
 int CPU::interpret_instruction(const uint &instruction)
 {
     uchar OPCODE = pass_OPCODE(instruction);
-    std::cerr << "OPCODE: " << std::hex << OPCODE << std::endl; //TESTING
+    //std::cerr << "OPCODE: " << std::hex << OPCODE << std::endl; //TESTING
     if (0 == OPCODE)
     {
-        std::cerr << "R Type" << std::endl; //TESTING
+        //std::cerr << "R Type" << std::endl; //TESTING
         uchar rs, rt, rd, shamt, funct;
         rs = pass_rs(instruction);
         rt = pass_rt(instruction);
@@ -71,7 +71,7 @@ int CPU::interpret_instruction(const uint &instruction)
     }
     else if ((OPCODE >=4 && OPCODE <=15) || (OPCODE >=32 && OPCODE <= 34) || OPCODE == 36 || OPCODE == 37 || OPCODE ==40 || OPCODE ==41 || OPCODE ==43)
     {
-        std::cerr << "I Type" << std::endl; //TESTING
+        //std::cerr << "I Type" << std::endl; //TESTING
         uchar rs, rt;
         uint immediate;
         rs = pass_rs(instruction);
@@ -81,7 +81,7 @@ int CPU::interpret_instruction(const uint &instruction)
     }
     else if (2 == OPCODE || 3 == OPCODE)
     {
-        std::cerr << "J Type" << std::endl; //TESTING
+        //std::cerr << "J Type" << std::endl; //TESTING
         uint address;
         address = pass_address(instruction);
         (j.J_OPCODES[OPCODE])(address, registers, memory);
@@ -105,13 +105,13 @@ int CPU::run()
     while (!memory.get_program_end_flag()) // i've done some research and I've read this is more efficent than any while loop
     {
         uint instruction = memory.fetch_instruction(); // load instruction
-	std::cerr << "fresh from hex" << std::hex << instruction << std::endl; //TESTING
+	    //std::cerr << "fresh from hex" << std::hex << instruction << std::endl; //TESTING
         if (memory.get_exception_flag()) //TODO: implement exception flag
         {
             std::cerr << "ERROR: memory access exception (-11)" << std::endl; //TESTING
             return -11;
         }
-        std::cerr << "running instruction: " << instruction << std::endl; //TESTING
+        //std::cerr << "running instruction: " << instruction << std::endl; //TESTING
         int instruction_status = interpret_instruction(instruction);
         if (instruction_status != 0)
         {
@@ -119,7 +119,7 @@ int CPU::run()
             return instruction_status;
         }
     }
-    std::cerr << "returning value in register 2" << std::endl; //TESTING
+    //std::cerr << "returning value in register 2" << std::endl; //TESTING
     return registers.read_register(2); // return exit code
 }
 

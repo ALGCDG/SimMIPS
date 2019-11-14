@@ -51,5 +51,6 @@ do
 	cs=", ";
         echo "${TestID}${cs}${testType}${cs}${STATUS}${cs}${AUTHOR_AND_MESSAGE}";
     done
+    printf "\n=============================================================================\n";
 done
 
