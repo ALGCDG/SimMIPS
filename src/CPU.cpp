@@ -69,7 +69,8 @@ int CPU::interpret_instruction(const uint &instruction)
             return (r.R_OPCODES[funct])(rs, rt, rd, shamt, registers, memory);
         }
     }
-    else if ((OPCODE >=4 && OPCODE <=15) || (OPCODE >=32 && OPCODE <= 34) || OPCODE == 36 || OPCODE == 37 || OPCODE ==40 || OPCODE ==41 || OPCODE ==43)
+    // else if ((OPCODE >=4 && OPCODE <=15) || (OPCODE >=32 && OPCODE <= 34) || OPCODE == 36 || OPCODE == 37 || OPCODE ==40 || OPCODE ==41 || OPCODE ==43)
+    else if (i.I_OPCODES.find(OPCODE) != i.I_OPCODES.end())
     {
         //std::cerr << "I Type" << std::endl; //TESTING
         uchar rs, rt;
