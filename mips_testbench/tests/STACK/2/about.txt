@@ -1,1 +1,1 @@
-Archie, Testing a swap by reference function (and function local variables)
+Archie, Testing a swap by pointer function (and function local variables)
