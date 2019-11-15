@@ -10,6 +10,10 @@ fileManager::fileManager(std::string path){
 	EOF_FLAG = false;
 	//TODO check if properly opened
 }
+fileManager::~fileManager()
+{
+	binary_file.close();
+}
 void fileManager::jump_to_offset(int offset){
 	//used just for jumping i.e return to label
 	binary_file.seekg(offset);

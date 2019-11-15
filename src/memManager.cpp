@@ -2,9 +2,9 @@
 
 
 //need constructor
-memManager::memManager()
+memManager::memManager() : DATA(0x4000000, 0)
 {
-    std::vector<uchar> DATA(0x4000000, 0);
+    // DATA = std::vector<uchar>(0x4000000, 0);
 }
 
 uint memManager::read_word(int index){

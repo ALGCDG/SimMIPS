@@ -123,7 +123,7 @@ int CPU::run()
             return instruction_status;
         }
     }
-    //std::cerr << "returning value in register 2" << std::endl; //TESTING
+    std::cerr << "returning value in register 2" << std::endl; //TESTING
     return registers.read_register(2); // return exit code
 }
 

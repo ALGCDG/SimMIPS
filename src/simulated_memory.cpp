@@ -229,6 +229,7 @@ uint simulated_memory::fetch_instruction(){
 void simulated_memory::jump_to(int address){
     //TODO check address valid for jump offset
     int word_index;
+    std::cerr << "jumping to address: " << address << std::endl;//TESTING
     char returnval = which_readMemLoc(address, word_index);
     if(returnval != 1){
 	std::cerr << "Illegal jump address" << std::endl; // TESTING

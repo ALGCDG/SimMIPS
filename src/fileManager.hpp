@@ -16,6 +16,8 @@ public:
 	std::queue<uint> instr_buff;
 	//TODO update functions
 	fileManager(std::string path); //constr
+	~fileManager(); //de-constr
+
 	//confusing use of offset:
 	//offset in this sense is the logical location (not offset eg base + offset)
 	// uint jump_r_w_left_return(int offset); //used
