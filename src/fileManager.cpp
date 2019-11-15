@@ -41,14 +41,14 @@ uint fileManager::r_word_advance(){
 		EOF_FLAG = true;
 	}
 	//returns a significance corrected word, ie: most significant byte highest in the word
-	for (int i = 0;i< 4 ; i++){ std::cerr << std::bitset<8>(buffer[i]) << std::endl; }  //TESTING
+	// for (int i = 0;i< 4 ; i++){ std::cerr << std::bitset<8>(buffer[i]) << std::endl; }  //TESTING
 	//uint word = (uint)buffer[3] + ((uint)buffer[2] << 8) + ((uint)buffer[1] << 16) + ((uint)buffer[0] << 24);
 	uint word = 0;
 	for (int i = 0 ; i < 4 ; i++) 
 	{
 		word += ((uint)((uchar)(buffer[i]))) << (8 * (3-i));
 	}
-	std::cerr << "Instruction word fetched: "<< std::bitset<32>(word) << std::endl; //testing
+	// std::cerr << "Instruction word fetched: "<< std::bitset<32>(word) << std::endl; //testing
 	delete[] buffer;
 	return word;
 }

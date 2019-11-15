@@ -54,8 +54,8 @@ int SRAV(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, 
 int JR(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
 {
     mem.jump_to(reg.read_register(rs));
-    std::cerr << "Jumping to address in register " << (int)rs << std::endl; //TESTING 
-    std::cerr << "Jumping to: " << reg.read_register(rs) << std::endl; //TESTING
+    // std::cerr << "Jumping to address in register " << (int)rs << std::endl; //TESTING 
+    // std::cerr << "Jumping to: " << reg.read_register(rs) << std::endl; //TESTING
     return 0;
 }
 int JALR(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
