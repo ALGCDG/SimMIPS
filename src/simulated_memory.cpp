@@ -220,7 +220,7 @@ uint simulated_memory::fetch_instruction(){
         }
         else
         {
-            //std::cerr << "EOF, exception flag set" << std::endl;//TESTING
+            std::cerr << "EOF, exception flag set" << std::endl;//TESTING
             set_exception_flag();
             return 0;
         }
@@ -231,6 +231,7 @@ void simulated_memory::jump_to(int address){
     int word_index;
     char returnval = which_readMemLoc(address, word_index);
     if(returnval != 1){
+	std::cerr << "Illegal jump address" << std::endl; // TESTING
         set_exception_flag();
     }
     if (address == 0)
