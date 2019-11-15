@@ -10,7 +10,9 @@ typedef unsigned char uchar;
 class fileManager{
 private:
 	std::ifstream binary_file;
+	uint FILESIZE;
 	bool EOF_FLAG;
+	bool is_passed_end();
 public:
 	bool get_EOF_FLAG();
 	std::queue<uint> instr_buff;
@@ -32,7 +34,7 @@ public:
 	// uint r_byte_advance(); //potentially unused
 
 	void jump_to_offset(int offset);
-	int get_currOffset();
+	uint get_currOffset();
 	uint jump_r_word_return(int offset);
 	uint r_word_advance();
 };
