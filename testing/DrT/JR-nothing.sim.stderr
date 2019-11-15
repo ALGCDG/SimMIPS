@@ -1,0 +1,11 @@
+starting main...
+CPU constructed!
+running CPU...
+Getting instruction from file
+Not at EOF
+fresh from hexffe00008
+running instruction: ffe00008
+OPcode2: 3f
+OPCODE: ?
+Invalid instruction: No match for OPCODE ?
+ERROR: instruction exception (arithmatic or instruction validity)

@@ -1,12 +1,15 @@
 #include "CPU.hpp"
 #include <math.h>
 #include "register.hpp"
-
+#include <bitset> // TESTING
 // functions for interpreting binary instructions
 uchar pass_OPCODE(const uint &instruction)
 {
 	//std::cerr << "OPcode2: " << std::hex << (instruction >> 26) << std::endl; //testing
-    return (instruction >> 26) & 0b111111;
+	//std::cerr << "parsing opcode: " << (int)(instruction>>26) << std::endl;
+	std::cerr << "Instruction pre parse: " << std::bitset<32>(instruction) << std::endl;
+	std::cerr << "Parsed OPCODE: " << std::bitset<6>(instruction >> 26) << std::endl;
+    return (instruction >> 26);
 }
 
 uchar pass_funct(const uint &instruction)
@@ -69,7 +72,8 @@ int CPU::interpret_instruction(const uint &instruction)
             return (r.R_OPCODES[funct])(rs, rt, rd, shamt, registers, memory);
         }
     }
-    else if ((OPCODE >=4 && OPCODE <=15) || (OPCODE >=32 && OPCODE <= 34) || OPCODE == 36 || OPCODE == 37 || OPCODE ==40 || OPCODE ==41 || OPCODE ==43)
+    // else if ((OPCODE >=4 && OPCODE <=15) || (OPCODE >=32 && OPCODE <= 34) || OPCODE == 36 || OPCODE == 37 || OPCODE ==40 || OPCODE ==41 || OPCODE ==43)
+    else if (i.I_OPCODES.find(OPCODE) != i.I_OPCODES.end())
     {
         //std::cerr << "I Type" << std::endl; //TESTING
         uchar rs, rt;
@@ -89,7 +93,7 @@ int CPU::interpret_instruction(const uint &instruction)
     }
     else
     {
-        std::cerr << "Invalid instruction: No match for OPCODE " << std::hex << OPCODE << std::endl; //TESTING
+        std::cerr << "Invalid instruction: No match for OPCODE " << (int)(OPCODE) << std::endl; //TESTING
         /*
         ERROR, UNSUPPORTED OPCODE USED, THROW EXCEPTION
         */

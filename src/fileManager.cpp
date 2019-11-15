@@ -1,5 +1,6 @@
 #include "fileManager.hpp"
 #include <iostream> //TESTING
+#include <bitset> //TESTING
 typedef unsigned int uint;
 typedef unsigned char uchar;
 
@@ -32,12 +33,18 @@ uint fileManager::r_word_advance(){
 	//std::cerr << "current pointer" <<binary_file.tellg() << std::endl;
 	binary_file.read(buffer,4);
 	if(binary_file.eof()){ 
-		//std::cerr << "setting EOF" << std::endl; //TESTING
+		std::cerr << "setting EOF" << std::endl; //TESTING
 		EOF_FLAG = true;
 	}
 	//returns a significance corrected word, ie: most significant byte highest in the word
-	uint word = (uint)buffer[3] | (uint)buffer[2] << 8 | (uint)buffer[1] << 16 | (uint)buffer[0] << 24;
-	//std::cerr << "Instruction word fetched: "<< std::hex << word << std::endl; //testing
+	for (int i = 0;i< 4 ; i++){ std::cerr << std::bitset<8>(buffer[i]) << std::endl; }  //TESTING
+	//uint word = (uint)buffer[3] + ((uint)buffer[2] << 8) + ((uint)buffer[1] << 16) + ((uint)buffer[0] << 24);
+	uint word = 0;
+	for (int i = 0 ; i < 4 ; i++) 
+	{
+		word += ((uint)((uchar)(buffer[i]))) << (8 * (3-i));
+	}
+	std::cerr << "Instruction word fetched: "<< std::bitset<32>(word) << std::endl; //testing
 	delete[] buffer;
 	return word;
 }

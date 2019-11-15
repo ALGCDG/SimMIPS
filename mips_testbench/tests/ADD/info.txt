@@ -1,1 +1,0 @@
-here tests for each instruction are stored in numbered directories
