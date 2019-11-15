@@ -33,7 +33,6 @@ echo "Running testbench..."
 #     done
 # done
 
-cd ..;
 for i in ./mips_testbench/tests/*/  #for each directory in the tests folder
 do
     #cd $i
@@ -42,7 +41,7 @@ do
 	testType=$(echo "$i" | cut -d/ -f4)
 	testNum=$(echo "$t" | cut -d/ -f6)
         TestID="${testType}${testNum}";
-        bin/mips_simulator "$t/binary.mips.bin";
+        $1 "$t/binary.mips.bin";
         RESULT=$?;
 	EXPECTATION=$(<"$t/expectation.txt");
         if [ "$RESULT" = "$EXPECTATION" ];
