@@ -1,0 +1,1 @@
+Jonathan, xor of 0b10001 with 0b01110 (gives 0 as complement)

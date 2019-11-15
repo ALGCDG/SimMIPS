@@ -1,0 +1,1 @@
+Jonathan, OR 0b1000 with 0b1111 from regs 1, 2 -> 2
