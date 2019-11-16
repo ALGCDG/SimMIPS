@@ -23,13 +23,14 @@ fileManager::fileManager(std::string path){
 // {
 // 	binary_file.close();
 // }
+
 void fileManager::jump_to_offset(int offset){
 	//used just for jumping i.e return to label
 	// binary_file.seekg(offset);
 	instr_loc = offset;
 	return;
 }
-int fileManager::get_currOffset(){
+uint fileManager::get_currOffset(){
 	//gets current file offset
 	// return binary_file.tellg();
 	return instr_loc;

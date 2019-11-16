@@ -75,6 +75,7 @@ char simulated_memory::which_readMemLoc(const int & address, int & word_index){
         if(address >= 0x10000000 && address < 0x10000000 + 0x1000000){
             returnval = 1;
             word_index = address - 0x10000000;
+	    std::cerr << "word index: " << word_index << std::endl;
         }
         else if(address >= 0x20000000 && address < 0x20000000 + 0x4000000){
             returnval = 0;
@@ -224,6 +225,7 @@ uint simulated_memory::fetch_instruction(){
         {
             std::cerr << "EOF, exception flag set" << std::endl;//TESTING
             set_exception_flag();
+	    std::cerr << "Current PC: " << get_PC()- 0x10000000 << std::endl;//TESTING
             return 0;
         }
     }
@@ -231,7 +233,7 @@ uint simulated_memory::fetch_instruction(){
 void simulated_memory::jump_to(int address){
     //TODO check address valid for jump offset
     int word_index;
-    // std::cerr << "jumping to address: " << address << std::endl;//TESTING
+    std::cerr << "jumping to address: " << address << std::endl;//TESTING
     char returnval = which_readMemLoc(address, word_index);
     if(returnval != 1){
 	std::cerr << "Illegal jump address" << std::endl; // TESTING
@@ -241,7 +243,7 @@ void simulated_memory::jump_to(int address){
     {
         // handles program termination
         interior_end_flag = true;
-        //std::cerr << "end flag set" << std::endl; //Testing
+        std::cerr << "interior end flag set" << std::endl; //Testing
     }
     //check returnval
     INSTR_MEM.instr_buff.push(fetch_instruction());
