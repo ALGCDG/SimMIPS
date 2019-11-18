@@ -1,0 +1,1 @@
+Archie, using LUI to load 0x8000 the slr by 31

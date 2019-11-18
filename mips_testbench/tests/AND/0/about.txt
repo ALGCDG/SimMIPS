@@ -1,0 +1,1 @@
+Archie, Using $1 to mask a number in $3

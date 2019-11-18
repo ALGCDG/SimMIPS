@@ -1,0 +1,1 @@
+Archie, testing putting char 'a' through the MMIO (NB WE NEED TO TEST TERMINALINPUTOUTPUT)

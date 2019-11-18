@@ -1,0 +1,1 @@
+Archie, Testing a simple c code that prints "Hello world!" ie testing writing multiple characters through PUTC
