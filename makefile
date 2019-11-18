@@ -46,6 +46,7 @@ assemble:
 
 
 bin/mips_simulator: ioManager.o fileManager.o memManager.o simulated_memory.o register.o R.o I.o J.o CPU.o main.o
+	mkdir -p bin
 	g++ -std=c++11 $^ -o bin/mips_simulator
 	
 
@@ -64,5 +65,6 @@ clean:
 	cd mips_testbench ; bash assemble_mips_clean.sh ; cd ..
 
 testbench: mips_testbench/testbench.sh assemble
+	mkdir -p bin
 	cp mips_testbench/testbench.sh bin/mips_testbench
-	chmod u-x bin/mips_testbench
+	chmod u+x bin/mips_testbench
