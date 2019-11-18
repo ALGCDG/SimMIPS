@@ -225,7 +225,7 @@ uint simulated_memory::fetch_instruction(){
         {
             std::cerr << "EOF, exception flag set" << std::endl;//TESTING
             set_exception_flag();
-	    std::cerr << "Current PC: " << get_PC()- 0x10000000 << std::endl;//TESTING
+	    std::cerr << "Current PC: "<< std::hex << get_PC()- 0x10000000 << std::endl;//TESTING
             return 0;
         }
     }
