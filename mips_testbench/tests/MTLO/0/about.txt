@@ -1,0 +1,1 @@
+Archie, testing moving a value (7) from register 3 to LO

@@ -1,0 +1,1 @@
+Archie, Using ANDI to mask a 8 bit number for only the lowest 4 bits

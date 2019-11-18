@@ -1,1 +1,1 @@
-Jonathan, simple BNE test -not implemented yet
+Archie, Testing BNE when registers are not equal and branch occurs

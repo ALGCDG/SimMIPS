@@ -1,0 +1,1 @@
+Archie, Taking a string from the user and then printing it and another string (testing GETC with multiple characters)

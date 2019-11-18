@@ -1,0 +1,1 @@
+Archie, Testing BNE when registers are equal and no branch occurs

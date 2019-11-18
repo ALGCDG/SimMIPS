@@ -1,0 +1,1 @@
+Archie, Basic test moving value from a register to LO then from LO to register 2

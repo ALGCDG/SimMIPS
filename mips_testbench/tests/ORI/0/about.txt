@@ -1,0 +1,1 @@
+Archie, Using ORI to load literal into register 2

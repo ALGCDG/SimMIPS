@@ -1,0 +1,1 @@
+Archie, Testing BGEZ when register is less than zero and no branch occurs
