@@ -44,8 +44,8 @@ do
         $1 "$t/binary.mips.bin";
         RESULT=$?;
 	echo $RESULT;
-        EXPECTATION="$cat expectation.txt";
-        if ["$RESULT"="$EXPECTATION"];
+	EXPECTATION=$(<"$t/expectation.txt");
+        if [ "$RESULT" = "$EXPECTATION" ];
         then
             STATUS="Pass";
         else
