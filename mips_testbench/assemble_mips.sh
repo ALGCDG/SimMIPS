@@ -32,7 +32,8 @@ do
 
 			#Link MIPS .o with linker data to make .elf
 			$MIPS_CC ${MIPS_CPPFLAGS[*]} ${MIPS_LDFLAGS[*]} -T linker.ld $j/binary.mips.o -o $j/binary.mips.elf
-			$MIPS_OBJCOPY -O binary -j --only-section=.text $j/binary.mips.elf $j/binary.mips.bin
+			#$MIPS_OBJCOPY -O binary -j --only-section=.text $j/binary.mips.elf $j/binary.mips.bin
+			$MIPS_OBJCOPY -O binary -j .text $j/binary.mips.elf $j/binary.mips.bin
 		done
 	done
 done
