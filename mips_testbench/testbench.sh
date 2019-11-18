@@ -41,7 +41,7 @@ do
 	testType=$(echo "$i" | cut -d/ -f4)
 	testNum=$(echo "$t" | cut -d/ -f6)
         TestID="${testType}${testNum}";
-	if [ -e binary.mips.bin ];
+	if [ -e $t/binary.mips.bin ];
 	then
         	$1 "$t/binary.mips.bin";
         	RESULT=$?;

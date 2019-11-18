@@ -10,7 +10,7 @@ typedef unsigned char uchar;
 class fileManager{
 private:
 	//std::ifstream binary_file;
-	std::vector<char> file_data;
+	std::vector<uchar> file_data;
 	bool EOF_FLAG;
 	uint instr_loc;
 	uint file_length;
