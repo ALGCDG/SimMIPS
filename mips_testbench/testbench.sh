@@ -43,9 +43,10 @@ do
         TestID="${testType}${testNum}";
         $1 "$t/binary.mips.bin";
         RESULT=$?;
-	EXPECTATION=$(<"$t/expectation.txt");
-        if [ "$RESULT" = "$EXPECTATION" ];
-	then
+	echo $RESULT;
+        EXPECTATION="$cat expectation.txt";
+        if ["$RESULT"="$EXPECTATION"];
+        then
             STATUS="Pass";
         else
             STATUS="Fail";

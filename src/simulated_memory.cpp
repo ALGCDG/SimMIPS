@@ -48,8 +48,10 @@ void simulated_memory::put_word(int address, uint word){
             return;
         case(0):
             DATA_MEM.store_word(word_index, word);
+	    return;
         case(1):
             IO_MEM.store_word(word);
+ 	    return;    
     }
 }
 // I suggest we use these instead of literals, from Archie
