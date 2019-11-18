@@ -48,8 +48,10 @@ void simulated_memory::put_word(int address, uint word){
             return;
         case(0):
             DATA_MEM.store_word(word_index, word);
+	    return;
         case(1):
             IO_MEM.store_word(word);
+ 	    return;    
     }
 }
 // I suggest we use these instead of literals, from Archie
@@ -73,6 +75,7 @@ char simulated_memory::which_readMemLoc(const int & address, int & word_index){
         if(address >= 0x10000000 && address < 0x10000000 + 0x1000000){
             returnval = 1;
             word_index = address - 0x10000000;
+	    std::cerr << "word index: " << word_index << std::endl;
         }
         else if(address >= 0x20000000 && address < 0x20000000 + 0x4000000){
             returnval = 0;
@@ -207,21 +210,22 @@ uint simulated_memory::fetch_instruction(){
         uint instruction = INSTR_MEM.instr_buff.front();
         INSTR_MEM.instr_buff.pop();
         if(interior_end_flag){ set_program_end_flag(); }
-        std::cerr << "Getting instruction from queue" << std::endl;//TESTING
+        //std::cerr << "Getting instruction from queue" << std::endl;//TESTING
         return instruction;
     }
     else{
         // return INSTR_MEM.r_word_advance();
         uint instr = INSTR_MEM.r_word_advance();
-        std::cerr << "Getting instruction from file" << std::endl;//TESTING
+        //std::cerr << "Getting instruction from file" << std::endl;//TESTING
         if(!INSTR_MEM.get_EOF_FLAG()){
-            std::cerr << "Not at EOF" << std::endl; //TESTING
+            //std::cerr << "Not at EOF" << std::endl; //TESTING
             return instr;
         }
         else
         {
             std::cerr << "EOF, exception flag set" << std::endl;//TESTING
             set_exception_flag();
+	    std::cerr << "Current PC: " << get_PC()- 0x10000000 << std::endl;//TESTING
             return 0;
         }
     }
@@ -229,19 +233,21 @@ uint simulated_memory::fetch_instruction(){
 void simulated_memory::jump_to(int address){
     //TODO check address valid for jump offset
     int word_index;
+    std::cerr << "jumping to address: " << address << std::endl;//TESTING
     char returnval = which_readMemLoc(address, word_index);
     if(returnval != 1){
+	std::cerr << "Illegal jump address" << std::endl; // TESTING
         set_exception_flag();
     }
     if (address == 0)
     {
         // handles program termination
         interior_end_flag = true;
-        std::cerr << "end flag set" << std::endl; //Testing
+        std::cerr << "interior end flag set" << std::endl; //Testing
     }
     //check returnval
     INSTR_MEM.instr_buff.push(fetch_instruction());
-    std::cerr << "pushing to queue, queue size: " << INSTR_MEM.instr_buff.size() << std::endl; //Testing
+    //std::cerr << "pushing to queue, queue size: " << INSTR_MEM.instr_buff.size() << std::endl; //Testing
     INSTR_MEM.jump_to_offset(word_index*4);
 }
 uint simulated_memory::get_PC(){

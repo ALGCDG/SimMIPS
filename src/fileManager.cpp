@@ -1,20 +1,39 @@
 #include "fileManager.hpp"
 #include <iostream> //TESTING
+#include <bitset> //TESTING
 typedef unsigned int uint;
 typedef unsigned char uchar;
 
 fileManager::fileManager(std::string path){
-	binary_file.open(path);
+	std::ifstream binary_file{path};
+	//std::cerr << "File name: "<< path << std::endl;
 	EOF_FLAG = false;
-	//TODO check if properly opened
+	instr_loc = 0;
+	if(binary_file){
+		binary_file.seekg(0, std::ios::end);
+		file_length = binary_file.tellg();
+		binary_file.seekg(0, std::ios::beg);
+		file_data.resize(file_length);
+		binary_file.read(file_data.data(), file_length);
+		binary_file.close();
+	}
+
 }
+// fileManager::~fileManager()
+// {
+// 	binary_file.close();
+// }
+
 void fileManager::jump_to_offset(int offset){
 	//used just for jumping i.e return to label
-	binary_file.seekg(offset);
+	// binary_file.seekg(offset);
+	instr_loc = offset;
+	return;
 }
-int fileManager::get_currOffset(){
+uint fileManager::get_currOffset(){
 	//gets current file offset
-	return binary_file.tellg();
+	// return binary_file.tellg();
+	return instr_loc;
 }
 uint fileManager::jump_r_word_return(int offset){
 	int initial_offset = get_currOffset();
@@ -27,15 +46,31 @@ uint fileManager::r_word_advance(){
 	//reads a word at the current position
 	//file pointer is advanced
 	//eg for getting an instruction
-	char * buffer = new char[4];
-	binary_file.read(buffer,4);
-	if(binary_file.eof()){ 
-		std::cerr << "setting EOF" << std::endl; //TESTING
+	// char * buffer = new char[4];
+	//std::cerr << "current pointer" <<binary_file.tellg() << std::endl;
+	// binary_file.read(buffer,4);
+	// if(binary_file.eof()){ 
+	// 	std::cerr << "setting EOF" << std::endl; //TESTING
+	// 	EOF_FLAG = true;
+	// }
+	//returns a significance corrected word, ie: most significant byte highest in the word
+	// for (int i = 0;i< 4 ; i++){ std::cerr << std::bitset<8>(buffer[i]) << std::endl; }  //TESTING
+	//uint word = (uint)buffer[3] + ((uint)buffer[2] << 8) + ((uint)buffer[1] << 16) + ((uint)buffer[0] << 24);
+	// uint word = 0;
+	// for (int i = 0 ; i < 4 ; i++) 
+	// {
+	// 	word += ((uint)((uchar)(buffer[i]))) << (8 * (3-i));
+	// }
+	// std::cerr << "Instruction word fetched: "<< std::bitset<32>(word) << std::endl; //testing
+	// delete[] buffer;
+
+	uint word = (file_data[instr_loc] << 24) | (file_data[instr_loc+1] << 16) | (file_data[instr_loc+2] << 8) | (file_data[instr_loc+3]);
+	instr_loc += 4;
+	std::cerr << "Instr word" << word << std::endl;
+	if(instr_loc >= file_length){
 		EOF_FLAG = true;
 	}
-	//returns a significance corrected word, ie: most significant byte highest in the word
-	uint word = (uint)buffer[3] | (uint)buffer[2] << 8 | (uint)buffer[1] << 16 | (uint)buffer[0] << 24;
-	delete[] buffer;
+
 	return word;
 }
 

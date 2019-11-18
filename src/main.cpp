@@ -34,7 +34,7 @@ int main(int argc, char *argv[])    // this is the way it has to be, left over f
     	
     CPU processor(binary_file_name);// constructing the simulated processor
     std::cerr << "CPU constructed!" << std::endl; //TESTING
-    std::cerr << "running CPU..." << std::endl; //TESTING
+    //std::cerr << "running CPU..." << std::endl; //TESTING
     return processor.run(); // runs the processor, the run function returns the value of the register 2
 
 

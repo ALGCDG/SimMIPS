@@ -1,0 +1,1 @@
+Jonathan, Result of OR in reg 2. ORs 5 in reg1 with 0 in reg 2

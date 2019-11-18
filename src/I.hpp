@@ -34,7 +34,7 @@ int SB(const uchar &rs, const uchar &rt, const uint &immediate, simulated_regist
 int SH(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem);
 int SW(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem);
 
-class I_TYPE : public simulated_register
+class I_TYPE
 {
     public:
     std::map<uchar, I_OPCODE> I_OPCODES;

@@ -52,3 +52,8 @@ main.o: src/main.cpp
 clean:
 	rm *.o
 	rm bin/mips_simulator
+	rm bin/mips_testbench
+
+testbench: mips_testbench/testbench.sh
+	cp mips_testbench/testbench.sh bin/mips_testbench
+	#chmod u-x bin/mips_testbench
