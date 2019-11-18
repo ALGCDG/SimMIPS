@@ -1,0 +1,1 @@
+Archie, Testing BLTZ when register is equal to zero so no branch occurs

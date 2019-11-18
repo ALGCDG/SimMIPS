@@ -1,0 +1,1 @@
+Archie, Testing SW writing to some other address in Data memory (0x20ceff12)

@@ -1,0 +1,1 @@
+Archie, Testing BEQ when registers are not equal and no branch occurs
