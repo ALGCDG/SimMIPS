@@ -9,14 +9,18 @@ typedef unsigned char uchar;
 
 class fileManager{
 private:
-	std::ifstream binary_file;
+	//std::ifstream binary_file;
+	std::vector<char> file_data;
 	bool EOF_FLAG;
+	uint instr_loc;
+	uint file_length;
+
 public:
 	bool get_EOF_FLAG();
 	std::queue<uint> instr_buff;
 	//TODO update functions
 	fileManager(std::string path); //constr
-	~fileManager(); //de-constr
+	// ~fileManager(); //de-constr
 
 	//confusing use of offset:
 	//offset in this sense is the logical location (not offset eg base + offset)
@@ -32,7 +36,7 @@ public:
 	// uint r_byte_advance(); //potentially unused
 
 	void jump_to_offset(int offset);
-	int get_currOffset();
+	uint get_currOffset();
 	uint jump_r_word_return(int offset);
 	uint r_word_advance();
 };

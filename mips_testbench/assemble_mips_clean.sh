@@ -4,8 +4,9 @@ do
 	for j in $i/*/
 	do
 		if [ -f $j/*.s ]; then
-			rm $j/*.elf
-			rm $j/*.bin
+			rm -f $j/*.elf
+			rm -f $j/*.bin
+			rm -f $j/*.o
 		fi
 	done
 done

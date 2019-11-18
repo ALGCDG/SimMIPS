@@ -39,9 +39,17 @@
 # MAIN.o: main.cpp CPU.o
 # 	g++ -std=c++11 -c main.cpp
 
+.PHONY: assemble
 
-simulator: ioManager.o fileManager.o memManager.o simulated_memory.o register.o R.o I.o J.o CPU.o main.o
+assemble:
+	cd mips_testbench ; bash assemble_mips.sh ; cd ..
+
+
+bin/mips_simulator: ioManager.o fileManager.o memManager.o simulated_memory.o register.o R.o I.o J.o CPU.o main.o
 	g++ -std=c++11 $^ -o bin/mips_simulator
+	
+
+simulator: bin/mips_simulator
 
 %.o: src/%.cpp src/%.hpp
 	g++ -std=c++11 -c $<
@@ -50,10 +58,11 @@ main.o: src/main.cpp
 	g++ -std=c++11 -c src/main.cpp
 
 clean:
-	rm *.o
-	rm bin/mips_simulator
-	rm bin/mips_testbench
+	rm -f *.o
+	rm -f bin/mips_simulator
+	rm -f bin/mips_testbench
+	cd mips_testbench ; bash assemble_mips_clean.sh ; cd ..
 
-testbench: mips_testbench/testbench.sh
+testbench: mips_testbench/testbench.sh assemble
 	cp mips_testbench/testbench.sh bin/mips_testbench
-	#chmod u-x bin/mips_testbench
+	chmod u-x bin/mips_testbench
