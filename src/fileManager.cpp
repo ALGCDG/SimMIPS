@@ -17,19 +17,22 @@ fileManager::fileManager(std::string path){
 		binary_file.read(file_data.data(), file_length);
 		binary_file.close();
 	}
-
+	else{
+		std::cerr << "Error opening file at path: " << path << std::endl;
+	}
 }
 // fileManager::~fileManager()
 // {
 // 	binary_file.close();
 // }
+
 void fileManager::jump_to_offset(int offset){
 	//used just for jumping i.e return to label
 	// binary_file.seekg(offset);
 	instr_loc = offset;
 	return;
 }
-int fileManager::get_currOffset(){
+uint fileManager::get_currOffset(){
 	//gets current file offset
 	// return binary_file.tellg();
 	return instr_loc;
@@ -62,13 +65,14 @@ uint fileManager::r_word_advance(){
 	// }
 	// std::cerr << "Instruction word fetched: "<< std::bitset<32>(word) << std::endl; //testing
 	// delete[] buffer;
+	if(instr_loc >= file_length){
+                EOF_FLAG = true;
+        }
 
 	uint word = (file_data[instr_loc] << 24) | (file_data[instr_loc+1] << 16) | (file_data[instr_loc+2] << 8) | (file_data[instr_loc+3]);
 	instr_loc += 4;
-	std::cerr << "Instr word" << word << std::endl;
-	if(instr_loc >= file_length){
-		EOF_FLAG = true;
-	}
+	//std::cerr << "Instr word"<< std::hex << word << std::endl;
+	
 
 	return word;
 }

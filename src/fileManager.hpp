@@ -14,6 +14,7 @@ private:
 	bool EOF_FLAG;
 	uint instr_loc;
 	uint file_length;
+
 public:
 	bool get_EOF_FLAG();
 	std::queue<uint> instr_buff;
@@ -35,7 +36,7 @@ public:
 	// uint r_byte_advance(); //potentially unused
 
 	void jump_to_offset(int offset);
-	int get_currOffset();
+	uint get_currOffset();
 	uint jump_r_word_return(int offset);
 	uint r_word_advance();
 };
