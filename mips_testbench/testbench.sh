@@ -41,17 +41,24 @@ do
 	testType=$(echo "$i" | cut -d/ -f4)
 	testNum=$(echo "$t" | cut -d/ -f6)
         TestID="${testType}${testNum}";
-        $1 "$t/binary.mips.bin";
-        RESULT=$?;
-	echo $RESULT;
-	EXPECTATION=$(<"$t/expectation.txt");
-        if [ "$RESULT" = "$EXPECTATION" ];
-        then
-            STATUS="Pass";
-        else
-            STATUS="Fail";
-        fi
-	AUTHOR_AND_MESSAGE=$(<"$t/about.txt");
+	if [ -e binary.mips.bin ];
+	then
+        	$1 "$t/binary.mips.bin";
+        	RESULT=$?;
+		echo $RESULT;
+		EXPECTATION=$(<"$t/expectation.txt");
+        	if [ "$RESULT" = "$EXPECTATION" ];
+        	then
+            		STATUS="Pass";
+        	else
+            		STATUS="Fail";
+        	fi
+		
+		AUTHOR_AND_MESSAGE=$(<"$t/about.txt");
+	else
+		AUTHOR_AND_MESSAGE="NO BIN FILE";
+		STATUS="FAIL";
+	fi
 	cs=", ";
         echo "${TestID}${cs}${testType}${cs}${STATUS}${cs}${AUTHOR_AND_MESSAGE}";
     done
