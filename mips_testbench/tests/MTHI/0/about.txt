@@ -1,0 +1,1 @@
+Archie, moving a value (5) from register run to hi register

@@ -1,5 +1,5 @@
-lui $26, 0xf0ff;
-lui $25, 0xfff0;
+lui $26, 0xffff;
+lui $25, 0xffff;
 bne $26, $25, 8;
 
 #code that is executed if false

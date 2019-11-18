@@ -1,0 +1,1 @@
+Archie, A basic test moving a value from one register to HI the moving from HI to register 2

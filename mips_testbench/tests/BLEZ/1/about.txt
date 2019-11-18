@@ -1,0 +1,1 @@
+Archie, Testing BLEZ when register is greater than zero and no branch occurs

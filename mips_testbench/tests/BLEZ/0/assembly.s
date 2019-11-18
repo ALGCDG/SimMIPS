@@ -1,6 +1,5 @@
-lui $26, 0xf0ff;
-lui $25, 0xfff0;
-bne $26, $25, 8;
+lui $26, 0xffff;
+blez $26, 8;
 
 #code that is executed if false
 addi $2, $0, 5; 

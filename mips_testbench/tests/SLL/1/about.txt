@@ -1,0 +1,1 @@
+Archie, use addi to put literal 1 in $2 then shift left by 8 until ought of return window

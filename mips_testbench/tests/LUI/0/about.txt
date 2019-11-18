@@ -1,0 +1,1 @@
+Archie, using LUI to load 0xffff into the upper half of the register two and testing that the lower half is uneffected
