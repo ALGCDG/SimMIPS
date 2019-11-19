@@ -21,7 +21,6 @@ fileManager::fileManager(std::string path){
 		for ( int i = 0 ; i < file_length ; i++ )
 		{
 			file_data[i] = static_cast<uchar>(tmp_data[i]);
-		}
 
 	}
 	else{

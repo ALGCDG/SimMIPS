@@ -25,16 +25,29 @@ for i in ./tests/*/
 do
 	for j in $i/*/
 	do
-		for k in $j/*.s
-		do
+		#for k in $j/*.s
+		#do
+		#	#Create .o file
+		#	$MIPS_CC ${MIPS_CPPFLAGS[*]} -c $k -o $j/binary.mips.o
+		#
+		#	#Link MIPS .o with linker data to make .elf
+		#	$MIPS_CC ${MIPS_CPPFLAGS[*]} ${MIPS_LDFLAGS[*]} -T linker.ld $j/binary.mips.o -o $j/binary.mips.elf
+		#	#$MIPS_OBJCOPY -O binary -j --only-section=.text $j/binary.mips.elf $j/binary.mips.bin
+		#	$MIPS_OBJCOPY -O binary -j .text $j/binary.mips.elf $j/binary.mips.bin
+		#done
+		
+		if [ -e $j/assembly.s ];
+		then
+			k=$j/assembly.s
 			#Create .o file
-			$MIPS_CC ${MIPS_CPPFLAGS[*]} -c $k -o $j/binary.mips.o
-
-			#Link MIPS .o with linker data to make .elf
-			$MIPS_CC ${MIPS_CPPFLAGS[*]} ${MIPS_LDFLAGS[*]} -T linker.ld $j/binary.mips.o -o $j/binary.mips.elf
-			#$MIPS_OBJCOPY -O binary -j --only-section=.text $j/binary.mips.elf $j/binary.mips.bin
-			$MIPS_OBJCOPY -O binary -j .text $j/binary.mips.elf $j/binary.mips.bin
-		done
+                        $MIPS_CC ${MIPS_CPPFLAGS[*]} -c $k -o $j/binary.mips.o
+                        #Link MIPS .o with linker data to make .elf
+                        $MIPS_CC ${MIPS_CPPFLAGS[*]} ${MIPS_LDFLAGS[*]} -T linker.ld $j/*.o -o $j/binary.mips.elf
+                        #$MIPS_OBJCOPY -O binary -j --only-section=.text $j/binary.mips.elf $j/binary.mips.bin
+                        $MIPS_OBJCOPY -O binary -j .text $j/*.elf $j/binary.mips.bin
+		#else
+		#	echo "Script currently requires assembly.s file to create a binary"
+		fi
 	done
 done
 
