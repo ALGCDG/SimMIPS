@@ -72,7 +72,7 @@ int MFHI(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, 
 }
 int MTHI(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
 {
-    reg.write_HI(reg.read_register(rd));
+    reg.write_HI(reg.read_register(rs));
     return 0;
 }
 int MFLO(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
@@ -82,7 +82,8 @@ int MFLO(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, 
 }
 int MTLO(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
 {
-    reg.write_LO(reg.read_register(rd));
+    reg.write_LO(reg.read_register(rs));
+    // std::cerr << "LO = " << (uint)(reg.read_LO()) << std::endl; //TESTING
     return 0;
 }
 int MULT(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
