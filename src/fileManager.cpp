@@ -22,6 +22,7 @@ fileManager::fileManager(std::string path){
 		{
 			file_data[i] = static_cast<uchar>(tmp_data[i]);
 
+		}
 	}
 	else{
 		std::cerr << "Error opening file at path: " << path << std::endl;
