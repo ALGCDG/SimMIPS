@@ -1,0 +1,1 @@
+Jonathan, shift 0xFFFFFFFF right 31 times

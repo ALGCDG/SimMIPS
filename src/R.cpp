@@ -29,12 +29,12 @@ int SRA(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, s
 }
 int SLLV(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
 {
-    reg.write_register(rd, reg.read_register(rt) << reg.read_register(rs));
+    reg.write_register(rd, reg.read_register(rt) << (reg.read_register(rs) % 32));
     return 0;
 }
 int SRLV(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
 {
-    reg.write_register(rd, reg.read_register(rt) >> reg.read_register(rs));
+    reg.write_register(rd, reg.read_register(rt) >> (reg.read_register(rs) % 32));
     return 0;
 }
 int SRAV(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
@@ -45,7 +45,7 @@ int SRAV(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, 
     bits which are the same as the most significant bit in the original word
     */
     uint word = reg.read_register(rt);
-    uint shift = reg.read_register(rs);
+    uint shift = reg.read_register(rs) % 32;
     uint shifted_word = word >> shift;
     uint signed_bits = ((word & 0x80000000) > 0) ? 0xFFFFFFFF << (32 - shift) : 0 ;
     reg.write_register(rd, shifted_word | signed_bits);
@@ -217,7 +217,7 @@ int NOR(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, s
 int SLT(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
 {
     // using type casting to signed int
-    reg.write_register(rd, ((int) reg.read_register(rs) < reg.read_register(rt))); // we can rely on implicit type conversion of bool to int
+    reg.write_register(rd, ((int)reg.read_register(rs) < (int)reg.read_register(rt))); // we can rely on implicit type conversion of bool to int
     return 0;
 }
 int SLTU(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
