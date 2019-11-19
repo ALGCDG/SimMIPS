@@ -1,0 +1,1 @@
+Archie, Testing for arithmetic exception when dividing a number by zero
