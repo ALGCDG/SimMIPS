@@ -1,0 +1,1 @@
+Jonathan, shift right by 36 actually shifts by 4 -> 32 := 2
