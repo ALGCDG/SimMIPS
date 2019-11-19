@@ -1,0 +1,1 @@
+Archie, Using XORI to load literal into register
