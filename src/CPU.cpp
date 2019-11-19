@@ -122,6 +122,11 @@ int CPU::run()
             std::cerr << "ERROR: instruction exception (arithmatic or instruction validity)" << std::endl; //TESTING
             return instruction_status;
         }
+        if (memory.get_exception_flag()) //TODO: implement exception flag
+        {
+            std::cerr << "ERROR: memory access exception (-11)" << std::endl; //TESTING
+            return -11;
+        }
     }
     std::cerr << "returning value in register 2" << std::endl; //TESTING
     return registers.read_register(2); // return exit code
