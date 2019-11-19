@@ -1,0 +1,1 @@
+Jonathan, negative offset from 0x200000 - should give mem exception

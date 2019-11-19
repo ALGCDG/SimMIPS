@@ -93,6 +93,7 @@ char simulated_memory::which_readMemLoc(const int & address, int & word_index){
             set_exception_flag();
             returnval = -1;
             word_index = 0;
+	    std::cerr << "exception flag set by which_readmemloc" << std::endl;
         }
     // }
     return returnval;
@@ -115,6 +116,7 @@ char simulated_memory::which_storeMemLoc(const int & address, int & word_index){
             set_exception_flag();
             returnval = -1;
             word_index = 0;
+	    std::cerr << "mem exception flag set by storememloc" << std::endl;
         }
     // }
     return returnval;
@@ -126,9 +128,20 @@ void simulated_memory::sign_extend_bytes_to_word(uint & word, int num_bytes_in){
 }
 uint simulated_memory::read_byte_u(int address){
     uint word = get_word(address);
-    // word %= (0xFF << address%4);
-    word = (word >> (address%4)) & 0xFF;
-    return word;
+    //// word %= (0xFF << address%4);
+    //word = (word >> (address%4)) & 0xFF;
+    //also possibly incorrect logic
+    
+
+    //if address bottom bits : 00, then reading from the most significant byte
+    
+    uint byte_offset = address & 0b11;
+    uint word_shamt = 8*(3-byte_offset); //how far to shift word right
+    					//in order to get the correct byte
+					//in the lsB
+    uint mask = 0xFF;
+    uint word_out = ((word >> word_shamt) & mask);
+    return word_out;
 }
 uint simulated_memory::read_byte_s(int address){
     uint byte = read_byte_u(address);
@@ -194,15 +207,28 @@ void simulated_memory::store_half_word(int address, uint word){
 }
 void simulated_memory::store_byte(int address, uint word){
     int temp_index; //just to fill the param slot
-    if(which_storeMemLoc(address,temp_index) == 1){
+    char returnval = which_storeMemLoc(address,temp_index);
+    if(returnval == 1){
         put_word(address, (word & 0xFF) << (address & 0b11)*8);
     }
-    else{
-        uint temp_word = get_word(address);
-        temp_word &= ~(0xFF << (address & 0b11)*8); //zero byte
-        temp_word |= ((temp_word & 0xFF) << (address & 0b11) * 8);
-        put_word(address,temp_word);
+    else if (returnval == 0){
+        //uint temp_word = get_word(address);
+        //temp_word &= ~(0xFF000000 >> (address & 0b11)*8); //zero byte
+        //temp_word |= ((word & 0xFF) << (address & 0b11) * 8);
+        //std::cerr << "temp word " << temp_word << std::endl;
+	
+	//rewriting for clarity - current code bug prone and opaque
+	uint temp_word = get_word(address);
+	uint byte_offset = address & 0b11;
+	uint bottom_byte = word & 0xFF;
+	//if the byte offset is 0, need to shift to highest char
+	//if the byte offset is 3, keep at lowest char
+	uint mask_shamt = (8*(3-byte_offset));
+	temp_word = (temp_word & ~(0xFF << mask_shamt)) | (bottom_byte << mask_shamt);
+
+	put_word(address,temp_word);
     }
+    else { return; }
 }
 
 uint simulated_memory::fetch_instruction(){

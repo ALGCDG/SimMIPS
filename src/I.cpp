@@ -117,6 +117,9 @@ int LHU(const uchar &rs, const uchar &rt, const uint &immediate, simulated_regis
 }
 int SB(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem)
 {
+    //std::cerr << "Store byte: source word (rt): " << reg.read_register(rt) << std::endl; //TESTING
+    //std::cerr << "Address for SB" << reg.read_register(rs) + sign_extend(immediate,16) << std::endl; //TESTING
+    
     mem.store_byte(reg.read_register(rs) + sign_extend(immediate,16), reg.read_register(rt));
     return 0;
 }
