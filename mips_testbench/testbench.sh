@@ -32,7 +32,7 @@ echo "Running testbench..."
 #         cat about.txt
 #     done
 # done
-
+touch ./testing/out.csv
 for i in ./mips_testbench/tests/*/  #for each directory in the tests folder
 do
     #cd $i
@@ -61,6 +61,7 @@ do
 	fi
 	cs=", ";
         echo "${TestID}${cs}${testType}${cs}${STATUS}${cs}${AUTHOR_AND_MESSAGE}";
+	echo "${TestID}${cs}${testType}${cs}${STATUS}${cs}${AUTHOR_AND_MESSAGE}">> ./testing/out.csv;
     done
     printf "\n=============================================================================\n";
 done

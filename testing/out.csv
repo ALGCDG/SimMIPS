@@ -1,0 +1,66 @@
+ADD0, ADD, Pass, Archie, testing the addition of the zeroth register with its self storing the result in the zeroth register NB I am not sure what should happen in this case\n
+ADD1, ADD, Pass, Archie, Testing for sign overflow exception (-10) adding two positive numbers and getting a negative number\n
+ADD2, ADD, Fail, Archie, Testing for arithmatic exception behaviour (-10) adding two negative numbers and getting a positive number\n
+ADDI0, ADDI, Pass, Archie, Adding zero and 7 and storing result in register 2\n
+AND0, AND, Pass, Archie, Using $1 to mask a number in $3\n
+ANDI0, ANDI, Pass, Archie, Using ANDI to mask a 8 bit number for only the lowest 4 bits\n
+BEQ0, BEQ, Pass, Archie, Testing BEQ when registers are equal and branch occurs\n
+BEQ1, BEQ, Pass, Archie, Testing BEQ when registers are not equal and no branch occurs\n
+BGEZ0, BGEZ, Fail, Archie, Testing BGEZ when register is greater than zero\n
+BGEZ1, BGEZ, Fail, Archie, Testing BGEZ when register is less than zero and no branch occurs\n
+BGEZ2, BGEZ, Fail, Archie, Testing BGEZ when register is equal to zero\n
+BGTZ0, BGTZ, Pass, Archie, Testing BGTZ when register is greater than zero\n
+BGTZ1, BGTZ, Pass, Archie, Testing BGTZ when register is less than zero and no branch occurs\n
+BGTZ2, BGTZ, Pass, Archie, Testing BGTZ when register is equal to zero and no branch occurs\n
+BLEZ0, BLEZ, Pass, Archie, Testing BLEZ when register is less than zero\n
+BLEZ1, BLEZ, Pass, Archie, Testing BLEZ when register is greater than zero and no branch occurs\n
+BLEZ2, BLEZ, Pass, Archie, Testing BLEZ when register is equal to zero\n
+BLTZ0, BLTZ, Fail, Archie, Testing BLTZ when register is less than zero\n
+BLTZ1, BLTZ, Fail, Archie, Testing BLTZ when register is greater than zero and no branch occurs\n
+BLTZ2, BLTZ, Fail, Archie, Testing BLTZ when register is equal to zero so no branch occurs\n
+BNE0, BNE, Pass, Archie, Testing BNE when registers are not equal and branch occurs\n
+BNE1, BNE, Pass, Archie, Testing BNE when registers are equal and no branch occurs\n
+INTERNAL0, INTERNAL, Pass, Archie, Testing that all registers are initialised zero\n
+INTERNAL1, INTERNAL, FAIL, NO BIN FILE\n
+INTERNAL2, INTERNAL, FAIL, NO BIN FILE\n
+INTERNAL3, INTERNAL, FAIL, NO BIN FILE\n
+INTERNAL4, INTERNAL, FAIL, NO BIN FILE\n
+INTERNAL7, INTERNAL, FAIL, NO BIN FILE\n
+INTERNAL8, INTERNAL, FAIL, NO BIN FILE\n
+J0, J, FAIL, NO BIN FILE\n
+JR0, JR, Pass, Archie, JR jumping straight to NULL to end program\n
+JR1, JR, Pass, Archie, Running ADD then SLL then SLL and a JR to null\n
+JR2, JR, Pass, Archie, testing plane jump to null assembled\n
+JR3, JR, Pass, Archie, Testing a Jump to null that is followed by several instructions (which ought not to execute)\n
+LUI0, LUI, Pass, Archie, using LUI to load 0xffff into the upper half of the register two and testing that the lower half is uneffected\n
+LUI1, LUI, Pass, Archie, using LUI to load 0x0001 into the upper half then shift right logically by 16\n
+LUI2, LUI, FAIL, NO BIN FILE\n
+LW0, LW, Pass, Archie, writing to the first address in data memory (0x20000000) then reading from it\n
+MFHI0, MFHI, Fail, Archie, A basic test moving a value from one register to HI the moving from HI to register 2\n
+MFLO0, MFLO, Fail, Archie, Basic test moving value from a register to LO then from LO to register 2\n
+MTHI0, MTHI, Pass, Archie, moving a value (5) from register run to hi register\n
+MTLO0, MTLO, Pass, Archie, testing moving a value (7) from register 3 to LO\n
+OR0, OR, Pass, Jonathan, Result of OR in reg 2. ORs 5 in reg1 with 0 in reg 2\n
+OR1, OR, Pass, Jonathan, OR 0b1000 with 0b1111 from regs 1, 2 -> 2\n
+ORI0, ORI, Pass, Archie, Using ORI to load literal into register 2\n
+SB0, SB, Pass, Jonathan, Store then read the same byte\n
+SB1, SB, Pass, Jonathan, store byte then read exact same address\n
+SB2, SB, Pass, Jonathan, negative offset from 0x200000 - should give mem exception\n
+SB3, SB, Pass, Jonathan, Store byte out of upper limit: mem exception\n
+SB4, SB, Fail, Jonathan, SB and PUTC test\n
+SLL0, SLL, Pass, Archie, use addi to store 0x1 in $2 then SLL to shift left by 2 then jump to end\n
+SLL1, SLL, Pass, Archie, use addi to put literal 1 in $2 then shift left by 8 until ought of return window\n
+SLTU0, SLTU, Pass, Archie, Testing SLTU where comparison is true\n
+SLTU1, SLTU, Pass, Archie, Testing SLTU in case where comparison is false\n
+SLTU2, SLTU, Pass, Archie, Comparing a negative (under two's compliment) number with a positive number\n
+STACK0, STACK, FAIL, NO BIN FILE\n
+STACK1, STACK, FAIL, NO BIN FILE\n
+STACK2, STACK, FAIL, NO BIN FILE\n
+STACK3, STACK, FAIL, NO BIN FILE\n
+SUBU0, SUBU, Fail, Archie, invert a binary word by using SUBU with zero then add 1\n
+SW0, SW, Pass, Archie, testing storing word in the first memory address of Data memory (0x20000000)\n
+SW1, SW, Fail, Archie, Testing SW writing to the largest address in Data memory (0x23fffffb)\n
+SW2, SW, Fail, Archie, Testing SW writing to some other address in Data memory (0x20ceff12)\n
+SW3, SW, Pass, Archie, Testing writing SW to the PUTC address (0x30000004)\n
+XOR0, XOR, Pass, Jonathan, xor of 0b10001 with 0b01110 (gives 0 as complement)\n
+XOR1, XOR, Pass, Jonathan, XOR swap\n
