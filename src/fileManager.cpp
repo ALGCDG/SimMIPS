@@ -10,12 +10,19 @@ fileManager::fileManager(std::string path){
 	EOF_FLAG = false;
 	instr_loc = 0;
 	if(binary_file){
+		std::vector<char> tmp_data;
 		binary_file.seekg(0, std::ios::end);
 		file_length = binary_file.tellg();
 		binary_file.seekg(0, std::ios::beg);
+		tmp_data.resize(file_length);
 		file_data.resize(file_length);
-		binary_file.read(file_data.data(), file_length);
+		binary_file.read(tmp_data.data(), file_length);
 		binary_file.close();
+		for ( int i = 0 ; i < file_length ; i++ )
+		{
+			file_data[i] = static_cast<uchar>(tmp_data[i]);
+		}
+
 	}
 	else{
 		std::cerr << "Error opening file at path: " << path << std::endl;

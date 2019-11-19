@@ -147,7 +147,7 @@ I_TYPE::I_TYPE()
     I_OPCODES[15] = LUI;
     I_OPCODES[32] = LB;
     I_OPCODES[33] = LH;
-    I_OPCODES[34] = LW;
+    I_OPCODES[35] = LW;
     I_OPCODES[36] = LBU;
     I_OPCODES[37] = LHU;
     I_OPCODES[40] = SB;

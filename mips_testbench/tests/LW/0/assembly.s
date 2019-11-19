@@ -1,4 +1,5 @@
-addi $2, $0, 0x00000001; #loading in a simple literal
-sll $2, $2, 29; #shifting left to get registery value 0x20000000
-lw $2, $2;
+li $1, 21;
+li $3, 0x20000000;
+sw $1, 0($3);
+lw $2, 0($3);
 jr $0;
