@@ -18,7 +18,7 @@ int B(const uchar &rs, const uchar &rt, const uint &immediate, simulated_registe
     if (0b00001 == rt)
     {
         /*BGEZ*/
-        if(reg.read_register(rs) >= 0){
+        if(reg.read_register(rs) < 0x80000000){ //ie > 0
             mem.jump_to(mem.get_PC() + sign_extend(immediate << 2, 18));
         }
         return 0;
@@ -26,9 +26,9 @@ int B(const uchar &rs, const uchar &rt, const uint &immediate, simulated_registe
     else if (0b10001 == rt)
     {
         /*BGEZAL*/
-        uint pc_value = mem.get_PC();
-        reg.write_register(31, pc_value + 8);
-        if(reg.read_register(rs) >= 0){
+        if(reg.read_register(rs) < 0x80000000){
+            uint pc_value = mem.get_PC();
+            reg.write_register(31, pc_value + 4);  
             mem.jump_to(mem.get_PC() + sign_extend(immediate << 2, 18));
         }
         return 0;
@@ -36,7 +36,7 @@ int B(const uchar &rs, const uchar &rt, const uint &immediate, simulated_registe
     else if (0b00000 == rt)
     {
         /*BLTZ*/
-        if(reg.read_register(rs) < 0){
+        if(reg.read_register(rs) >= 0x80000000){
             mem.jump_to(mem.get_PC() + sign_extend(immediate << 2, 18));
         }
         return 0;
@@ -44,9 +44,9 @@ int B(const uchar &rs, const uchar &rt, const uint &immediate, simulated_registe
     else if (0b00000 == rt)
     {
         /*BLTZAL*/
-        uint pc_value = mem.get_PC();
-        reg.write_register(31, pc_value + 8);
-        if(reg.read_register(rs) < 0){
+        if(reg.read_register(rs) >= 0x80000000){
+            uint pc_value = mem.get_PC();
+            reg.write_register(31, pc_value + 4);
             mem.jump_to(mem.get_PC() + sign_extend(immediate << 2, 18));
         }
         return 0;
