@@ -179,6 +179,10 @@ int SW(const uchar &rs, const uchar &rt, const uint &immediate, simulated_regist
     mem.store_word(reg.read_register(rs) + sign_extend(immediate,16), reg.read_register(rt));
     return 0;
 }
+int LWL(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem) {}
+int LWR(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem) {}
+
+
 
 I_TYPE::I_TYPE()
 {
@@ -201,7 +205,7 @@ I_TYPE::I_TYPE()
     I_OPCODES[35] = LW;
     I_OPCODES[36] = LBU;
     I_OPCODES[37] = LHU;
-    I_OPCODES[38] = LWL;
+    I_OPCODES[38] = LWR;
     I_OPCODES[40] = SB;
     I_OPCODES[41] = SH;
     I_OPCODES[43] = SW;
