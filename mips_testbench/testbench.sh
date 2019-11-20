@@ -46,20 +46,58 @@ do
     do
 	testType=$(echo "$i" | cut -d/ -f4)
 	testNum=$(echo "$t" | cut -d/ -f6)
-        TestID="${testType}${testNum}";
+	TestID="${testType}${testNum}";
 	if [ -e $t/binary.mips.bin ];
 	then
-        	$1 "$t/binary.mips.bin";
-        	RESULT=$?;
-		echo $RESULT;
-		EXPECTATION=$(<"$t/expectation.txt");
-        	if [ "$RESULT" = "$EXPECTATION" ];
-        	then
-            		STATUS="Pass";
-        	else
-            		STATUS="Fail";
-        	fi
+        	if [ -e $t/input.txt ] || [ -e $t/output.txt ];
+		then
+			EXPECTATION=$(<"$t/expectation.txt");
+			if [ -e $t/input.txt ] && ![ -e $t/output.txt ]; then
+				IN=$(<"$t/input.txt");
+				echo $IN | $1 "$t/binary.mips.bin";
+				RESULT=$?
+				echo $RESULT
+				if [ "$RESULT" = "$EXPECTATION" ]; then
+					STATUS="PASS";
+				else
+					STATUS="FAIL";
+				fi
+			elif ![ -e $t/input.txt ] && [ -e $t/output.txt ]; then
+				OUT=$(<"$t/output.txt");
+				$1 "$t/binary.mips.bin" | read GOTOUT;
+				RESULT=$?;
+				echo $RESULT;
+				if [ "$RESULT" = "$EXPECTATION" ] && [ "$GOTOUT" = "OUT" ]; then
+                                        STATUS="PASS";
+                                else
+                                        STATUS="FAIL";
+                                fi
+			elif [ -e $t/input.txt ] && [ -e $t/output.txt ]; then
+				IN=$(<"$t/input.txt");
+				OUT=$(<"$t/output.txt")
+				echo $IN | $1 "$t/binary.mips.bin" | read GOTOUT;
+				RESULT=$?;
+				echo $RESULT;
+				if [ "$RESULT" = "$EXPECTATION" ] && [ "$GOTOUT" = "OUT" ]; then
+					STATUS="PASS";
+				else
+					STATUS="FAIL";
+				fi
+			fi
+
+		else
+			$1 "$t/binary.mips.bin";
+        		RESULT=$?;
+			echo $RESULT;
+			EXPECTATION=$(<"$t/expectation.txt");
 		
+			if [ "$RESULT" = "$EXPECTATION" ];
+      			then
+      				STATUS="Pass";
+      			else
+        			STATUS="Fail";
+      			fi
+		fi
 		AUTHOR_AND_MESSAGE=$(<"$t/about.txt");
 	else
 		AUTHOR_AND_MESSAGE="NO BIN FILE";
@@ -71,4 +109,3 @@ do
     done
     printf "\n=============================================================================\n";
 done
-
