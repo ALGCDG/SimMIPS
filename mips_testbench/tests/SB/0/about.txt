@@ -1,1 +1,1 @@
-Jonathan, Store then read the same byte
+Jonathan, Store then read the same byte - checks non alligned byte

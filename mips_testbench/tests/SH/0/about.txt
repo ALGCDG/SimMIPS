@@ -1,0 +1,1 @@
+Jonathan, simple store half then load word (aligned)

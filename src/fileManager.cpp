@@ -15,13 +15,16 @@ fileManager::fileManager(std::string path){
 		file_length = binary_file.tellg();
 		binary_file.seekg(0, std::ios::beg);
 		tmp_data.resize(file_length);
-		file_data.resize(file_length);
 		binary_file.read(tmp_data.data(), file_length);
 		binary_file.close();
+		//file size check - truncates if longer
+		//file size measured in bytes
+		//max size = 0x1000000 bytes
+		file_length = (file_length <= 0x1000000) ? file_length : 0x1000000;
+		file_data.resize(file_length);
 		for ( int i = 0 ; i < file_length ; i++ )
 		{
 			file_data[i] = static_cast<uchar>(tmp_data[i]);
-
 		}
 	}
 	else{
@@ -58,7 +61,7 @@ uint fileManager::r_word_advance(){
 	// char * buffer = new char[4];
 	//std::cerr << "current pointer" <<binary_file.tellg() << std::endl;
 	// binary_file.read(buffer,4);
-	// if(binary_file.eof()){ 
+	// if(binary_file.eof()){
 	// 	std::cerr << "setting EOF" << std::endl; //TESTING
 	// 	EOF_FLAG = true;
 	// }
@@ -66,21 +69,18 @@ uint fileManager::r_word_advance(){
 	// for (int i = 0;i< 4 ; i++){ std::cerr << std::bitset<8>(buffer[i]) << std::endl; }  //TESTING
 	//uint word = (uint)buffer[3] + ((uint)buffer[2] << 8) + ((uint)buffer[1] << 16) + ((uint)buffer[0] << 24);
 	// uint word = 0;
-	// for (int i = 0 ; i < 4 ; i++) 
+	// for (int i = 0 ; i < 4 ; i++)
 	// {
 	// 	word += ((uint)((uchar)(buffer[i]))) << (8 * (3-i));
 	// }
 	// std::cerr << "Instruction word fetched: "<< std::bitset<32>(word) << std::endl; //testing
 	// delete[] buffer;
 	if(instr_loc >= file_length){
-                EOF_FLAG = true;
-        }
-
+  	EOF_FLAG = true;
+  }
 	uint word = (file_data[instr_loc] << 24) | (file_data[instr_loc+1] << 16) | (file_data[instr_loc+2] << 8) | (file_data[instr_loc+3]);
 	instr_loc += 4;
 	//std::cerr << "Instr word"<< std::hex << word << std::endl;
-	
-
 	return word;
 }
 

@@ -27,7 +27,7 @@ bool simulated_memory::get_program_end_flag()
 
 uint simulated_memory::get_word(int address){
     int word_index;
-    char code = which_readMemLoc(address, word_index);
+    char code = which_readMemLoc(address - address%4, word_index);
     switch(code){
         case(-1):
             return 0;
@@ -42,7 +42,7 @@ uint simulated_memory::get_word(int address){
 }
 void simulated_memory::put_word(int address, uint word){
     int word_index;
-    char code = which_storeMemLoc(address, word_index);
+    char code = which_storeMemLoc(address - address%4, word_index);
     switch(code){
         case(-1):
             return;
@@ -51,48 +51,41 @@ void simulated_memory::put_word(int address, uint word){
 	    return;
         case(1):
             IO_MEM.store_word(word);
- 	    return;
+ 	    return;    
     }
 }
 // I suggest we use these instead of literals, from Archie
-static const uint INST_BASE = 0x10000000;
-static const uint DATA_BASE = 0x20000000;
-static const uint GETC_BASE = 0x30000000;
-static const uint PUTC_BASE = 0x30000004;
+const uint INST_BASE = 0x10000000;
+const uint DATA_BASE = 0x20000000;
+const uint GETC_BASE = 0x30000000;
+const uint PUTC_BASE = 0x30000004;
 
-static const uint INST_LEN = 0x1000000;
-static const uint DATA_LEN = 0x4000000;
-static const uint GETC_LEN = 0x4;
-static const uint PUTC_LEN = 0x4;
+const uint INST_SIZE = 0x1000000;
+const uint DATA_SIZE = 0x4000000;
+const uint GETC_SIZE = 0x4;
+const uint PUTC_SIZE = 0x4;
 
 char simulated_memory::which_readMemLoc(const int & address, int & word_index){
-    //takes in any address for the purpose of checking its general validity
-    //input address can be unaligned
-    //word_index is used exclusively by get_word, it is assured to be alligned
-    //the function returns the codes for functions to use
-
-
     //-1 if not valid
     //0 if DATA
     //1 if instr
     //2 if getc
-    int al_address = address - address%4;
     char returnval = -1;
     // if(address < 0x10000000){
-        if(al_address >= INST_BASE && al_address < INST_BASE + INST_LEN){
+        if(address >= 0x10000000 && address < 0x10000000 + 0x1000000){
             returnval = 1;
-            word_index = al_address - INST_BASE;
-	          std::cerr << "word index: " << word_index << std::endl;
+            word_index = address - 0x10000000;
+	    std::cerr << "word index: " << word_index << std::endl;
         }
-        else if(al_address >= DATA_BASE && al_address < DATA_BASE + DATA_LEN){
+        else if(address >= 0x20000000 && address < 0x20000000 + 0x4000000){
             returnval = 0;
-            word_index = al_address - DATA_BASE;
+            word_index = address - 0x20000000;
         }
-        else if(al_address >= GETC_BASE && al_address < GETC_BASE + GETC_LEN){
+        else if(address >= 0x30000000 && address < 0x30000000 + 0x4){
             returnval = 2;
-            word_index = al_address - GETC_BASE;
+            word_index = address - 0x30000000;
         }
-        else if(al_address == 0){
+        else if(address == 0){
             returnval = 1;
             word_index = 0;
         }
@@ -100,7 +93,6 @@ char simulated_memory::which_readMemLoc(const int & address, int & word_index){
             set_exception_flag();
             returnval = -1;
             word_index = 0;
-	    std::cerr << "exception flag set by which_readmemloc" << std::endl;
         }
     // }
     return returnval;
@@ -110,21 +102,19 @@ char simulated_memory::which_storeMemLoc(const int & address, int & word_index){
     //0 if DATA
     //1 if putc
     char returnval = -1;
-    int al_address = address - address%4;
     // if(address < 0x10000000){
-        if(al_address >= DATA_BASE && al_address < DATA_BASE + DATA_LEN){
+        if(address >= 0x20000000 && address < 0x20000000 + 0x4000000){
             returnval = 0;
-            word_index = al_address - DATA_BASE;
+            word_index = address - 0x20000000;
         }
-        else if(al_address >= PUTC_BASE && al_address < PUTC_BASE + PUTC_LEN){
+        else if(address >= 0x30000004 && address < 0x30000004 + 0x4){
             returnval = 1;
-            word_index = al_address - PUTC_BASE;
+            word_index = address - 0x30000004;
         }
         else{
             set_exception_flag();
             returnval = -1;
             word_index = 0;
-	          std::cerr << "mem exception flag set by storememloc" << std::endl;
         }
     // }
     return returnval;
@@ -139,16 +129,18 @@ uint simulated_memory::read_byte_u(int address){
     //// word %= (0xFF << address%4);
     //word = (word >> (address%4)) & 0xFF;
     //also possibly incorrect logic
-
+    
 
     //if address bottom bits : 00, then reading from the most significant byte
-
+    
     uint byte_offset = address & 0b11;
     uint word_shamt = 8*(3-byte_offset); //how far to shift word right
     					//in order to get the correct byte
 					//in the lsB
     uint mask = 0xFF;
     uint word_out = ((word >> word_shamt) & mask);
+
+
     return word_out;
 }
 uint simulated_memory::read_byte_s(int address){
@@ -191,53 +183,39 @@ uint simulated_memory::read_word_right(int address){
     return word >> (3-(address%4))*8;
 }
 void simulated_memory::store_word(int address, uint word){
-    if((address & 0b10) ^ 0b00){
+    if((address & 0b11) ^ 0b00){
         set_exception_flag();
         return;
     }
     put_word(address,word);
 }
 void simulated_memory::store_half_word(int address, uint word){
-    int temp_index; //just to fill param slot in storememloc
-    char returnval = which_storeMemLoc(address, temp_index);
+    int temp_index; //just to fill the param slot
     if(address & 0b1){
         set_exception_flag();
         return;
     }
-    if(returnval == 1){
+    if(which_storeMemLoc(address,temp_index) == 1){
         put_word(address, (word & 0xFFFF) << (address & 0b10)*8);
     }
-    else if (returnval == 0){
+    else{
         uint temp_word = get_word(address);
-        //temp_word &= (0xFFFF0000 >> (address & 0b10)*8);
-        //temp_word |= (address << (address & 0b10)*8);
-        //rewriting for clarity as per
-
-        //if address offset 2, want to edit least sig half word
-        //if address offset 0, want to edit most sig half word
-        uint h_word = word & 0xFFFF;
-        uint mask = ~(0xFFFF0000 >> ((address & 0b10)*8));//mask used to zero correct bits of temp_word
-
-        temp_word &= mask;
-        h_word = h_word << (16 - (address & 0b10)*8);//if offset = 2, then dont want to shift
-                                                    //if offset = 0, then shift to most sig half word
-        temp_word |= h_word;
-
+        temp_word &= (0xFFFF0000 >> (address & 0b10)*8);
+        temp_word |= (address << (address & 0b10)*8);
         put_word(address,temp_word);
     }
 }
 void simulated_memory::store_byte(int address, uint word){
     int temp_index; //just to fill the param slot
-    char returnval = which_storeMemLoc(address,temp_index);
-    if(returnval == 1){
+    if(which_storeMemLoc(address,temp_index) ==){
         put_word(address, (word & 0xFF) << (address & 0b11)*8);
     }
-    else if (returnval == 0){
+    else if
         //uint temp_word = get_word(address);
         //temp_word &= ~(0xFF000000 >> (address & 0b11)*8); //zero byte
         //temp_word |= ((word & 0xFF) << (address & 0b11) * 8);
         //std::cerr << "temp word " << temp_word << std::endl;
-
+	
 	//rewriting for clarity - current code bug prone and opaque
 	uint temp_word = get_word(address);
 	uint byte_offset = address & 0b11;
@@ -249,7 +227,6 @@ void simulated_memory::store_byte(int address, uint word){
 
 	put_word(address,temp_word);
     }
-    else { return; }
 }
 
 uint simulated_memory::fetch_instruction(){
@@ -272,16 +249,17 @@ uint simulated_memory::fetch_instruction(){
         {
             std::cerr << "EOF, exception flag set" << std::endl;//TESTING
             set_exception_flag();
-	    std::cerr << "Current PC: "<< std::hex << get_PC() - 0x10000000 << std::endl;//TESTING
+	    std::cerr << "Current PC: "<< std::hex << get_PC()- 0x10000000 << std::endl;//TESTING
             return 0;
         }
     }
 }
 void simulated_memory::jump_to(int address){
+    //TODO check address valid for jump offset
     int word_index;
     std::cerr << "jumping to address: " << address << std::endl;//TESTING
     char returnval = which_readMemLoc(address, word_index);
-    if((returnval != 1) || (address & 0b11 != 0)){
+    if(returnval != 1){
 	std::cerr << "Illegal jump address" << std::endl; // TESTING
         set_exception_flag();
     }
@@ -294,9 +272,9 @@ void simulated_memory::jump_to(int address){
     //check returnval
     INSTR_MEM.instr_buff.push(fetch_instruction());
     //std::cerr << "pushing to queue, queue size: " << INSTR_MEM.instr_buff.size() << std::endl; //Testing
-    INSTR_MEM.jump_to_offset(word_index);
+    INSTR_MEM.jump_to_offset(word_index*4);
 }
 uint simulated_memory::get_PC(){
-    return INSTR_MEM.get_currOffset() + INST_BASE; // must be memory address (not relative instruction address)
+    return INSTR_MEM.get_currOffset() + 0x10000000; // must be memory address (not relative instruction address)
     // NB consider writing all these memory addresses as constant unsigned ints, code with large literals are hard to read
 }

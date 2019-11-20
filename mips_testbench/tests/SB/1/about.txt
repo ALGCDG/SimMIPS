@@ -1,1 +1,1 @@
-Jonathan, store byte then read exact same address
+Jonathan, store byte then read exact same address - checks concatenation

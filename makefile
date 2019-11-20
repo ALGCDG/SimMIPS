@@ -63,6 +63,7 @@ clean:
 	rm -f bin/mips_simulator
 	rm -f bin/mips_testbench
 	cd mips_testbench ; bash assemble_mips_clean.sh ; cd ..
+	rm -f testing/out.csv
 
 testbench: mips_testbench/testbench.sh assemble
 	mkdir -p bin
