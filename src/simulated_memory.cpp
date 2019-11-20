@@ -70,6 +70,7 @@ char simulated_memory::which_readMemLoc(const int & address, int & word_index){
     //0 if DATA
     //1 if instr
     //2 if getc
+    int loc_address = address - address%4;
     char returnval = -1;
     // if(address < 0x10000000){
         if(address >= 0x10000000 && address < 0x10000000 + 0x1000000){
@@ -270,11 +271,10 @@ uint simulated_memory::fetch_instruction(){
     }
 }
 void simulated_memory::jump_to(int address){
-    //TODO check address valid for jump offset
     int word_index;
     std::cerr << "jumping to address: " << address << std::endl;//TESTING
     char returnval = which_readMemLoc(address, word_index);
-    if(returnval != 1){
+    if((returnval != 1) || (address & 0b11 != 0)){
 	std::cerr << "Illegal jump address" << std::endl; // TESTING
         set_exception_flag();
     }
