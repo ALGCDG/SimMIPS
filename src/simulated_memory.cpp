@@ -294,7 +294,7 @@ void simulated_memory::jump_to(int address){
     //check returnval
     INSTR_MEM.instr_buff.push(fetch_instruction());
     //std::cerr << "pushing to queue, queue size: " << INSTR_MEM.instr_buff.size() << std::endl; //Testing
-    INSTR_MEM.jump_to_offset(word_index*4);
+    INSTR_MEM.jump_to_offset(word_index);
 }
 uint simulated_memory::get_PC(){
     return INSTR_MEM.get_currOffset() + INST_BASE; // must be memory address (not relative instruction address)
