@@ -1,1 +1,1 @@
-Archie, testing some basic flow control with J return value indicates which path is taken
+Archie, Testing J to skip over an instruction

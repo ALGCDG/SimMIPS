@@ -153,16 +153,35 @@ int ADD(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, s
     there is no way we can short cut signed addition and subtraction by using signed ints
     instead we must implement it using unsigned int and detect overflow ourselves
     */
-    uint a, b;
+    uint a, b, sum;
     a = reg.read_register(rs);
     b = reg.read_register(rt);
     // checking for ARITHMATIC overflow
-    if (a > INT_MAX - b)
+    // if (a > INT_MAX - b)
+    // {
+    //     std::cerr << "ADD arithmatic overflow" << std::endl; // ERROR LOGGING
+    //     return -10; // Throwing an arithmatic exception (which will be caught in the CPU execute function)
+    // }
+    // new overflow check
+    sum = a + b;
+    if (a < 0x80000000 && b < 0x80000000) // ie a and b positive
     {
-        std::cerr << "ADD arithmatic overflow" << std::endl; // ERROR LOGGING
-        return -10; // Throwing an arithmatic exception (which will be caught in the CPU execute function)
+        if (sum >= 0x80000000) // ie the sum is negative
+        {
+            std::cerr << "ADD arithmatic overflow" << std::endl; // ERROR LOGGING
+            return -10;
+        }
+
     }
-    reg.write_register(rd, a + b);
+    else if (a >= 0x80000000 && b >= 0x80000000) // ie a and b are negative
+    {
+        if (sum < 0x80000000) // ie the sum is negative
+        {
+            std::cerr << "ADD arithmatic overflow" << std::endl; // ERROR LOGGING
+            return -10;
+        }
+    }
+    reg.write_register(rd, sum);
     return 0;
 }
 int ADDU(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
