@@ -12,6 +12,48 @@ uint sign_extend(uint word, uchar length_of_word)
     }
 }
 
+int B(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem)
+{
+    // a function for all the Branch instructions which have opcode 1 (ie BGEZ, BGEZAL, BLTZ, BLTZAL)
+    if (0b00001 == rt)
+    {
+        /*BGEZ*/
+        if(reg.read_register(rs) >= 0){
+            mem.jump_to(mem.get_PC() + sign_extend(immediate << 2, 18));
+        }
+        return 0;
+    }
+    else if (0b10001 == rt)
+    {
+        /*BGEZAL*/
+        uint pc_value = mem.get_PC();
+        reg.write_register(31, pc_value + 8);
+        if(reg.read_register(rs) >= 0){
+            mem.jump_to(mem.get_PC() + sign_extend(immediate << 2, 18));
+        }
+        return 0;
+    }
+    else if (0b00000 == rt)
+    {
+        /*BLTZ*/
+        if(reg.read_register(rs) < 0){
+            mem.jump_to(mem.get_PC() + sign_extend(immediate << 2, 18));
+        }
+        return 0;
+    }
+    else if (0b00000 == rt)
+    {
+        /*BLTZAL*/
+        uint pc_value = mem.get_PC();
+        reg.write_register(31, pc_value + 8);
+        if(reg.read_register(rs) < 0){
+            mem.jump_to(mem.get_PC() + sign_extend(immediate << 2, 18));
+        }
+        return 0;    
+    }
+    return -12;
+}
+
 // I type operators implementation
 int BEQ(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem){
     if(reg.read_register(rs) == reg.read_register(rt)){
@@ -137,9 +179,14 @@ int SW(const uchar &rs, const uchar &rt, const uint &immediate, simulated_regist
     mem.store_word(reg.read_register(rs) + sign_extend(immediate,16), reg.read_register(rt));
     return 0;
 }
+int LWL(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem) {}
+int LWR(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem) {}
+
+
 
 I_TYPE::I_TYPE()
 {
+    I_OPCODES[1] = B;
     I_OPCODES[4] = BEQ;
     I_OPCODES[5] = BNE;
     I_OPCODES[6] = BLEZ;
@@ -153,10 +200,12 @@ I_TYPE::I_TYPE()
     I_OPCODES[14] = XORI;
     I_OPCODES[15] = LUI;
     I_OPCODES[32] = LB;
-    I_OPCODES[33] = LH;
+    I_OPCODES[33] = LH;    
+    I_OPCODES[34] = LWL;
     I_OPCODES[35] = LW;
     I_OPCODES[36] = LBU;
     I_OPCODES[37] = LHU;
+    I_OPCODES[38] = LWR;
     I_OPCODES[40] = SB;
     I_OPCODES[41] = SH;
     I_OPCODES[43] = SW;

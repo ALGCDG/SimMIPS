@@ -191,21 +191,39 @@ int ADDU(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, 
 }
 int SUB(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
 {
-    uint a, b;
+    uint a, b, difference ;
     a = reg.read_register(rs);
     b = reg.read_register(rt);
-    // checking for overflow
-    // if (a > UINT_MAX - (~b) - 1)
-    bool msb_a = (a & 0x80000000) > 0;
-    bool msb_b = (b & 0x80000000) > 0;
-    uint result = a - b;
-    bool msb_r = (result & 0x80000000) > 0;
-    if (((msb_a&&!msb_b)&&(!msb_r))||((!msb_a&&msb_b)&&(msb_r)))
+    // // checking for overflow
+    // // if (a > UINT_MAX - (~b) - 1)
+    // bool msb_a = (a & 0x80000000) > 0;
+    // bool msb_b = (b & 0x80000000) > 0;
+    // uint result = a - b;
+    // bool msb_r = (result & 0x80000000) > 0;
+    // if (((msb_a&&!msb_b)&&(!msb_r))||((!msb_a&&msb_b)&&(msb_r)))
+    // {
+    //     std::cerr << "SUB arithmatic overflow" << std::endl; // ERROR LOGGING
+    //     return -10;                                          // Throwing an arithmatic exception (which will be caught in the CPU execute function)
+    // }
+    difference = a - b;
+    if (a < 0x80000000 && b >= 0x80000000) // ie a is positive and b is negative
     {
-        std::cerr << "SUB arithmatic overflow" << std::endl; // ERROR LOGGING
-        return -10;                                          // Throwing an arithmatic exception (which will be caught in the CPU execute function)
+        if (difference >= 0x80000000) // ie the sum is negative
+        {
+            std::cerr << "SUB arithmatic overflow" << std::endl; // ERROR LOGGING
+            return -10;
+        }
+
     }
-    reg.write_register(rd, result);
+    else if (a >= 0x80000000 && b < 0x80000000) // ie a is negative and b is positive
+    {
+        if (difference < 0x80000000) // ie the sum is negative
+        {
+            std::cerr << "SUB arithmatic overflow" << std::endl; // ERROR LOGGING
+            return -10;
+        }
+    }
+    reg.write_register(rd, difference);
     return 0;
 }
 int SUBU(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
