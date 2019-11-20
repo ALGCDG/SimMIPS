@@ -125,6 +125,10 @@ int SB(const uchar &rs, const uchar &rt, const uint &immediate, simulated_regist
 }
 int SH(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem)
 {
+    std::cerr << "rs: " << reg.read_register(rs) << std::endl;
+    std::cerr << "sign extend imm: " << sign_extend(immediate,16) << std::endl;
+    std::cerr << "rs + sign_extend(imm): " << reg.read_register(rs) + sign_extend(immediate,16) << std::endl;
+    std::cerr << "rt: " << reg.read_register(rt) << std::endl;
     mem.store_half_word(reg.read_register(rs) + sign_extend(immediate,16), reg.read_register(rt));
     return 0;
 }

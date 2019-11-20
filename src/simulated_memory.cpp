@@ -51,7 +51,7 @@ void simulated_memory::put_word(int address, uint word){
 	    return;
         case(1):
             IO_MEM.store_word(word);
- 	    return;    
+ 	    return;
     }
 }
 // I suggest we use these instead of literals, from Archie
@@ -131,10 +131,10 @@ uint simulated_memory::read_byte_u(int address){
     //// word %= (0xFF << address%4);
     //word = (word >> (address%4)) & 0xFF;
     //also possibly incorrect logic
-    
+
 
     //if address bottom bits : 00, then reading from the most significant byte
-    
+
     uint byte_offset = address & 0b11;
     uint word_shamt = 8*(3-byte_offset); //how far to shift word right
     					//in order to get the correct byte
@@ -183,25 +183,38 @@ uint simulated_memory::read_word_right(int address){
     return word >> (3-(address%4))*8;
 }
 void simulated_memory::store_word(int address, uint word){
-    if((address & 0b11) ^ 0b00){
+    if((address & 0b10) ^ 0b00){
         set_exception_flag();
         return;
     }
     put_word(address,word);
 }
 void simulated_memory::store_half_word(int address, uint word){
-    int temp_index; //just to fill the param slot
+    int temp_index; //just to fill param slot in storememloc
+    char returnval = which_storeMemLoc(address, temp_index);
     if(address & 0b1){
         set_exception_flag();
         return;
     }
-    if(which_storeMemLoc(address,temp_index) == 1){
+    if(returnval == 1){
         put_word(address, (word & 0xFFFF) << (address & 0b10)*8);
     }
-    else{
+    else if (returnval == 0){
         uint temp_word = get_word(address);
-        temp_word &= (0xFFFF0000 >> (address & 0b10)*8);
-        temp_word |= (address << (address & 0b10)*8);
+        //temp_word &= (0xFFFF0000 >> (address & 0b10)*8);
+        //temp_word |= (address << (address & 0b10)*8);
+        //rewriting for clarity as per
+
+        //if address offset 2, want to edit least sig half word
+        //if address offset 0, want to edit most sig half word
+        uint h_word = word & 0xFFFF;
+        uint mask = ~(0xFFFF0000 >> ((address & 0b10)*8));//mask used to zero correct bits of temp_word
+
+        temp_word &= mask;
+        h_word = h_word << (16 - (address & 0b10)*8);//if offset = 2, then dont want to shift
+                                                    //if offset = 0, then shift to most sig half word
+        temp_word |= h_word;
+
         put_word(address,temp_word);
     }
 }
@@ -216,7 +229,7 @@ void simulated_memory::store_byte(int address, uint word){
         //temp_word &= ~(0xFF000000 >> (address & 0b11)*8); //zero byte
         //temp_word |= ((word & 0xFF) << (address & 0b11) * 8);
         //std::cerr << "temp word " << temp_word << std::endl;
-	
+
 	//rewriting for clarity - current code bug prone and opaque
 	uint temp_word = get_word(address);
 	uint byte_offset = address & 0b11;
