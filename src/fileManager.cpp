@@ -48,11 +48,15 @@ uint fileManager::get_currOffset(){
 	return instr_loc;
 }
 uint fileManager::jump_r_word_return(int offset){
-	int initial_offset = get_currOffset();
-	jump_to_offset(offset);
-	uint word = r_word_advance();
-	jump_to_offset(initial_offset);
-	return word;
+	//int initial_offset = get_currOffset();
+	//jump_to_offset(offset);
+	//uint word = r_word_advance();
+	//jump_to_offset(initial_offset);
+	if(offset > file_length){ return 0; }
+	else {
+		uint word = (file_data[offset] << 24) | (file_data[offset+1] << 16) | (file_data[offset+2] << 8) | (file_data[offset+3]);
+		return word;
+	}
 }
 uint fileManager::r_word_advance(){
 	//reads a word at the current position

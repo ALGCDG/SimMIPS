@@ -34,7 +34,7 @@ uint simulated_memory::get_word(int address){
         case(0):
             return DATA_MEM.read_word(word_index);
         case(1):
-            return INSTR_MEM.jump_r_word_return(word_index*4);
+            return INSTR_MEM.jump_r_word_return(word_index);
         case(2):
             return IO_MEM.read_word();
     }
@@ -131,7 +131,7 @@ char simulated_memory::which_storeMemLoc(const int & address, int & word_index){
 }
 void simulated_memory::sign_extend_bytes_to_word(uint & word, int num_bytes_in){
     if((0x80 << (num_bytes_in-1)) & word){
-        word = ((0xFFFFFFFF << num_bytes_in*4) | word);
+        word = ((0xFFFFFFFF << num_bytes_in*8) | word);
     }
 }
 uint simulated_memory::read_byte_u(int address){

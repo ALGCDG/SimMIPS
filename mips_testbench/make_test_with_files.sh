@@ -1,4 +1,5 @@
 TEST=$1
+TESTINFO=$2
 echo $TEST
 mkdir -p ./tests/$TEST
 ID=0
@@ -9,4 +10,4 @@ mkdir ./tests/$TEST/$ID
 touch ./tests/$TEST/$ID/assembly.s
 touch ./tests/$TEST/$ID/about.txt
 touch ./tests/$TEST/$ID/expectation.txt
-echo 'PLACEHOLDER, NOTHING IMPLEMENTED' >./tests/$TEST/$ID/about.txt
+echo $TESTINFO >./tests/$TEST/$ID/about.txt
