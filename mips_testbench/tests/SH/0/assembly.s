@@ -15,6 +15,9 @@ sllv $3, $3, $1 #0b00000000000000000000000000000000
 OR $2, $3, $4
 OR $2, $2, $5
 OR $2, $2, $6 #0b00000000000000010000001000000011
+
+#testbench confirms up to this point correct, decimal value of $2 is 66051 as expected
+
 li $1, 0x20000000
 SH $2, 0($1) #stores 0b0000001000000011 as most significant half
 LW $2, 0($1) #now most significant half of $2
