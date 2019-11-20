@@ -1,1 +1,1 @@
-Archie, invert a binary word by using SUBU with zero then add 1
+Archie, A very simple subtraction of a large positive number by a smaller positive number

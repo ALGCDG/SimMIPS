@@ -60,7 +60,7 @@ int JR(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, si
 }
 int JALR(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
 {
-    reg.write_register(rd, mem.get_PC() + 8);
+    reg.write_register(rd, mem.get_PC() + 4);
     mem.jump_to(reg.read_register(rs));
     return 0;
 }
@@ -128,6 +128,10 @@ int DIV(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, s
 
     MIPS specifies that dividend and remainer must have same sign
     */
+    if (0 == reg.read_register(rt))
+    {
+        return 0;
+    }
     reg.write_LO((int) reg.read_register(rs) / reg.read_register(rt));
     reg.write_HI((int) reg.read_register(rs) % reg.read_register(rt));
     return 0;
@@ -142,6 +146,10 @@ int DIVU(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, 
 
     there is an issue about what happens if the number in register rt is zero - unclear
     */
+    if (0 == reg.read_register(rt))
+    {
+        return 0;
+    }
     reg.write_LO(reg.read_register(rs) / reg.read_register(rt));
     reg.write_HI(reg.read_register(rs) % reg.read_register(rt));
     return 0;

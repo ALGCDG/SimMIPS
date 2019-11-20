@@ -191,7 +191,7 @@ uint simulated_memory::read_word_right(int address){
     return (word >> (3-(address%4))*8);
 }
 void simulated_memory::store_word(int address, uint word){
-    if((address & 0b10) ^ 0b00){
+    if((address & 0b11) > 0){
         set_exception_flag();
         return;
     }
