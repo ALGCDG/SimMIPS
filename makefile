@@ -42,7 +42,7 @@
 .PHONY: assemble
 
 assemble:
-	cd mips_testbench ; bash assemble_mips.sh ; cd ..
+	cd mips_testbench ; bash assemble_mips.sh ; bash compile_mips.sh ; cd ..
 
 
 bin/mips_simulator: ioManager.o fileManager.o memManager.o simulated_memory.o register.o R.o I.o J.o CPU.o main.o
