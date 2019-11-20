@@ -49,13 +49,6 @@ int ADDI(const uchar &rs, const uchar &rt, const uint &immediate, simulated_regi
     // !(a^b) Top bit true if they are the same
     // (a^sum) Top bit true if sign change
     // !(a^b) & (a^sum) & 0x80000000
-    std::cerr << "ADDI INFO ========= " << std::endl;
-    std::cerr << "a " << std::hex << a << std::endl;
-    std::cerr << "b " << std::hex << b << std::endl;
-    std::cerr << std::hex << ~(a^b) << std::endl;
-    std::cerr << std::hex << (a^sum) << std::endl;
-    std::cerr << std::hex << 0x80000000 << std::endl;
-    std::cerr << "===========" << std::endl;
     if( ~(a^b) & (a^sum) & 0x80000000 ){ //then possible overflow
         return -10;
     }
