@@ -91,8 +91,8 @@ int ADDI(const uchar &rs, const uchar &rt, const uint &immediate, simulated_regi
     // !(a^b) Top bit true if they are the same
     // (a^sum) Top bit true if sign change
     // !(a^b) & (a^sum) & 0x80000000
-    if( !(a^b) & (a^sum) & 0x80000000 ){ //then possible overflow
-        return -12;
+    if( ~(a^b) & (a^sum) & 0x80000000 ){ //then possible overflow
+        return -10;
     }
     reg.write_register(rt, sum);
     return 0;
@@ -161,7 +161,7 @@ int SB(const uchar &rs, const uchar &rt, const uint &immediate, simulated_regist
 {
     //std::cerr << "Store byte: source word (rt): " << reg.read_register(rt) << std::endl; //TESTING
     //std::cerr << "Address for SB" << reg.read_register(rs) + sign_extend(immediate,16) << std::endl; //TESTING
-    
+
     mem.store_byte(reg.read_register(rs) + sign_extend(immediate,16), reg.read_register(rt));
     return 0;
 }
