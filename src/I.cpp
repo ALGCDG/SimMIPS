@@ -12,6 +12,48 @@ uint sign_extend(uint word, uchar length_of_word)
     }
 }
 
+int B(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem)
+{
+    // a function for all the Branch instructions which have opcode 1 (ie BGEZ, BGEZAL, BLTZ, BLTZAL)
+    if (0b00001 == rt)
+    {
+        /*BGEZ*/
+        if(reg.read_register(rs) >= 0){
+            mem.jump_to(mem.get_PC() + sign_extend(immediate << 2, 18));
+        }
+        return 0;
+    }
+    else if (0b10001 == rt)
+    {
+        /*BGEZAL*/
+        uint pc_value = mem.get_PC();
+        reg.write_register(31, pc_value + 8);
+        if(reg.read_register(rs) >= 0){
+            mem.jump_to(mem.get_PC() + sign_extend(immediate << 2, 18));
+        }
+        return 0;
+    }
+    else if (0b00000 == rt)
+    {
+        /*BLTZ*/
+        if(reg.read_register(rs) < 0){
+            mem.jump_to(mem.get_PC() + sign_extend(immediate << 2, 18));
+        }
+        return 0;
+    }
+    else if (0b00000 == rt)
+    {
+        /*BLTZAL*/
+        uint pc_value = mem.get_PC();
+        reg.write_register(31, pc_value + 8);
+        if(reg.read_register(rs) < 0){
+            mem.jump_to(mem.get_PC() + sign_extend(immediate << 2, 18));
+        }
+        return 0;    
+    }
+    return -12;
+}
+
 // I type operators implementation
 int BEQ(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem){
     if(reg.read_register(rs) == reg.read_register(rt)){
@@ -140,6 +182,7 @@ int SW(const uchar &rs, const uchar &rt, const uint &immediate, simulated_regist
 
 I_TYPE::I_TYPE()
 {
+    I_OPCODES[1] = BEQ;
     I_OPCODES[4] = BEQ;
     I_OPCODES[5] = BNE;
     I_OPCODES[6] = BLEZ;
