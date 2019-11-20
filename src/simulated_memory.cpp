@@ -184,11 +184,11 @@ uint simulated_memory::read_word(int address){
 }
 uint simulated_memory::read_word_left(int address){
     uint word = get_word(address);
-    return word << (address%4)*8;
+    return (word << (address%4)*8);
 }
 uint simulated_memory::read_word_right(int address){
     uint word = get_word(address);
-    return word >> (3-(address%4))*8;
+    return (word >> (3-(address%4))*8);
 }
 void simulated_memory::store_word(int address, uint word){
     if((address & 0b10) ^ 0b00){
