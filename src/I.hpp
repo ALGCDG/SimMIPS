@@ -34,6 +34,8 @@ int LHU(const uchar &rs, const uchar &rt, const uint &immediate, simulated_regis
 int SB(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem);
 int SH(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem);
 int SW(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem);
+int LWL(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem);
+int LWR(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem);
 
 class I_TYPE
 {

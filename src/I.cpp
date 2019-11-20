@@ -196,10 +196,12 @@ I_TYPE::I_TYPE()
     I_OPCODES[14] = XORI;
     I_OPCODES[15] = LUI;
     I_OPCODES[32] = LB;
-    I_OPCODES[33] = LH;
+    I_OPCODES[33] = LH;    
+    I_OPCODES[34] = LWL;
     I_OPCODES[35] = LW;
     I_OPCODES[36] = LBU;
     I_OPCODES[37] = LHU;
+    I_OPCODES[38] = LWL;
     I_OPCODES[40] = SB;
     I_OPCODES[41] = SH;
     I_OPCODES[43] = SW;
