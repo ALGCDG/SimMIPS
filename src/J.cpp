@@ -9,7 +9,7 @@ void J(const uint &address, simulated_register &reg, simulated_memory &mem)
 void JAL(const uint &address, simulated_register &reg, simulated_memory &mem)
 {
     uint pc_value = mem.get_PC();
-    reg.write_register(31, pc_value + 8);
+    reg.write_register(31, pc_value + 4);
     mem.jump_to((pc_value & 0xF0000000) + (address << 2));
 }
 
