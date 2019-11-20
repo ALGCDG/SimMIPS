@@ -1,0 +1,1 @@
+Archie, Testing that there is NO arithmetic exception when dividing a number by zero (MIPS reference sheet is very explicit about this, there must be no exception)

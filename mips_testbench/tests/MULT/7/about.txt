@@ -1,0 +1,1 @@
+Archie, Testing signed multiplication of a 32 bit negative number with a 32 bit negative number (expecting a 64bit positive product)

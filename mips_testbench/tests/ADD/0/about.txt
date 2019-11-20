@@ -1,1 +1,1 @@
-Archie, testing the addition of the zeroth register with its self storing the result in the zeroth register NB I am not sure what should happen in this case
+Archie, testing the addition of the zeroth register with its self storing the result in the zeroth register this ought not cause any exception
