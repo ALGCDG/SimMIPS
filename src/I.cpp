@@ -182,7 +182,7 @@ int SW(const uchar &rs, const uchar &rt, const uint &immediate, simulated_regist
 
 I_TYPE::I_TYPE()
 {
-    I_OPCODES[1] = BEQ;
+    I_OPCODES[1] = B;
     I_OPCODES[4] = BEQ;
     I_OPCODES[5] = BNE;
     I_OPCODES[6] = BLEZ;
