@@ -49,7 +49,7 @@ int B(const uchar &rs, const uchar &rt, const uint &immediate, simulated_registe
         if(reg.read_register(rs) < 0){
             mem.jump_to(mem.get_PC() + sign_extend(immediate << 2, 18));
         }
-        return 0;    
+        return 0;
     }
     return -12;
 }
@@ -167,10 +167,10 @@ int SB(const uchar &rs, const uchar &rt, const uint &immediate, simulated_regist
 }
 int SH(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem)
 {
-    std::cerr << "rs: " << reg.read_register(rs) << std::endl;
-    std::cerr << "sign extend imm: " << sign_extend(immediate,16) << std::endl;
-    std::cerr << "rs + sign_extend(imm): " << reg.read_register(rs) + sign_extend(immediate,16) << std::endl;
-    std::cerr << "rt: " << reg.read_register(rt) << std::endl;
+    //std::cerr << "rs: " << reg.read_register(rs) << std::endl;
+    //std::cerr << "sign extend imm: " << sign_extend(immediate,16) << std::endl;
+    //std::cerr << "rs + sign_extend(imm): " << reg.read_register(rs) + sign_extend(immediate,16) << std::endl;
+    //std::cerr << "rt: " << reg.read_register(rt) << std::endl;
     mem.store_half_word(reg.read_register(rs) + sign_extend(immediate,16), reg.read_register(rt));
     return 0;
 }
@@ -179,8 +179,27 @@ int SW(const uchar &rs, const uchar &rt, const uint &immediate, simulated_regist
     mem.store_word(reg.read_register(rs) + sign_extend(immediate,16), reg.read_register(rt));
     return 0;
 }
-int LWL(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem) {}
-int LWR(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem) {}
+int LWL(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem) {
+    //rs is base
+    //immediate is 16bit offset
+    //rt is destination to merge result
+    uint effective_address = reg.read_register(rs) + sign_extend(immediate,16);
+    uint word_offset = effective_address & 0b11;
+    uint left_word = mem.read_word_left(effective_address);
+    uint mask = (0x00FFFFFF >> ((3-word_offset)*8));
+    //eg mask with word offset of 3 will keep the bottom 3 bytes of the register
+    reg.write_register(rt, (reg.read_register(rt) & mask) | left_word);
+    return 0;
+}
+int LWR(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem){
+    uint effective_address = reg.read_register(rs) + sign_extend(immediate,16);
+    uint word_offset = effective_address & 0b11;
+    uint right_word = mem.read_word_right(effective_address);
+    uint mask = (0xFFFFFF00 << (word_offset*8));
+
+    reg.write_register(rt, (reg.read_register(rt) & mask) | right_word);
+    return 0;
+}
 
 
 
@@ -200,7 +219,7 @@ I_TYPE::I_TYPE()
     I_OPCODES[14] = XORI;
     I_OPCODES[15] = LUI;
     I_OPCODES[32] = LB;
-    I_OPCODES[33] = LH;    
+    I_OPCODES[33] = LH;
     I_OPCODES[34] = LWL;
     I_OPCODES[35] = LW;
     I_OPCODES[36] = LBU;
