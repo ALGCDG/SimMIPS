@@ -41,7 +41,7 @@ int B(const uchar &rs, const uchar &rt, const uint &immediate, simulated_registe
         }
         return 0;
     }
-    else if (0b00000 == rt)
+    else if (0b10000 == rt)
     {
         /*BLTZAL*/
         if(reg.read_register(rs) >= 0x80000000){
