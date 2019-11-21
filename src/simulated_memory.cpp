@@ -82,7 +82,7 @@ char simulated_memory::which_readMemLoc(const int & address, int & word_index){
         if(al_address >= INST_BASE && al_address < INST_BASE + INST_LEN){
             returnval = 1;
             word_index = al_address - INST_BASE;
-	          std::cerr << "word index: " << word_index << std::endl;
+	        //   std::cerr << "word index: " << word_index << std::endl;
         }
         else if(al_address >= DATA_BASE && al_address < DATA_BASE + DATA_LEN){
             returnval = 0;
@@ -100,7 +100,7 @@ char simulated_memory::which_readMemLoc(const int & address, int & word_index){
             set_exception_flag();
             returnval = -1;
             word_index = 0;
-	    std::cerr << "exception flag set by which_readmemloc" << std::endl;
+	    // std::cerr << "exception flag set by which_readmemloc" << std::endl;
         }
     // }
     return returnval;
@@ -124,7 +124,7 @@ char simulated_memory::which_storeMemLoc(const int & address, int & word_index){
             set_exception_flag();
             returnval = -1;
             word_index = 0;
-	          std::cerr << "mem exception flag set by storememloc" << std::endl;
+	        //   std::cerr << "mem exception flag set by storememloc" << std::endl;
         }
     // }
     return returnval;
@@ -270,26 +270,26 @@ uint simulated_memory::fetch_instruction(){
         }
         else
         {
-            std::cerr << "EOF, exception flag set" << std::endl;//TESTING
+            // std::cerr << "EOF, exception flag set" << std::endl;//TESTING
             set_exception_flag();
-	    std::cerr << "Current PC: "<< std::hex << get_PC() - 0x10000000 << std::endl;//TESTING
+	    // std::cerr << "Current PC: "<< std::hex << get_PC() - 0x10000000 << std::endl;//TESTING
             return 0;
         }
     }
 }
 void simulated_memory::jump_to(int address){
     int word_index;
-    std::cerr << "jumping to address: " << address << std::endl;//TESTING
+    // std::cerr << "jumping to address: " << address << std::endl;//TESTING
     char returnval = which_readMemLoc(address, word_index);
     if((returnval != 1) || (address & 0b11 != 0)){
-	std::cerr << "Illegal jump address" << std::endl; // TESTING
+	// std::cerr << "Illegal jump address" << std::endl; // TESTING
         set_exception_flag();
     }
     if (address == 0)
     {
         // handles program termination
         interior_end_flag = true;
-        std::cerr << "interior end flag set" << std::endl; //Testing
+        // std::cerr << "interior end flag set" << std::endl; //Testing
     }
     //check returnval
     INSTR_MEM.instr_buff.push(fetch_instruction());

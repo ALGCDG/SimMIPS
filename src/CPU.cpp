@@ -7,8 +7,8 @@ uchar pass_OPCODE(const uint &instruction)
 {
 	//std::cerr << "OPcode2: " << std::hex << (instruction >> 26) << std::endl; //testing
 	//std::cerr << "parsing opcode: " << (int)(instruction>>26) << std::endl;
-	std::cerr << "Instruction pre parse: " << std::bitset<32>(instruction) << std::endl;
-	std::cerr << "Parsed OPCODE: " << std::bitset<6>(instruction >> 26) << std::endl;
+	// std::cerr << "Instruction pre parse: " << std::bitset<32>(instruction) << std::endl;
+	// std::cerr << "Parsed OPCODE: " << std::bitset<6>(instruction >> 26) << std::endl;
     return (instruction >> 26);
 }
 
@@ -128,7 +128,7 @@ int CPU::run()
             return -11;
         }
     }
-    std::cerr << "returning value in register 2" << std::endl; //TESTING
+    // std::cerr << "returning value in register 2" << std::endl; //TESTING
     return registers.read_register(2); // return exit code
 }
 
