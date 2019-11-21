@@ -2,7 +2,7 @@ int fib(int n);
 
 int main()
 {
-	asm("li $sp, 0x34fffffc; sw	$ra, 28($sp); sw	$s8, 24($sp); move $s8, $sp;");
+	// asm("li $sp, 0x24fffffc; sw	$ra, 28($sp); sw	$s8, 24($sp); move $s8, $sp;");
 	return fib(13);
 }
 int fib(int n)

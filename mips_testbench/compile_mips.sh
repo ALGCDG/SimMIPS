@@ -59,8 +59,8 @@ do
 		
 		
 			# mips-linux-gnu-as init_stack.s -o init_stack.o;
-			mips-linux-gnu-gcc -W -Wall -fno-builtin -march=mips1 -mfp32 -c $k -o $j/binary.mips.o;
-			mips-linux-gnu-gcc -W -Wall -fno-builtin -march=mips1 -mfp32 -nostdlib -Wl,-melf32btsmip -march=mips1 -nostartfiles -mno-check-zero-division -Wl,--gpsize=0 -static -Wl,-Bstatic -Wl,--build-id=none -T linker.ld init_stack.o $j/binary.mips.o -o $j/binary.mips.elf;
+			mips-linux-gnu-gcc -W -Wall -fno-stack-protector -fno-builtin -march=mips1 -mfp32 -c $k -o $j/binary.mips.o;
+			mips-linux-gnu-gcc -W -Wall -fno-stack-protector -fno-builtin -march=mips1 -mfp32 -nostdlib -Wl,-melf32btsmip -march=mips1 -nostartfiles -mno-check-zero-division -Wl,--gpsize=0 -static -Wl,-Bstatic -Wl,--build-id=none -T linker.ld init_stack.o $j/binary.mips.o -o $j/binary.mips.elf;
 			$MIPS_OBJCOPY -O binary -j .text $j/*.elf $j/binary.mips.bin
 
 

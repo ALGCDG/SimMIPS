@@ -1,7 +1,7 @@
 void f(int *x);
 int main()
 {
-    asm("li $sp, 0x34fffffc;");
+    // asm("li $sp, 0x34fffffc;");
 
     int a = 2;
     f(a);
