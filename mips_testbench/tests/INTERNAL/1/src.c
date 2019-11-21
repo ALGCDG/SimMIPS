@@ -1,6 +1,6 @@
-// #include<stdio.h>
+#include "MIPS_IO.h"
 int main()
 {
-	putchar('a');
+	putc('a');
 	return 0;
 }
