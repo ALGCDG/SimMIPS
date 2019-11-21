@@ -1,0 +1,1 @@
+Jonathan, Load upper word from mem

@@ -1,0 +1,1 @@
+Jonathan, shift left by 8 out of return byte

@@ -1,0 +1,1 @@
+Jonathan, 1 in second highest bit shifted right to bottom bit to check sign extension

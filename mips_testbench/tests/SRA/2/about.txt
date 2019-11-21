@@ -1,0 +1,1 @@
+Jonathan, 1 in lowest bit shifted right to zero register

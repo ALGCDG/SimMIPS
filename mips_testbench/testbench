@@ -58,9 +58,9 @@ do
 				RESULT=$?
 				echo $RESULT
 				if [ "$RESULT" = "$EXPECTATION" ]; then
-					STATUS="Pass";
+					STATUS="PASS";
 				else
-					STATUS="Fail";
+					STATUS="FAIL";
 				fi
 			elif ![ -e $t/input.txt ] && [ -e $t/output.txt ]; then
 				OUT=$(<"$t/output.txt");
@@ -68,9 +68,9 @@ do
 				RESULT=$?;
 				echo $RESULT;
 				if [ "$RESULT" = "$EXPECTATION" ] && [ "$GOTOUT" = "OUT" ]; then
-                                        STATUS="Pass";
+                                        STATUS="PASS";
                                 else
-                                        STATUS="Fail";
+                                        STATUS="FAIL";
                                 fi
 			elif [ -e $t/input.txt ] && [ -e $t/output.txt ]; then
 				IN=$(<"$t/input.txt");
@@ -79,9 +79,9 @@ do
 				RESULT=$?;
 				echo $RESULT;
 				if [ "$RESULT" = "$EXPECTATION" ] && [ "$GOTOUT" = "OUT" ]; then
-					STATUS="Pass";
+					STATUS="PASS";
 				else
-					STATUS="Fail";
+					STATUS="FAIL";
 				fi
 			fi
 
@@ -101,16 +101,11 @@ do
 		AUTHOR_AND_MESSAGE=$(<"$t/about.txt");
 	else
 		AUTHOR_AND_MESSAGE="NO BIN FILE";
-		STATUS="Fail";
+		STATUS="FAIL";
 	fi
 	cs=", ";
-	if [ "$STATUS" = "Fail" ]; then
-		FAIL_MSG="[EXPECTED ${EXPECTATION} BUT GOT ${RESULT}]   "
-	else
-		FAIL_MSG=""
-	fi 
-        echo "${TestID}${cs}${testType}${cs}${STATUS}${cs}${AUTHOR_AND_MESSAGE}${FAIL_MSG}";
-	echo "${TestID}${cs}${testType}${cs}${STATUS}${cs}${AUTHOR_AND_MESSAGE}${FAIL_MSG}" >> ./testing/out.csv;
+        echo "${TestID}${cs}${testType}${cs}${STATUS}${cs}${AUTHOR_AND_MESSAGE}";
+	echo "${TestID}${cs}${testType}${cs}${STATUS}${cs}${AUTHOR_AND_MESSAGE}" >> ./testing/out.csv;
     done
     printf "\n=============================================================================\n";
 done
