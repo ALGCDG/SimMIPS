@@ -21,11 +21,17 @@ fileManager::fileManager(std::string path){
 		//file size measured in bytes
 		//max size = 0x1000000 bytes
 		file_length = (file_length <= 0x1000000) ? file_length : 0x1000000;
-		file_data.resize(file_length);
+		int extend_by = 0;
+		if ( file_length <= 0x1000000 - 4){ extend_by=4; }
+		file_data.resize(file_length + extend_by);
 		for ( int i = 0 ; i < file_length ; i++ )
 		{
 			file_data[i] = static_cast<uchar>(tmp_data[i]);
 		}
+		for ( int i = 0; i < extend_by; i++){
+			file_data[file_length+i] = 0;
+		}
+		file_length+=extend_by;
 	}
 	else{
 		std::cerr << "Error opening file at path: " << path << std::endl;
