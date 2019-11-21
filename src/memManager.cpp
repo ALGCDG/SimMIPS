@@ -12,7 +12,7 @@ uint memManager::read_word(int index){
 }
 
 void memManager::store_word(int index, uint word){
-    std::cerr << "Word stored: " << std::hex << word << std::endl;
+    // std::cerr << "Word stored: " << std::hex << word << std::endl;
     for(int i = 0; i < 4; i++){
         DATA[3-i+index] = (word >> i*8) & 0xFF;
     }

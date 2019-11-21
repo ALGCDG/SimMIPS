@@ -21,7 +21,7 @@ simulated_register::simulated_register() : general_purpose_registors(32, 0)
 unsigned int simulated_register::read_register(const unsigned char& register_number)
 {
     // std::cerr << "reading registor " << (int)register_number << std::endl; //TESTING
-    std::cerr << "$" << (int)register_number << " = " << general_purpose_registors[register_number] << std::endl; //TESTING
+    // std::cerr << "$" << (int)register_number << " = " << general_purpose_registors[register_number] << std::endl; //TESTING
     return general_purpose_registors[register_number];
 }
 unsigned int simulated_register::read_HI()
@@ -37,7 +37,7 @@ unsigned int simulated_register::read_LO()
 void simulated_register::write_register(const unsigned char& register_number, const unsigned int& value)
 {
     // std::cerr << "writing registor " << (int)register_number << std::endl; //TESTING
-    std::cerr << "$" << (int)register_number << " := " << value << std::endl; //TESTING
+    // std::cerr << "$" << (int)register_number << " := " << value << std::endl; //TESTING
     // ensure that register $0 is immutable
     if ( register_number > 0 && register_number < 32 )
     {

@@ -63,9 +63,9 @@ int BEQ(const uchar &rs, const uchar &rt, const uint &immediate, simulated_regis
 }
 int BNE(const uchar &rs, const uchar &rt, const uint &immediate, simulated_register &reg, simulated_memory &mem){
     if(reg.read_register(rs) != reg.read_register(rt)) {
-	std::cerr << "PC before BNE: " << mem.get_PC() << std::endl;
-	std::cerr << "BNE immediate: " << immediate << std::endl;
-	std::cerr << "PC during BNE: " << mem.get_PC() + sign_extend(immediate << 2, 18) << std::endl;
+	// std::cerr << "PC before BNE: " << mem.get_PC() << std::endl;
+	// std::cerr << "BNE immediate: " << immediate << std::endl;
+	// std::cerr << "PC during BNE: " << mem.get_PC() + sign_extend(immediate << 2, 18) << std::endl;
         mem.jump_to(mem.get_PC() + sign_extend(immediate << 2, 18));
     }
     return 0;

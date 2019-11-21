@@ -33,3 +33,4 @@ int main()
 	}
 	return 0;
 }
+#include "../../../MIPS_IO.c"
