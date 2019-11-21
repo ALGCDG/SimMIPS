@@ -1,0 +1,185 @@
+ADD0, ADD, Pass, Archie, testing the addition of the zeroth register with its self storing the result in the zeroth register this ought not cause any exception
+ADD1, ADD, Pass, Archie, Testing for sign overflow exception (-10) adding two positive numbers and getting a negative number
+ADD2, ADD, Pass, Archie, Testing for arithmatic exception behaviour (-10) adding two negative numbers and getting a positive number
+ADDI0, ADDI, Pass, Archie, Adding zero and 7 and storing result in register 2
+ADDI1, ADDI, Pass, Archie, Testing for sign overflow exception (-10) adding two positive numbers and getting a negative number
+ADDI2, ADDI, Pass, Archie, Testing for arithmatic exception behaviour (-10) adding two negative numbers and getting a positive number
+AND0, AND, Pass, Archie, Using $1 to mask a number in $3
+ANDI0, ANDI, Pass, Archie, Using ANDI to mask a 8 bit number for only the lowest 4 bits
+BEQ0, BEQ, Pass, Archie, Testing BEQ when registers are equal and branch occurs
+BEQ1, BEQ, Pass, Archie, Testing BEQ when registers are not equal and no branch occurs
+BGEZ0, BGEZ, Pass, Archie, Testing BGEZ when register is greater than zero
+BGEZ1, BGEZ, Pass, Archie, Testing BGEZ when register is less than zero and no branch occurs
+BGEZ2, BGEZ, Pass, Archie, Testing BGEZ when register is equal to zero
+BGEZAL0, BGEZAL, Pass, Archie, Testing calling a subroutine when the condition is met
+BGEZAL1, BGEZAL, Pass, Archie, Testing calling a subroutine when the condition is met (zero)
+BGEZAL2, BGEZAL, Pass, Archie, Testing not calling a subroutine when the condition is not met (number in register is negative)
+BGTZ0, BGTZ, Pass, Archie, Testing BGTZ when register is greater than zero
+BGTZ1, BGTZ, Pass, Archie, Testing BGTZ when register is less than zero and no branch occurs
+BGTZ2, BGTZ, Pass, Archie, Testing BGTZ when register is equal to zero and no branch occurs
+BLEZ0, BLEZ, Pass, Archie, Testing BLEZ when register is less than zero
+BLEZ1, BLEZ, Pass, Archie, Testing BLEZ when register is greater than zero and no branch occurs
+BLEZ2, BLEZ, Pass, Archie, Testing BLEZ when register is equal to zero
+BLTZ0, BLTZ, Pass, Archie, Testing BLTZ when register is less than zero
+BLTZ1, BLTZ, Pass, Archie, Testing BLTZ when register is greater than zero and no branch occurs
+BLTZ2, BLTZ, Pass, Archie, Testing BLTZ when register is equal to zero so no branch occurs
+BLTZAL0, BLTZAL, Pass, Archie, Testing calling a subroutine when the condition is met
+BLTZAL1, BLTZAL, Pass, Archie, Testing not calling a subroutine when the condition is not met (number in register is positive)
+BLTZAL2, BLTZAL, Pass, Archie, Testing not calling a subroutine when the condition is not met (number in register is zero)
+BNE0, BNE, Pass, Archie, Testing BNE when registers are not equal and branch occurs
+BNE1, BNE, Pass, Archie, Testing BNE when registers are equal and no branch occurs
+DIV0, DIV, Pass, Archie, Testing division 1/1 and testing quotient
+DIV1, DIV, Pass, Archie, Testing division 1/1 and testing remainder
+DIV10, DIV, Pass, Archie, Testing division of a positive number by a negative 2's compliment number and testing remainder which must have the same sign as the dividend (so we expect it to be positive)
+DIV11, DIV, Pass, Archie, Testing division of a negative 2's compliment number by a positive number and testing remainder which must have the same sign as the dividend (so we expect it to be negative)
+DIV2, DIV, Pass, Archie, Testing division 79 / 1 and testing quotient
+DIV3, DIV, Pass, Archie, Testing division 79 / 1 and testing remainder
+DIV4, DIV, Fail, Archie, Testing that there is NO arithmetic exception when dividing a number by zero (MIPS reference sheet is very explicit about this, there must be no exception)[EXPECTED 0 BUT GOT 244]   
+DIV5, DIV, Pass, Archie, Testing the divison of a prime (3) / 2 and testing quotient
+DIV6, DIV, Pass, Archie, Testing the divison of a prime (3) / 2 and testing remainder
+DIV7, DIV, Pass, Archie, Testing division of two negative 2's compliment numbers and testing quotient which we expect to be positive
+DIV8, DIV, Pass, Archie, Testing division of a positive number by a negative 2's compliment number and testing quotient which we expect to be negative
+DIV9, DIV, Pass, Archie, Testing division of a negative 2's compliment number and a positive number and testing quotient which we expect to be negative
+DIVU0, DIVU, Pass, Archie, Testing unsigned division 1/1 and testing quotient
+DIVU1, DIVU, Pass, Archie, Testing unsigned division 1/1 and testing remainder
+DIVU2, DIVU, Pass, Archie, Testing unsigned division 79 / 1 and testing quotient
+DIVU3, DIVU, Pass, Archie, Testing unsigned division 79 / 1 and testing remainder
+DIVU4, DIVU, Fail, Archie, Testing that there is NO arithmetic exception when dividing a number by zero (MIPS reference sheet is very explicit about this, there must be no exception)[EXPECTED 0 BUT GOT 244]   
+DIVU5, DIVU, Pass, Archie, Testing the unsigned divison of a prime (3) / 2 and testing quotient
+DIVU6, DIVU, Pass, Archie, Testing the unsigned divison of a prime (3) / 2 and testing remainder
+DIVU7, DIVU, Pass, Archie, Testing division of negative 2's compliment number with positive number and testing quotient which we expect to be positive
+FUNCTION0, FUNCTION, Fail, Archie, Testing a function that returns int[EXPECTED 0 BUT GOT 245]   
+FUNCTION1, FUNCTION, Fail, Archie, Testing a function that returns char[EXPECTED 0 BUT GOT 245]   
+FUNCTION2, FUNCTION, Fail, Archie, Testing a function that returns double[EXPECTED 0 BUT GOT 245]   
+FUNCTION3, FUNCTION, Fail, Archie, Testing a function that returns float[EXPECTED 0 BUT GOT 245]   
+FUNCTION4, FUNCTION, Fail, Archie, Testing a function that returns bool[EXPECTED 0 BUT GOT 245]   
+FUNCTION5, FUNCTION, Fail, Archie, Testing a function that returns void (and passes an int pointer)[EXPECTED 5 BUT GOT 245]   
+FUNCTION6, FUNCTION, Pass, Archie, Testing a function that passes by constant reference (nb this is C++ compiled code)
+INTERNAL0, INTERNAL, Pass, Archie, Testing that all registers are initialised zero
+INTERNAL1, INTERNAL, Pass, Archie, testing putting char 'a' through the MMIO (NB WE NEED TO TEST TERMINALINPUTOUTPUT)
+INTERNAL10, INTERNAL, Fail, [EXPECTED  BUT GOT 0]   
+INTERNAL2, INTERNAL, Fail, NO BIN FILE[EXPECTED  BUT GOT 0]   
+INTERNAL3, INTERNAL, Fail, NO BIN FILE[EXPECTED  BUT GOT 0]   
+INTERNAL4, INTERNAL, Fail, NO BIN FILE[EXPECTED  BUT GOT 0]   
+INTERNAL7, INTERNAL, Pass, Archie, Testing a C program that uses a while loop
+INTERNAL8, INTERNAL, Pass, Archie, Testing a C program that uses a for loop
+INTERNAL9, INTERNAL, Fail, [EXPECTED  BUT GOT 245]   
+J0, J, Pass, Archie, Testing J to skip over an instruction
+J1, J, Pass, Archie, Writing a program that uses slightly more complicated jumps
+JAL0, JAL, Pass, Archie, Implementing and calling a simple subroutine (succ) using JAL
+JAL1, JAL, Pass, Archie, Implementing and calling (repeatedly) a simple subroutine (succ) using JAL
+JALR0, JALR, Pass, Archie, Using JALR to jump to null and placing the link address in $2
+JALR1, JALR, Pass, Archie, Implementing and calling (repeatedly) a simple subroutine (succ) using JALR (and testing that by default $31 is used)
+JALR2, JALR, Pass, Archie, Using JALR to call a subroutine from a subroutine from another subroutine
+JR0, JR, Pass, Archie, JR jumping straight to NULL to end program
+JR1, JR, Pass, Archie, Running ADD then SLL then SLL and a JR to null
+JR2, JR, Pass, Archie, testing plane jump to null assembled
+JR3, JR, Pass, Archie, Testing a Jump to null that is followed by several instructions (which ought not to execute)
+LB0, LB, Pass, Jonathan, checking exclusively for issues with signed extension
+LB1, LB, Pass, Jonathan, checking LB with out of range address
+LB2, LB, Pass, Jonathan, checking LB with byte offset and sign extension
+LBU0, LBU, Pass, Jonathan, same code as LB0 to check difference with unsigned
+LBU1, LBU, Pass, Jonathan, with byte offset
+LBU2, LBU, Pass, Jonathan, Reading byte from instruction memory
+LH0, LH, Pass, Jonathan, Load upper word from mem
+LH1, LH, Pass, Jonathan, Load lower word from mem
+LH2, LH, Pass, Jonathan, Load odd offset -> exception
+LH3, LH, Pass, Jonathan, Load odd offset 3 -> exception
+LH4, LH, Pass, Jonathan, Load out of range -> exception
+LH5, LH, Pass, Jonathan, Testing sign extension -> upper mem word
+LHU0, LHU, Pass, Jonathan, Load upper word from mem
+LHU1, LHU, Pass, Jonathan, Load lower word from mem
+LHU2, LHU, Pass, Jonathan, Load odd offset -> exception
+LHU3, LHU, Pass, Jonathan, Load odd offset 3 -> exception
+LHU4, LHU, Pass, Jonathan, Load out of range -> exception
+LHU5, LHU, Pass, Jonathan, Testing zero extension -> upper mem word
+LUI0, LUI, Pass, Archie, using LUI to load 0xffff into the upper half of the register two and testing that the lower half is uneffected
+LUI1, LUI, Pass, Archie, using LUI to load 0x0001 into the upper half then shift right logically by 16
+LUI2, LUI, Pass, Archie, using LUI to load 0x8000 the slr by 31
+LW0, LW, Pass, Archie, writing to the first address in data memory (0x20000000) then reading from it
+LWL0, LWL, Pass, Jonathan, offset of 0
+LWL1, LWL, Pass, Jonathan, offset of 1
+LWL2, LWL, Pass, Jonathan, offset of 2
+LWL3, LWL, Pass, Jonathan, offset of 3
+LWR0, LWR, Pass, Jonathan, with offset 0
+LWR1, LWR, Pass, Jonathan, with offset 1
+LWR2, LWR, Pass, Jonathan, with offset 2
+LWR3, LWR, Pass, Jonathan, with offset 3
+MFHI0, MFHI, Pass, Archie, A basic test moving a value from one register to HI the moving from HI to register 2
+MFLO0, MFLO, Pass, Archie, Basic test moving value from a register to LO then from LO to register 2
+MTHI0, MTHI, Pass, Archie, moving a value (5) from register run to hi register
+MTLO0, MTLO, Pass, Archie, testing moving a value (7) from register 3 to LO
+MULT0, MULT, Pass, Archie, Testing multiplication of 1 by 1
+MULT1, MULT, Pass, Archie, Testing multiplication of 1 by 0
+MULT2, MULT, Pass, Archie, Testing 16 bit multiplication
+MULT3, MULT, Pass, Archie, Testing 32 bit multiplication
+MULT4, MULT, Pass, Archie, Testing signed multiplication of a 16 bit positive number with a 16 bit negative number (expecting a 32bit negative product)
+MULT5, MULT, Pass, Archie, Testing signed multiplication of a 16 bit negative number with a 16 bit negative number (expecting a 32bit positive product)
+MULT6, MULT, Pass, Archie, Testing signed multiplication of a 32 bit negative number with a 32 bit positive number (expecting a 64bit negative product)
+MULT7, MULT, Pass, Archie, Testing signed multiplication of a 32 bit negative number with a 32 bit negative number (expecting a 64bit positive product)
+MULTU0, MULTU, Pass, Archie, Testing multiplication of 1 by 1
+MULTU1, MULTU, Pass, Archie, Testing multiplication of 1 by 0
+MULTU2, MULTU, Pass, Archie, Testing 16 bit unsigned multiplication
+MULTU3, MULTU, Pass, Archie, Testing 32 bit unsigned multiplication
+OR0, OR, Pass, Jonathan, Result of OR in reg 2. ORs 5 in reg1 with 0 in reg 2
+OR1, OR, Pass, Jonathan, OR 0b1000 with 0b1111 from regs 1, 2 -> 2
+ORI0, ORI, Pass, Archie, Using ORI to load literal into register 2
+SB0, SB, Pass, Jonathan, Store then read the same byte - checks non alligned byte
+SB1, SB, Pass, Jonathan, store byte then read exact same address - checks concatenation
+SB2, SB, Pass, Jonathan, negative offset from 0x200000 - should give mem exception
+SB3, SB, Pass, Jonathan, Store byte out of upper limit: mem exception
+SH0, SH, Pass, Jonathan, simple store half then load word (aligned)
+SLL0, SLL, Pass, Archie, use addi to store 0x1 in $2 then SLL to shift left by 2 then jump to end
+SLL1, SLL, Pass, Archie, use addi to put literal 1 in $2 then shift left by 8 until ought of return window
+SLLV0, SLLV, Pass, Jonathan, Shift left by 32 does nothing
+SLLV1, SLLV, Pass, Jonathan, shift left by 2
+SLLV2, SLLV, Pass, Jonathan, shift left by 8 out of return byte
+SLLV3, SLLV, Pass, Jonathan, Shift left by 33 shifts left by 1
+SLT0, SLT, Pass, Jonathan, Comparing two negative numbers (TRUE)
+SLT1, SLT, Pass, Jonathan, Comparing two negative numbers (FALSE)
+SLT2, SLT, Pass, Jonathan, testing negative less than positive
+SLT3, SLT, Pass, Jonathan, testing pos < pos
+SLT4, SLT, Pass, Jonathan, testing pos < neg
+SLTI0, SLTI, Pass, Jonathan, pos < pos imm
+SLTI1, SLTI, Pass, Jonathan, pos < neg imm
+SLTI2, SLTI, Pass, Jonathan, neg < pos imm
+SLTI3, SLTI, Pass, Jonathan, neg < neg imm
+SLTIU0, SLTIU, Pass, Jonathan, pos < pos imm
+SLTIU1, SLTIU, Pass, Jonathan, pos < (signed - negative) big imm
+SLTIU2, SLTIU, Pass, Jonathan, (signed - negative) big reg < (signed - negative) big imm
+SLTIU3, SLTIU, Pass, Jonathan, (signed - negative) big reg < pos imm
+SLTIU4, SLTIU, Pass, Jonathan, pos < smaller pos
+SLTU0, SLTU, Pass, Archie, Testing SLTU where comparison is true
+SLTU1, SLTU, Pass, Archie, Testing SLTU in case where comparison is false
+SLTU2, SLTU, Pass, Archie, Comparing a negative (under two's compliment) number with a positive number
+SRA0, SRA, Pass, Jonathan, 1 in highest bit shifted right to bottom bit to check sign extension
+SRA1, SRA, Pass, Jonathan, 1 in second highest bit shifted right to bottom bit to check sign extension
+SRA2, SRA, Pass, Jonathan, 1 in lowest bit shifted right to zero register
+SRAV0, SRAV, Pass, Jonathan, shift 0xFFFFFFFF right 31 times
+SRAV1, SRAV, Pass, Jonathan, shift 0x7FFFFFFF right 30 times
+SRAV2, SRAV, Pass, Jonathan, shift 0x5 by 32 in reg should do nothing
+SRL0, SRL, Pass, Jonathan, 1 in highest bit shifted right to bottom bit to check 0 extension
+SRL1, SRL, Pass, Jonathan, 1 in lowest bit shifted to zero the register
+SRLV0, SRLV, Pass, Jonathan, shift 0xFFFFFFFF right 31 times
+SRLV1, SRLV, Pass, Jonathan, shift 0 right 
+SRLV2, SRLV, Pass, Jonathan, shift right by 36 actually shifts by 4 -> 32 := 2
+STACK0, STACK, Pass, Archie, calling one function inside anthor
+STACK1, STACK, Fail, Archie, testing the succ of succ of succ of 0[EXPECTED 3 BUT GOT 245]   
+STACK2, STACK, Fail, NO BIN FILE[EXPECTED 3 BUT GOT 245]   
+STACK3, STACK, Fail, Archie, Finding the 13th (any larger and it wont fit in a char) fibonacci term (testing recursive functions)[EXPECTED 233 BUT GOT 245]   
+SUB0, SUB, Pass, Jonathan, pos - pos -> no overflow
+SUB1, SUB, Pass, Jonathan, pos - neg -> no overflow
+SUB2, SUB, Pass, Jonathan, neg - neg -> no overflow
+SUB3, SUB, Pass, Jonathan, neg - pos -> no overflow
+SUB4, SUB, Pass, Jonathan, big pos - big neg -> overflow
+SUB5, SUB, Pass, Jonathan, big neg - big pos -> overflow
+SUBU0, SUBU, Pass, Archie, A very simple subtraction of a large positive number by a smaller positive number
+SUBU1, SUBU, Fail, NO BIN FILE[EXPECTED 2 BUT GOT 2]   
+SW0, SW, Pass, Archie, testing storing word in the first memory address of Data memory (0x20000000)
+SW1, SW, Pass, Archie, Testing SW writing to the largest address in Data memory (0x23fffffb)
+SW2, SW, Pass, Archie, Testing SW writing to some other address in Data memory (0x20ceff12)
+SW3, SW, Pass, Archie, Testing writing SW to the PUTC address (0x30000004)
+XOR0, XOR, Pass, Jonathan, xor of 0b10001 with 0b01110 (gives 0 as complement)
+XOR1, XOR, Pass, Jonathan, XOR swap
+XORI0, XORI, Pass, Archie, Using XORI to load literal into register
+XORI1, XORI, Pass, Archie, Using XORI to xor a literal and a register value
