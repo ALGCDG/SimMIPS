@@ -5,7 +5,7 @@ int putc(char a)
 	return 0;	
 }
 
-unsigned char getc()
+int getc()
 {
 	int *i = (int *) 0x30000000;
 	return *i;

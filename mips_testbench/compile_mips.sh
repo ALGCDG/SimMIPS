@@ -35,19 +35,39 @@ do
 		then
 			k=$j/src.c
 			#Create .o file
-                        $MIPS_CC ${MIPS_CPPFLAGS[*]} -c $k -o $j/binary.mips.o
-                        #Link MIPS .o with linker data to make .elf
-                        $MIPS_CC ${MIPS_CPPFLAGS[*]} ${MIPS_LDFLAGS[*]} -T linker.ld stack_stub.o  $j/*.o -o $j/binary.mips.elf
-                        # $MIPS_CC ${MIPS_CPPFLAGS[*]} ${MIPS_LDFLAGS[*]} -T linker.ld $j/*.o stack_stub.o -o $j/binary.mips.elf
-                        # $MIPS_OBJCOPY -O binary -j --only-section=.text $j/binary.mips.elf $j/binary.mips.bin
-                        $MIPS_OBJCOPY -O binary -j .text $j/*.elf $j/binary.mips.bin
+                        # $MIPS_CC ${MIPS_CPPFLAGS[*]} -c $k -o $j/binary.mips.o
+                        # #Link MIPS .o with linker data to make .elf
+                        # # $MIPS_CC ${MIPS_CPPFLAGS[*]} ${MIPS_LDFLAGS[*]} -T linker.ld  $j/*.o -o $j/binary.mips.elf
+                        # $MIPS_CC ${MIPS_CPPFLAGS[*]} ${MIPS_LDFLAGS[*]} -T linker.ld stack_stub.o $j/*.o -o $j/binary.mips.elf
+                        # # $MIPS_OBJCOPY -O binary -j --only-section=.text $j/binary.mips.elf $j/binary.mips.bin
+                        # $MIPS_OBJCOPY -O binary -j .text $j/*.elf $j/binary.mips.bin
 
 
-						# my attempt to fix
-						# # cross compile for mips 
-						# mips-linux-gnu-gcc -static -nostdlib -O3 -mips1 -mfp32 $k stack_stub.s -o $j/binary.mips.elf
-						# # We then need to extract the raw binary (remove file header)
-						# mips-linux-gnu-objcopy -O binary -j .text $j/binary.mips.elf $j/binary.mips.bin
+						# # my attempt to fix
+						# # # cross compile for mips 
+						# # mips-linux-gnu-gcc -static -nostdlib -O3 -mips1 -mfp32 $k stack_stub.s -o $j/binary.mips.elf
+						# # # We then need to extract the raw binary (remove file header)
+						# # mips-linux-gnu-objcopy -O binary -j .text $j/binary.mips.elf $j/binary.mips.bin
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+			# mips-linux-gnu-as init_stack.s -o init_stack.o;
+			mips-linux-gnu-gcc -W -Wall -fno-builtin -march=mips1 -mfp32 -c $k -o $j/binary.mips.o;
+			mips-linux-gnu-gcc -W -Wall -fno-builtin -march=mips1 -mfp32 -nostdlib -Wl,-melf32btsmip -march=mips1 -nostartfiles -mno-check-zero-division -Wl,--gpsize=0 -static -Wl,-Bstatic -Wl,--build-id=none -T linker.ld init_stack.o $j/binary.mips.o -o $j/binary.mips.elf;
+			$MIPS_OBJCOPY -O binary -j .text $j/*.elf $j/binary.mips.bin
+
+
+
+		
+		
+		
 		#else
 		#	echo "Script currently requires assembly.s file to create a binary"
 		fi

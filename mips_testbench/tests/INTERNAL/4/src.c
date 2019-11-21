@@ -1,9 +1,35 @@
-#include <stdio.h>
+#include "../../../MIPS_IO.h"
 int main()
 {
 	char name[20];
-	printf("please entre your name: ");
-	fgets(name, 20, stdin);
-	printf("\nHello ",name,"!\n");
+	char * welcome = "please entre your name: ";
+	for ( int i = 0 ; i < 25; i++)
+	{
+		putc(welcome[i]);
+	}
+	char tmp;
+	for (int i =0 ;i < 20 ; i++)
+	{
+		tmp = getc();
+		if (-1 != tmp)
+		{
+			name[i] = tmp;
+		}
+		else
+		{
+			i = 20;
+		}
+
+	}
+	putc('\n');
+	char * hello = "Hello ";
+	for ( int i = 0 ; i < 7; i++)
+	{
+		putc(hello[i]);
+	}
+	for ( int i = 0 ; i < 20; i++)
+	{
+		putc(name[i]);
+	}
 	return 0;
 }

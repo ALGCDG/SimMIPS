@@ -3,7 +3,7 @@ for i in ./tests/*/
 do
 	for j in $i/*/
 	do
-		if [ -f $j/*.s ]; then
+		if [ -f $j/*.s ] || [ -f $j/*.c ]; then
 			rm -f $j/*.elf
 			rm -f $j/*.bin
 			rm -f $j/*.o
