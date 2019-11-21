@@ -1,5 +1,5 @@
 main:
-j end;
+j subroutine;
 
 end:
 jr $0;

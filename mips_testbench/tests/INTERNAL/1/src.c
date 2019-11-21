@@ -1,6 +1,6 @@
-#include<stdio.h>
+// #include<stdio.h>
 int main()
 {
-	printf('a');
+	putchar('a');
 	return 0;
 }

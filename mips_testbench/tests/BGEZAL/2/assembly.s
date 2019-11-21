@@ -1,6 +1,6 @@
 $main:
 li $2, -6;
-bltzal $2, $divide_by_2;
+bgezal $2, $divide_by_2;
 jr $0;
 
 $divide_by_2:
