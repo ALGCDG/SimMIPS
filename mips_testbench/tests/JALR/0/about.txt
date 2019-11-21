@@ -1,1 +1,1 @@
-Archie, Implementing and calling a simple subroutine (succ) using JALR
+Archie, Using JALR to jump to null and placing the link address in $2
