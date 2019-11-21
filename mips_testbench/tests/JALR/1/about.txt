@@ -1,1 +1,1 @@
-Archie, Implementing and calling (repeatedly) a simple subroutine (succ) using JAL
+Archie, Implementing and calling (repeatedly) a simple subroutine (succ) using JALR (and testing that by default $31 is used)

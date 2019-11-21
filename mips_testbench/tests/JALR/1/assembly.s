@@ -1,5 +1,7 @@
+.text
 $main:
-li $8, $succ;
+li $8, 0x10000000
+addi $8, $8, $succ;
 jalr $8;
 jalr $8;
 jalr $8;
