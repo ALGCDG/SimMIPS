@@ -1,11 +1,12 @@
-addi $11, $0, 1
-addi $12, $0, 2
-addi $13, $0, 3
-#0 in 10
+addi $10, $0, 1
+addi $11, $0, 4
+addi $12, $0, 16
+addi $13, $0, 64
 
+sll $10, $10, 24
 sll $11, $11, 16
 sll $12, $12, 8
-#0 is 'shifted' 24
+#sll $13, $13, 0
 
 or $2, $10, $11
 or $2, $2, $12
@@ -37,11 +38,18 @@ sw $2, 4($1) #WORD ARE STORED CORRECTLY
 
 #mem now looks like
 #0x20000000 -> increasing address
-# 0 1 2 3 | 4 5 6 7 | 0 0 0 0
+# 1 4 16 64 | 4 5 6 7 | 0 0 0 0
 
 #===========
 
-li $3, 0x0a0000
+#want to interleve bits
+
+#                  1         4         16      64
+#mem contains 0b00000001 00000100 00010000 01000000
+#reg needs    0b00000010 00001000 00100000 10000000
+#                  2         8         32      128
+
+li $3, 0b00000010000010000010000010000000
 
 #===========
 #below is test specific
@@ -51,8 +59,7 @@ li $3, 0x0a0000
 #LWL RESULT IN REG 3
 
 lwr $3, 2($1)
-#expect 0 1 2 3 in each byte of 2
-
+#2 + 1 + 4 + 16
 
 #=================
 #below is general
@@ -68,12 +75,12 @@ srl $3, $3, 8
 and $4, $5, $3
 add $2, $2, $4
 
-srl $3, $3, 8 
-and $4, $5, $3 
-add $2, $2, $4 
- 
-srl $3, $3, 8 
-and $4, $5, $3 
-add $2, $2, $4 
+srl $3, $3, 8
+and $4, $5, $3
+add $2, $2, $4
+
+srl $3, $3, 8
+and $4, $5, $3
+add $2, $2, $4
 
 jr $0
