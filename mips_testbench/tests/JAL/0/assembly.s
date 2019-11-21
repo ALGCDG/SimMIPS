@@ -1,8 +1,8 @@
-$main:
-jal $succ;
+_entry:
+jal _succ;
 jr $0;
 
 # The succ(ession) subroutine
-$succ:
+_succ:
 addi $2, $2, 1;
 jr $31;

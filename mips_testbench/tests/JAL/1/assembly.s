@@ -1,4 +1,3 @@
-$main:
 jal $succ;
 jal $succ;
 jal $succ;

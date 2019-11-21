@@ -40,11 +40,18 @@ do
 		then
 			k=$j/assembly.s
 			#Create .o file
-                        $MIPS_CC ${MIPS_CPPFLAGS[*]} -c $k -o $j/binary.mips.o
-                        #Link MIPS .o with linker data to make .elf
-                        $MIPS_CC ${MIPS_CPPFLAGS[*]} ${MIPS_LDFLAGS[*]} -T linker.ld $j/*.o -o $j/binary.mips.elf
-                        #$MIPS_OBJCOPY -O binary -j --only-section=.text $j/binary.mips.elf $j/binary.mips.bin
-                        $MIPS_OBJCOPY -O binary -j .text $j/*.elf $j/binary.mips.bin
+                        # $MIPS_CC ${MIPS_CPPFLAGS[*]} -c $k -o $j/binary.mips.o
+                        # #Link MIPS .o with linker data to make .elf
+                        # $MIPS_CC ${MIPS_CPPFLAGS[*]} ${MIPS_LDFLAGS[*]} -T linker.ld $j/*.o -o $j/binary.mips.elf
+                        # #$MIPS_OBJCOPY -O binary -j --only-section=.text $j/binary.mips.elf $j/binary.mips.bin
+                        # $MIPS_OBJCOPY -O binary -j .text $j/*.elf $j/binary.mips.bin
+
+						# MY ATTEMPT TO FIX
+						mips-linux-gnu-as -mips1 $k -o $j/binary.mips.elf
+						# Note that the assembler is too clever - it takes the assembly file and moves all J and B instructions up by one to account for the delay slot
+
+						# We then need to extract the raw binary (remove file header)
+						mips-linux-gnu-objcopy -O binary -j .text $j/binary.mips.elf $j/binary.mips.bin
 		#else
 		#	echo "Script currently requires assembly.s file to create a binary"
 		fi
