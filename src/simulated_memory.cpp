@@ -160,10 +160,10 @@ uint simulated_memory::read_h_word_u(int address){
     uint word = get_word(address);
     uint ls_2b = address & 0b11;
     if(ls_2b == 0b00){
-        return word & 0xFFFF;
+        return ((word & 0xFFFF0000) >> 16);
     }
     else if(ls_2b == 0b10){
-        return ((word & 0xFFFF0000) >> 16);
+        return word & 0xFFFF;
     }
     else{
         set_exception_flag();
