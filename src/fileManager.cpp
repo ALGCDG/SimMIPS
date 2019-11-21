@@ -29,6 +29,7 @@ fileManager::fileManager(std::string path){
 	}
 	else{
 		std::cerr << "Error opening file at path: " << path << std::endl;
+		exit(-21);
 	}
 }
 // fileManager::~fileManager()

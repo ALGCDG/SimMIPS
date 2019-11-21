@@ -97,7 +97,7 @@ int MULT(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, 
     this simplest way to do this
     */
     long long int product = static_cast<long long int>((int)reg.read_register(rt)) * static_cast<long long int>((int)reg.read_register(rs)); // by casting the first argument, we ensure that it is a long long int (64 bit) operation
-    std::cerr << "MULT PROD" << (product >> 32) << std::endl;
+    //std::cerr << "MULT PROD" << (product >> 32) << std::endl;
     // conversion from signed long long int to unsigned long long int should be implicitly handled
     reg.write_HI((static_cast<unsigned long long int>(product) & 0xFFFFFFFF00000000) >> 32 );
     reg.write_LO(product & 0x00000000FFFFFFFF);
@@ -111,7 +111,7 @@ int MULTU(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt,
     The most significant "top" half in HI
     and the least significant "bottom" half in LO
     */
-    unsigned long long int product = (unsigned long long int) reg.read_register(rt) * reg.read_register(rs); // by casting the first argument, we ensure that it is a long long int (64 bit) operation
+    unsigned long long int product = static_cast<unsigned long long int>(reg.read_register(rt)) * static_cast<unsigned long long int>(reg.read_register(rs)); // by casting the first argument, we ensure that it is a long long int (64 bit) operation
     reg.write_HI((product & 0xFFFFFFFF00000000) >> 32 );
     reg.write_LO(product & 0x00000000FFFFFFFF);
     return 0;
