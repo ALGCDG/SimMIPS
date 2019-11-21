@@ -54,7 +54,7 @@ int SRAV(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, 
 int JR(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
 {
     mem.jump_to(reg.read_register(rs));
-    // std::cerr << "Jumping to address in register " << (int)rs << std::endl; //TESTING 
+    // std::cerr << "Jumping to address in register " << (int)rs << std::endl; //TESTING
     // std::cerr << "Jumping to: " << reg.read_register(rs) << std::endl; //TESTING
     return 0;
 }
@@ -94,11 +94,12 @@ int MULT(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, 
     The most significant "top" half in HI
     and the least significant "bottom" half in LO
 
-    this simplest way to do this 
+    this simplest way to do this
     */
-    unsigned long long int product = (long long int) reg.read_register(rt) * reg.read_register(rs); // by casting the first argument, we ensure that it is a long long int (64 bit) operation
+    long long int product = static_cast<long long int>((int)reg.read_register(rt)) * static_cast<long long int>((int)reg.read_register(rs)); // by casting the first argument, we ensure that it is a long long int (64 bit) operation
+    std::cerr << "MULT PROD" << (product >> 32) << std::endl;
     // conversion from signed long long int to unsigned long long int should be implicitly handled
-    reg.write_HI((product & 0xFFFFFFFF00000000) >> 32 );
+    reg.write_HI((static_cast<unsigned long long int>(product) & 0xFFFFFFFF00000000) >> 32 );
     reg.write_LO(product & 0x00000000FFFFFFFF);
     return 0;
 }
@@ -132,8 +133,9 @@ int DIV(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, s
     {
         return 0;
     }
-    reg.write_LO((int) reg.read_register(rs) / reg.read_register(rt));
-    reg.write_HI((int) reg.read_register(rs) % reg.read_register(rt));
+    // std::cerr << "test output: div lo of " << reg.read_register(rs) << "/" << reg.read_register(rt) << " = " << (int) reg.read_register(rs) / reg.read_register(rt);
+    reg.write_LO(static_cast<int>(reg.read_register(rs)) / static_cast<int>(reg.read_register(rt)));
+    reg.write_HI( static_cast<int>(reg.read_register(rs)) % static_cast<int>(reg.read_register(rt)));
     return 0;
 }
 int DIVU(const uchar &rs, const uchar &rt, const uchar &rd, const uchar &shamt, simulated_register &reg, simulated_memory &mem)
