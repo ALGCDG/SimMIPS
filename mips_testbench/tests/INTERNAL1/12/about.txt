@@ -1,0 +1,1 @@
+Jonathan, Traversing entire memory space and summing each word to check 0
