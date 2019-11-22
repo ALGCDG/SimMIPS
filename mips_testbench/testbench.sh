@@ -65,6 +65,7 @@ do
 				fi
 			elif [ ! -e $t/input.txt ] && [ -e $t/output.txt ]; then
 				OUT=$(<"$t/output.txt");
+				mkdir -p test/temp;
 				$1 "$t/binary.mips.bin" > test/temp/out.txt;
 				RESULT=$?;
 				#echo $RESULT;
@@ -77,6 +78,7 @@ do
 			elif [ -e $t/input.txt ] && [ -e $t/output.txt ]; then
 				IN=$(<"$t/input.txt");
 				OUT=$(<"$t/output.txt")
+				mkdir -p test/temp;
 				echo $IN | $1 "$t/binary.mips.bin" > test/temp/out.txt;
 				RESULT=$?;
 				echo $RESULT;
@@ -93,7 +95,7 @@ do
         		RESULT=$?;
 			#echo $RESULT;
 			EXPECTATION=$(<"$t/expectation.txt");
-		
+
 			if ( [ "$RESULT" = "$EXPECTATION" ] && [ ! -e $t/not.txt ] ) || ( [ ! "$RESULT" = "$EXPECTATION" ] && [ -e $t/not.txt ] ) ;
       			then
       				STATUS="Pass";
@@ -111,8 +113,9 @@ do
 		FAIL_MSG="[EXPECTED ${EXPECTATION} BUT GOT ${RESULT}]   "
 	else
 		FAIL_MSG=""
-	fi 
+	fi
         echo "${TestID}${cs}${testType}${cs}${STATUS}${cs}${AUTHOR_AND_MESSAGE}${FAIL_MSG}";
+				mkdir -p test/output;
 	echo "${TestID}${cs}${testType}${cs}${STATUS}${cs}${AUTHOR_AND_MESSAGE}${FAIL_MSG}" >> ./test/output/out.csv;
     done
     #printf "\n=============================================================================\n";
