@@ -79,7 +79,7 @@ do
 				echo $IN | $1 "$t/binary.mips.bin" > out.txt;
 				RESULT=$?;
 				echo $RESULT;
-				if ( ( [ "$RESULT" = "$EXPECTATION" ] && [ ! -e $t/not.txt ] ) || ( [ ! "$RESULT" = "$EXPECTATION" ] && [ -e $t/not.txt ] ) ) && [ $(< out.txt) = "$OUT" ]; then
+				if ( ( [ "$RESULT" = "$EXPECTATION" ] && [ ! -e $t/not.txt ] ) || ( [ ! "$RESULT" = "$EXPECTATION" ] && [ -e $t/not.txt ] ) ) && [ "$(< out.txt)" = "$OUT" ]; then
 					STATUS="Pass";
 				else
 					STATUS="Fail";
