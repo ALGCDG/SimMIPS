@@ -33,11 +33,11 @@ echo "Running testbench..."
 #     done
 # done
 
-if [ -w ./testing/out.csv ]; then
-	rm -r ./testing/out.csv
+if [ -w ./test/output/out.csv ]; then
+	rm -r ./test/output/out.csv
 fi
 
-touch ./testing/out.csv
+touch ./test/output/out.csv
 
 for i in ./mips_testbench/tests/*/  #for each directory in the tests folder
 do
@@ -65,27 +65,27 @@ do
 				fi
 			elif [ ! -e $t/input.txt ] && [ -e $t/output.txt ]; then
 				OUT=$(<"$t/output.txt");
-				$1 "$t/binary.mips.bin" > out.txt;
+				$1 "$t/binary.mips.bin" > test/temp/out.txt;
 				RESULT=$?;
 				#echo $RESULT;
-				if ( ( [ "$RESULT" = "$EXPECTATION" ] && [ ! -e $t/not.txt ] ) || ( [ ! "$RESULT" = "$EXPECTATION" ] && [ -e $t/not.txt ] ) ) && [ $(< out.txt) = "$OUT" ]; then
+				if ( ( [ "$RESULT" = "$EXPECTATION" ] && [ ! -e $t/not.txt ] ) || ( [ ! "$RESULT" = "$EXPECTATION" ] && [ -e $t/not.txt ] ) ) && [ $(< test/temp/out.txt) = "$OUT" ]; then
 					STATUS="Pass";
 				else
 					STATUS="Fail";
 				fi
-				rm out.txt;
+				rm test/temp/out.txt;
 			elif [ -e $t/input.txt ] && [ -e $t/output.txt ]; then
 				IN=$(<"$t/input.txt");
 				OUT=$(<"$t/output.txt")
-				echo $IN | $1 "$t/binary.mips.bin" > out.txt;
+				echo $IN | $1 "$t/binary.mips.bin" > test/temp/out.txt;
 				RESULT=$?;
 				echo $RESULT;
-				if ( ( [ "$RESULT" = "$EXPECTATION" ] && [ ! -e $t/not.txt ] ) || ( [ ! "$RESULT" = "$EXPECTATION" ] && [ -e $t/not.txt ] ) ) && [ "$(< out.txt)" = "$OUT" ]; then
+				if ( ( [ "$RESULT" = "$EXPECTATION" ] && [ ! -e $t/not.txt ] ) || ( [ ! "$RESULT" = "$EXPECTATION" ] && [ -e $t/not.txt ] ) ) && [ "$(< test/temp/out.txt)" = "$OUT" ]; then
 					STATUS="Pass";
 				else
 					STATUS="Fail";
 				fi
-				rm out.txt;
+				rm test/temp/out.txt;
 			fi
 
 		else
@@ -113,7 +113,7 @@ do
 		FAIL_MSG=""
 	fi 
         echo "${TestID}${cs}${testType}${cs}${STATUS}${cs}${AUTHOR_AND_MESSAGE}${FAIL_MSG}";
-	echo "${TestID}${cs}${testType}${cs}${STATUS}${cs}${AUTHOR_AND_MESSAGE}${FAIL_MSG}" >> ./testing/out.csv;
+	echo "${TestID}${cs}${testType}${cs}${STATUS}${cs}${AUTHOR_AND_MESSAGE}${FAIL_MSG}" >> ./test/output/out.csv;
     done
     #printf "\n=============================================================================\n";
 done
