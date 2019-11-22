@@ -31,6 +31,7 @@ int main()
 	{
 		putc(name[i]);
 	}
+	putc('\n');
 	return 0;
 }
 #include "../../../MIPS_IO.c"
