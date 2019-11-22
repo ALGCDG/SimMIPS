@@ -55,8 +55,9 @@ do
 			if [ -e $t/input.txt ] && [ ! -e $t/output.txt ]; then
 				IN=$(<"$t/input.txt");
 				echo $IN | $1 "$t/binary.mips.bin";
+				#$IN | $1 "$t/binary.mips.bin";
 				RESULT=$?
-				echo $RESULT
+				#echo $RESULT
 				if ( [ "$RESULT" = "$EXPECTATION" ] && [ ! -e $t/not.txt ] ) || ( [ ! "$RESULT" = "$EXPECTATION" ] && [ -e $t/not.txt ] ); then
 					STATUS="Pass";
 				else
@@ -66,7 +67,7 @@ do
 				OUT=$(<"$t/output.txt");
 				$1 "$t/binary.mips.bin" > out.txt;
 				RESULT=$?;
-				echo $RESULT;
+				#echo $RESULT;
 				if ( ( [ "$RESULT" = "$EXPECTATION" ] && [ ! -e $t/not.txt ] ) || ( [ ! "$RESULT" = "$EXPECTATION" ] && [ -e $t/not.txt ] ) ) && [ $(< out.txt) = "$OUT" ]; then
 					STATUS="Pass";
 				else
@@ -78,7 +79,7 @@ do
 				OUT=$(<"$t/output.txt")
 				echo $IN | $1 "$t/binary.mips.bin" > out.txt;
 				RESULT=$?;
-				echo $RESULT;
+				#echo $RESULT;
 				if ( ( [ "$RESULT" = "$EXPECTATION" ] && [ ! -e $t/not.txt ] ) || ( [ ! "$RESULT" = "$EXPECTATION" ] && [ -e $t/not.txt ] ) ) && [ $(< out.txt) = "$OUT" ]; then
 					STATUS="Pass";
 				else
@@ -90,7 +91,7 @@ do
 		else
 			$1 "$t/binary.mips.bin";
         		RESULT=$?;
-			echo $RESULT;
+			#echo $RESULT;
 			EXPECTATION=$(<"$t/expectation.txt");
 		
 			if ( [ "$RESULT" = "$EXPECTATION" ] && [ ! -e $t/not.txt ] ) || ( [ ! "$RESULT" = "$EXPECTATION" ] && [ -e $t/not.txt ] ) ;
@@ -114,5 +115,5 @@ do
         echo "${TestID}${cs}${testType}${cs}${STATUS}${cs}${AUTHOR_AND_MESSAGE}${FAIL_MSG}";
 	echo "${TestID}${cs}${testType}${cs}${STATUS}${cs}${AUTHOR_AND_MESSAGE}${FAIL_MSG}" >> ./testing/out.csv;
     done
-    printf "\n=============================================================================\n";
+    #printf "\n=============================================================================\n";
 done
