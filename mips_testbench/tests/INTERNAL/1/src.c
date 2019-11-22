@@ -2,6 +2,6 @@
 int main()
 {
 	putc('A');
-	return 1;
+	return 0;
 }
 #include "../../../MIPS_IO.c"

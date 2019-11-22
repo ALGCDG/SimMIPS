@@ -64,25 +64,27 @@ do
 				fi
 			elif [ ! -e $t/input.txt ] && [ -e $t/output.txt ]; then
 				OUT=$(<"$t/output.txt");
-				$1 "$t/binary.mips.bin" | read GOTOUT;
+				$1 "$t/binary.mips.bin" > out.txt;
 				RESULT=$?;
 				echo $RESULT;
-				if ( ( [ "$RESULT" = "$EXPECTATION" ] && [ ! -e $t/not.txt ] ) || ( [ ! "$RESULT" = "$EXPECTATION" ] && [ -e $t/not.txt ] ) ) && [ "$GOTOUT" = "OUT" ]; then
-                                        STATUS="Pass";
-                                else
-                                        STATUS="Fail";
-                                fi
-			elif [ -e $t/input.txt ] && [ -e $t/output.txt ]; then
-				IN=$(<"$t/input.txt");
-				OUT=$(<"$t/output.txt")
-				echo $IN | $1 "$t/binary.mips.bin" | read GOTOUT;
-				RESULT=$?;
-				echo $RESULT;
-				if ( ( [ "$RESULT" = "$EXPECTATION" ] && [ ! -e $t/not.txt ] ) || ( [ ! "$RESULT" = "$EXPECTATION" ] && [ -e $t/not.txt ] ) ) && [ "$GOTOUT" = "OUT" ]; then
+				if ( ( [ "$RESULT" = "$EXPECTATION" ] && [ ! -e $t/not.txt ] ) || ( [ ! "$RESULT" = "$EXPECTATION" ] && [ -e $t/not.txt ] ) ) && [ $(< out.txt) = "$OUT" ]; then
 					STATUS="Pass";
 				else
 					STATUS="Fail";
 				fi
+				rm out.txt;
+			elif [ -e $t/input.txt ] && [ -e $t/output.txt ]; then
+				IN=$(<"$t/input.txt");
+				OUT=$(<"$t/output.txt")
+				echo $IN | $1 "$t/binary.mips.bin" > out.txt;
+				RESULT=$?;
+				echo $RESULT;
+				if ( ( [ "$RESULT" = "$EXPECTATION" ] && [ ! -e $t/not.txt ] ) || ( [ ! "$RESULT" = "$EXPECTATION" ] && [ -e $t/not.txt ] ) ) && [ $(< out.txt) = "$OUT" ]; then
+					STATUS="Pass";
+				else
+					STATUS="Fail";
+				fi
+				rm out.txt;
 			fi
 
 		else
