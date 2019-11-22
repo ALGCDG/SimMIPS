@@ -1,0 +1,1 @@
+Jonathan, Testing scalar product of two arrays
