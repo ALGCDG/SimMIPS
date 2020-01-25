@@ -40,6 +40,8 @@ for example, if I wished to run a file bin/binary.mips.bin, I would write the fo
 
 The program simulates a MIPS 1 device with simple text input ouput. 
 
+To see the full list of implemented instructions, look [here](instructions.md)
+
 ### Memory Map
 
 | Memory Regions| Offset     | Length    |  Permission  |
@@ -71,11 +73,11 @@ Good learning experience.
 
 ## What has changed since the coursework?
 
-The original assessment was very possitive, and only reported 4 minor errors.
+Our professor's assessment was very possitive, and only reported 4 minor errors.
 
 - BGEZAL - our simulator linked conditionally.
-- LB - Confused Error Code
-- LBU - Confused Error Code
+- LB - Confused Error Code, returning invalid instruction instead of invalid memory access when reading NULL address
+- LBU - Confused Error Code,  returning invalid instruction instead of invalid memory access when reading NULL address
 - LH - Don't know yet
 
 ## What next?
