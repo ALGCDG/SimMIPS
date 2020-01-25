@@ -50,11 +50,19 @@ The program simulates a MIPS 1 device with simple text input ouput.
 | Getc          | 0x30000000 |    0x4    |      R       |
 | Putc          | 0x30000004 |    0x4    |      W       |
 
+`
+X : Execute permission
+R : Read permission
+W : Write permission
+`
+
 Text inputs and outputs are memory mapped with the getc and putc addresses.
 
 ## Testbench
 
-The testbench is a collection of MIPS assembly and C code snippets. A bashscript file then compiles these and passes them to the simulator and compares the expected text output and return code.
+The testbench is a collection of MIPS assembly and C code snippets. A bashscript file then compiles these, runs them with the simulator and compares both the expected text output and return code with a reference.
+
+The compilation process uses mips-linux-gnu-gcc and mips-linux-gnu-as. These must both be installed to create the testbench.
 
 ### Memory Drivers
 
