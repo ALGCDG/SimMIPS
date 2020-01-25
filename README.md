@@ -11,11 +11,15 @@ Since then, we have continued to work on the project, fixing errors and adding m
 This was a collaboration between:
 
 ### Archibald Crichton
-github: ALGCDG
+
+github: [ALGCDG](https://github.com/ALGCDG)
+
 personal website: https://www.doc.ic.ac.uk/~ac11018/
 
 ### Jonathan Paynter
-github: jrpdotjpg
+
+github: [jrpdotjpg](https://github.com/jrpdotjpg)
+
 personal website:
 
 ## Build and use instructions
@@ -54,7 +58,7 @@ The testbench is a collection of MIPS assembly and C code snippets. A bashscript
 
 ### Memory Drivers
 
-Something we are particullarly proud of is the memory drivers Archie wrote. This allowed us to write more advanced tests far more easily.
+Something we are particularly proud of is the memory drivers Archie wrote. This allowed us to write more advanced tests far more easily.
 Good learning experience.
 
 ## What has changed since the coursework?
