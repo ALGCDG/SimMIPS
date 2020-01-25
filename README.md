@@ -83,6 +83,7 @@ Our professor's assessment was very possitive, and only reported 4 minor errors.
 ## What next?
 
 - Fix the minor errors
+- Implement Floating Point registers and instructions
 - Implement Coprocessor support
 - Implement a region of memory for MMIO of Graphical output
 - Audio output
