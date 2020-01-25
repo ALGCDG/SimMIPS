@@ -35,6 +35,7 @@
 ### I Type
 
 - B (includes BGEZ, BGEZAL, BLTZ, BLTZAL - all branch instructions which have opcode 1)
+
 *Must fix conditional linking issue for -AL instructions* 
 - BEQ
 - BNE
@@ -49,11 +50,14 @@
 - XORI
 - LUI
 - LB
+
 *Must fix NULL access error* 
 - LH
+
 *Must fix* 
 - LW
 - LBU
+
 *Must fix NULL access error* 
 - LHU
 - SB
