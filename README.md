@@ -20,7 +20,7 @@ personal website: https://www.doc.ic.ac.uk/~ac11018/
 
 github: [jrpdotjpg](https://github.com/jrpdotjpg)
 
-personal website:
+[portfolio](https://jrpdotjpg.github.io/)
 
 ## Build and use instructions
 
